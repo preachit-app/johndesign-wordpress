@@ -131,3 +131,24 @@ add_action('wp_head',function(){
         echo '<script type="application/ld+json">'.wp_json_encode($schema,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES).'</script>'."\n";
     }
 },5);
+
+
+/**
+ * Intégration Yoast SEO.
+ * On laisse Yoast gérer canonicals, sitemap, Open Graph et schéma,
+ * mais John Design fournit les titres et descriptions validés du site.
+ */
+function jd_core_yoast_value($existing,$field){
+    if (is_admin()) return $existing;
+    $seo=jd_core_seo_current();
+    if (!$seo) return $existing;
+    if ($field==='title' && !empty($seo['title'])) return $seo['title'];
+    if ($field==='description' && !empty($seo['description'])) return $seo['description'];
+    return $existing;
+}
+add_filter('wpseo_title',function($value){return jd_core_yoast_value($value,'title');},20);
+add_filter('wpseo_metadesc',function($value){return jd_core_yoast_value($value,'description');},20);
+add_filter('wpseo_opengraph_title',function($value){return jd_core_yoast_value($value,'title');},20);
+add_filter('wpseo_opengraph_desc',function($value){return jd_core_yoast_value($value,'description');},20);
+add_filter('wpseo_twitter_title',function($value){return jd_core_yoast_value($value,'title');},20);
+add_filter('wpseo_twitter_description',function($value){return jd_core_yoast_value($value,'description');},20);

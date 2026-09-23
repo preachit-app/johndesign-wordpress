@@ -34,8 +34,8 @@ function jd_core_admin_page(){ ?>
 <?php if(!empty($diag)): ?><p><strong>Connexion GitHub :</strong> <?php echo !empty($diag['ok'])?'<span style=\"color:#16803a;font-weight:700\">OK</span>':'<span style=\"color:#b42318;font-weight:700\">Échec</span>'; ?> — <?php echo esc_html(($diag['status']??0).' · '.($diag['error']??'')); ?><br><code><?php echo esc_html($diag['endpoint']??''); ?></code><br><small>Dernier contrôle : <?php echo esc_html($diag['checked_at']??''); ?></small></p><?php endif; ?>
 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>"><input type="hidden" name="action" value="jd_force_update_check"><?php wp_nonce_field('jd_force_update_check'); ?><button class="button">Vérifier maintenant les mises à jour GitHub</button></form>
 <h2>6. SEO & indexation</h2>
-<?php $seo_external=function_exists('jd_core_has_external_seo')&&jd_core_has_external_seo(); $public=(int)get_option('blog_public')===1; ?>
-<p><strong>Indexation WordPress :</strong> <?php echo $public?'<span style="color:#16803a;font-weight:700">autorisée</span>':'<span style="color:#b42318;font-weight:700">désactivée</span>'; ?> &nbsp;·&nbsp; <strong>Métadonnées John Design :</strong> <?php echo $seo_external?'désactivées car un plugin SEO externe est actif':'actives'; ?></p>
+<?php $seo_external=function_exists('jd_core_has_external_seo')&&jd_core_has_external_seo(); $yoast=defined('WPSEO_VERSION'); $public=(int)get_option('blog_public')===1; ?>
+<p><strong>Indexation WordPress :</strong> <?php echo $public?'<span style="color:#16803a;font-weight:700">autorisée</span>':'<span style="color:#b42318;font-weight:700">désactivée</span>'; ?> &nbsp;·&nbsp; <strong>SEO :</strong> <?php echo $yoast?'Yoast SEO actif — titres et descriptions John Design injectés dans Yoast':($seo_external?'plugin SEO externe actif':'métadonnées John Design actives'); ?></p>
 <p><strong>Sitemap WordPress :</strong> <code><?php echo esc_html(home_url('/wp-sitemap.xml')); ?></code></p>
 <p><small>Sur la préproduction, garder l’indexation désactivée. Elle ne devra être activée qu’au moment de la mise en ligne définitive.</small></p>
 
