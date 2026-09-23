@@ -40,6 +40,8 @@ function jd_core_admin_page(){ ?>
 <div id="jd-seo"></div>
 <?php $yoastdiag=get_option('jd_core_yoast_sync_diag',[]); ?>
 <h3>Optimisation Yoast des pages</h3>
+<?php $contentdiag=get_option('jd_core_seo_content_tuning_diag',[]); ?>
+<?php if(!empty($contentdiag)): ?><p><strong>Contenu SEO réel :</strong> <?php echo absint($contentdiag['changed']??0); ?> page(s) ajustée(s) automatiquement · <?php echo esc_html($contentdiag['checked_at']??''); ?>. Les phrases ajoutées sont visibles sur le site : aucun texte caché n’est utilisé.</p><?php endif; ?>
 <p>John Design renseigne les requêtes cibles uniquement sur les pages qui ont une vraie intention de recherche commerciale. Les autres pages restent optimisées (titre et méta-description) sans forcer une requête artificielle juste pour obtenir un feu vert.</p>
 <?php if(isset($_GET['yoast_synced'])): ?><div class="notice notice-success inline"><p>Yoast synchronisé sur <?php echo absint($_GET['yoast_updated']??0); ?> pages.</p></div><?php endif; ?>
 <?php if(!empty($yoastdiag)): ?><p><small>Dernière synchronisation : <?php echo esc_html($yoastdiag['checked_at']??''); ?> · <?php echo absint($yoastdiag['updated']??0); ?> pages mises à jour<?php if(!empty($yoastdiag['missing'])) echo ' · pages manquantes : '.esc_html(implode(', ',$yoastdiag['missing'])); ?>.</small></p><?php endif; ?>
