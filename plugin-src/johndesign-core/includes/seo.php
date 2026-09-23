@@ -15,44 +15,54 @@ function jd_core_has_external_seo(){
 function jd_core_seo_map(){
     return [
         'home' => [
-            'focus' => 'graphiste indépendant',
-            'title' => 'Graphiste indépendant — Web, identité & print | John Design',
-            'description' => 'Graphiste indépendant, John Design crée sites internet, identités visuelles, supports print et signalétique pour entreprises, associations et indépendants.',
+            'focus' => 'graphiste Aix-en-Provence',
+            'secondary' => 'graphiste Pertuis, graphiste indépendant, communication visuelle',
+            'intent' => 'Trouver un graphiste local capable de gérer web, identité, print et signalétique.',
+            'title' => 'Graphiste Aix-en-Provence & Pertuis | John Design',
+            'description' => 'Graphiste près d’Aix-en-Provence et Pertuis, John Design crée sites internet, logos, supports print et signalétique. Projets à distance partout en France.',
         ],
         'creation-site-internet' => [
-            'focus' => 'site',
-            'title' => 'Création de site internet sur mesure | John Design',
-            'description' => 'Votre site doit être clair, rapide et fidèle à votre activité. John Design conçoit votre site internet sur mesure, de la structure à la mise en ligne.',
+            'focus' => 'création site internet Pertuis',
+            'secondary' => 'création site web Pertuis, création site internet Aix-en-Provence, site vitrine',
+            'intent' => 'Trouver un prestataire local pour créer ou refondre un site professionnel.',
+            'title' => 'Création site internet Pertuis & Aix | John Design',
+            'description' => 'Création de site internet à Pertuis, Aix-en-Provence et à distance : site vitrine clair, responsive et cohérent avec votre identité, de la conception à la mise en ligne.',
         ],
         'identite-visuelle' => [
-            'focus' => 'identité',
-            'title' => 'Identité visuelle & création de logo | John Design',
-            'description' => 'Votre identité doit être reconnaissable et simple à utiliser. John Design crée logo, univers graphique et déclinaisons cohérentes pour votre activité.',
+            'focus' => 'création logo Aix-en-Provence',
+            'secondary' => 'identité visuelle Aix-en-Provence, création logo Pertuis, charte graphique',
+            'intent' => 'Trouver un graphiste pour créer un logo et une identité visuelle professionnelle.',
+            'title' => 'Création logo Aix-en-Provence | John Design',
+            'description' => 'Création de logo et d’identité visuelle pour entreprises autour d’Aix-en-Provence et Pertuis : logo, couleurs, typographies, charte et déclinaisons.',
         ],
         'print-signaletique' => [
-            'focus' => 'print',
-            'title' => 'Print, signalétique & marquage | John Design',
-            'description' => 'John Design conçoit vos supports print, panneaux, adhésifs, signalétique et marquage, avec accompagnement possible jusqu’à la fabrication et la pose.',
+            'focus' => 'signalétique Pertuis',
+            'secondary' => 'marquage véhicule Pertuis, panneau publicitaire, adhésifs, enseigne, impression',
+            'intent' => 'Trouver un prestataire local pour concevoir et produire des supports visibles sur le terrain.',
+            'title' => 'Signalétique Pertuis & Aix-en-Provence | John Design',
+            'description' => 'Signalétique à Pertuis et autour d’Aix-en-Provence : panneaux, adhésifs, marquage véhicule, supports imprimés, conception graphique, fabrication et pose selon le projet.',
         ],
         'realisations' => [
-            'focus' => 'réalisations',
-            'title' => 'Réalisations — Web, print & signalétique | John Design',
-            'description' => 'Découvrez les réalisations John Design : sites internet, identité visuelle, print, signalétique, marquage et supports de communication pour de vrais projets.',
+            'secondary' => 'portfolio graphiste, réalisations site internet, logo, signalétique',
+            'intent' => 'Rassurer et montrer des preuves avant une prise de contact.',
+            'title' => 'Réalisations — Web, identité & signalétique | John Design',
+            'description' => 'Découvrez des réalisations John Design : sites internet, identités visuelles, supports print, signalétique et marquage réalisés pour de vrais clients.',
         ],
         'a-propos' => [
-            'focus' => 'graphiste indépendant',
-            'title' => 'Graphiste indépendant — À propos | John Design',
-            'description' => 'Jonathan Romain est graphiste indépendant depuis 2015. Découvrez John Design et une approche directe, créative et concrète de la communication visuelle.',
+            'secondary' => 'graphiste indépendant, graphiste Le Puy-Sainte-Réparade',
+            'intent' => 'Présenter le professionnel derrière John Design et renforcer la confiance.',
+            'title' => 'Jonathan Romain, graphiste indépendant | John Design',
+            'description' => 'Jonathan Romain, graphiste indépendant depuis 2015 au Puy-Sainte-Réparade, accompagne les professionnels autour d’Aix-en-Provence et partout en France.',
         ],
         'methode' => [
-            'focus' => 'méthode',
+            'intent' => 'Expliquer le processus de travail et lever les freins avant demande de devis.',
             'title' => 'Méthode de création & accompagnement | John Design',
-            'description' => 'Découvrez la méthode John Design : échange, cadrage, création, ajustements, préparation des fichiers et accompagnement jusqu’au lancement de votre projet.',
+            'description' => 'Découvrez la méthode John Design : échange, cadrage, création, ajustements, production et accompagnement jusqu’à la livraison de votre projet.',
         ],
         'contact' => [
-            'focus' => 'contact',
-            'title' => 'Contact & devis graphiste | John Design',
-            'description' => 'Contactez John Design pour parler de votre projet : site internet, identité, print, signalétique ou communication globale. Demande de devis et premier échange.',
+            'intent' => 'Convertir une visite en demande de devis.',
+            'title' => 'Contact & devis | John Design',
+            'description' => 'Parlez de votre projet à John Design : site internet, logo, identité visuelle, print ou signalétique. Demandez un devis ou un premier échange.',
         ],
         'mentions-legales' => [
             'title' => 'Mentions légales — John Design',
@@ -176,12 +186,16 @@ function jd_core_sync_yoast_meta($force=false){
     $map=jd_core_seo_map();
     $updated=0;$missing=[];
     foreach($map as $key=>$data){
-        if(empty($data['focus'])) continue;
+        if(!empty($data['noindex'])) continue;
         $id=jd_core_seo_page_id($key);
         if(!$id){$missing[]=$key;continue;}
-        update_post_meta($id,'_yoast_wpseo_focuskw',sanitize_text_field($data['focus']));
-        update_post_meta($id,'_yoast_wpseo_title',sanitize_text_field($data['title']));
-        update_post_meta($id,'_yoast_wpseo_metadesc',sanitize_text_field($data['description']));
+        if(!empty($data['focus'])){
+            update_post_meta($id,'_yoast_wpseo_focuskw',sanitize_text_field($data['focus']));
+        }else{
+            delete_post_meta($id,'_yoast_wpseo_focuskw');
+        }
+        if(!empty($data['title'])) update_post_meta($id,'_yoast_wpseo_title',sanitize_text_field($data['title']));
+        if(!empty($data['description'])) update_post_meta($id,'_yoast_wpseo_metadesc',sanitize_text_field($data['description']));
         $updated++;
     }
     update_option('jd_core_yoast_sync_version',JD_CORE_VERSION,false);

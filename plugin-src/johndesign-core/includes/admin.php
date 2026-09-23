@@ -40,12 +40,16 @@ function jd_core_admin_page(){ ?>
 <div id="jd-seo"></div>
 <?php $yoastdiag=get_option('jd_core_yoast_sync_diag',[]); ?>
 <h3>Optimisation Yoast des pages</h3>
-<p>John Design renseigne automatiquement les requêtes cibles, titres SEO et méta-descriptions, puis transmet le contenu réel des modules dynamiques à l’analyse Yoast dans Gutenberg.</p>
+<p>John Design renseigne les requêtes cibles uniquement sur les pages qui ont une vraie intention de recherche commerciale. Les autres pages restent optimisées (titre et méta-description) sans forcer une requête artificielle juste pour obtenir un feu vert.</p>
 <?php if(isset($_GET['yoast_synced'])): ?><div class="notice notice-success inline"><p>Yoast synchronisé sur <?php echo absint($_GET['yoast_updated']??0); ?> pages.</p></div><?php endif; ?>
 <?php if(!empty($yoastdiag)): ?><p><small>Dernière synchronisation : <?php echo esc_html($yoastdiag['checked_at']??''); ?> · <?php echo absint($yoastdiag['updated']??0); ?> pages mises à jour<?php if(!empty($yoastdiag['missing'])) echo ' · pages manquantes : '.esc_html(implode(', ',$yoastdiag['missing'])); ?>.</small></p><?php endif; ?>
-<table class="widefat striped" style="max-width:900px;margin:12px 0 14px"><thead><tr><th>Page</th><th>Requête cible Yoast</th></tr></thead><tbody>
-<?php foreach(jd_core_seo_map() as $slug=>$seo_row): if(empty($seo_row['focus'])) continue; ?>
-<tr><td><strong><?php echo esc_html($slug==='home'?'Accueil':$slug); ?></strong></td><td><?php echo esc_html($seo_row['focus']); ?></td></tr>
+<table class="widefat striped" style="max-width:1050px;margin:12px 0 14px"><thead><tr><th>Page</th><th>Requête cible principale</th><th>Requêtes secondaires / rôle</th></tr></thead><tbody>
+<?php foreach(jd_core_seo_map() as $slug=>$seo_row): if(!empty($seo_row['noindex'])) continue; ?>
+<tr>
+<td><strong><?php echo esc_html($slug==='home'?'Accueil':$slug); ?></strong></td>
+<td><?php echo !empty($seo_row['focus'])?esc_html($seo_row['focus']):'<em>Pas de requête forcée</em>'; ?></td>
+<td><?php echo !empty($seo_row['secondary'])?esc_html($seo_row['secondary']):esc_html($seo_row['intent']??'Page de support à la conversion'); ?></td>
+</tr>
 <?php endforeach; ?>
 </tbody></table>
 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>"><input type="hidden" name="action" value="jd_sync_yoast"><?php wp_nonce_field('jd_sync_yoast'); ?><button class="button button-secondary">Resynchroniser Yoast maintenant</button></form>
