@@ -9,3 +9,58 @@
 .jd-site-info{background:#fff}
 .jd-site-open{white-space:nowrap}
 @media(max-width:760px){.jd-site-grid{grid-template-columns:1fr!important;gap:18px!important}.jd-site-card:hover{transform:none}.jd-site-browser{aspect-ratio:16/10!important}}
+
+/* John Design Core 2.13.1 — responsive hardening
+   Desktop composition stays unchanged; these rules only prevent narrow-screen breakage. */
+html,body{max-width:100%;overflow-x:hidden}
+.wp-block-post-content>.jd-section,
+.jd-preview-page>.jd-section,
+.jd-home-contact-shell,
+.jd-home-form-panel,
+.jd-site-card,
+.jd-real-card{min-width:0}
+.jd-section img,
+.jd-site-card img,
+.jd-real-card img{max-width:100%;height:auto}
+.jd-contact-form input,
+.jd-contact-form select,
+.jd-contact-form textarea{max-width:100%}
+.jd-home-email,
+.jd-contact-form,
+.jd-site-open{overflow-wrap:anywhere}
+
+@media (min-width:768px) and (max-width:1024px){
+  .wp-block-post-content>.jd-section,
+  .jd-preview-page>.jd-section{padding-left:32px;padding-right:32px}
+  .jd-home-contact-shell{gap:24px}
+  .jd-home-form-panel{padding:26px}
+  .jd-site-grid{gap:18px!important}
+}
+
+@media (max-width:767px){
+  .jd-contact-form input,
+  .jd-contact-form select,
+  .jd-contact-form textarea{font-size:16px!important}
+  .jd-contact-form button,
+  .wp-block-button__link,
+  .jd-nav-cta{min-height:44px}
+  .jd-home-contact-shell{width:100%;min-width:0}
+  .jd-home-form-panel{width:100%;min-width:0}
+  .jd-home-form-panel .jd-form-grid{grid-template-columns:minmax(0,1fr)!important}
+  .jd-preview-nav[open] nav{max-width:calc(100vw - 36px)!important;right:0}
+  .jd-site-info{min-width:0}
+  .jd-site-open{white-space:normal}
+  .jd-review-card,
+  .jd-related-card,
+  .jd-service{min-width:0}
+}
+
+@media (max-width:430px){
+  .wp-block-post-content>.jd-section,
+  .jd-preview-page>.jd-section{padding-left:18px!important;padding-right:18px!important}
+  .jd-home-contact-shell{padding:16px!important;border-radius:26px}
+  .jd-home-form-panel{padding:18px!important;border-radius:22px}
+  .jd-home-contact-copy h2{font-size:clamp(2.35rem,12vw,3.5rem)}
+  .jd-site-grid{gap:14px!important}
+}
+
