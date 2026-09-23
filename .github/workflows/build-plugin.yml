@@ -1,0 +1,28 @@
+name: Build John Design Core
+on:
+  push:
+    paths:
+      - 'plugin-src/**'
+      - '.github/workflows/build-plugin.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build plugin ZIP
+        run: |
+          rm -f dist/johndesign-core.zip
+          mkdir -p dist
+          cd plugin-src
+          zip -qr ../dist/johndesign-core.zip johndesign-core
+      - name: Commit distribution ZIP
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/johndesign-core.zip
+          git diff --cached --quiet && exit 0
+          git commit -m "Build John Design Core distribution"
+          git push
