@@ -12,17 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build plugin ZIP
+      - name: Rebuild verified ZIP from text chunks
         run: |
-          rm -f dist/johndesign-core.zip
           mkdir -p dist
-          cd plugin-src
-          zip -qr ../dist/johndesign-core.zip johndesign-core
+          cat plugin-src/package.b64.part* | tr -d '\n\r ' | base64 --decode > dist/johndesign-core.zip
+          unzip -t dist/johndesign-core.zip
       - name: Commit distribution ZIP
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add dist/johndesign-core.zip
           git diff --cached --quiet && exit 0
-          git commit -m "Build John Design Core distribution"
+          git commit -m "Build verified John Design Core distribution"
           git push
