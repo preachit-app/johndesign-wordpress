@@ -15,9 +15,12 @@ function jd_core_cleanup_all_managed_pages_2140(){
         'Étude créative fictive : aucun client, aucune commande ni résultat commercial n’est associé à cette composition.'=>'',
         'Les vignettes présentent une capture ou le nom du projet. Les sites des clients peuvent évoluer après leur livraison.'=>'',
         'Une marque qui dit bonjour.'=>'Une identité qui vous ressemble.',
-        'Pour votre création de site internet à Pertuis, John Design conçoit un site clair, responsive et cohérent avec votre activité. Pour votre création de site internet à Pertuis, John Design conçoit un site clair, responsive et cohérent avec votre activité.'=>'Pour votre création de site internet, John Design conçoit un site clair, responsive et cohérent avec votre activité.',
         'Pour votre création de site internet à Pertuis, John Design conçoit un site clair, responsive et cohérent avec votre activité.'=>'Pour votre création de site internet, John Design conçoit un site clair, responsive et cohérent avec votre activité.',
         'De plus, chaque création de site internet à Pertuis est pensée pour guider vos visiteurs vers l’essentiel et faciliter la prise de contact.'=>'De plus, chaque création de site internet est pensée pour guider vos visiteurs vers l’essentiel et faciliter la prise de contact.',
+    ];
+    $dedupe=[
+        'Graphiste à Aix-en-Provence et autour de Pertuis, John Design vous accompagne avec un seul interlocuteur pour construire une communication cohérente.',
+        'Pour votre création de site internet, John Design conçoit un site clair, responsive et cohérent avec votre activité.',
     ];
 
     $pages=get_posts([
@@ -32,23 +35,42 @@ function jd_core_cleanup_all_managed_pages_2140(){
         $raw=(string)$page->post_content;
         if(strpos($raw,'wp:johndesign/section')===false) continue;
 
-        $new=$raw;
-        foreach($replacements as $from=>$to){
-            $new=str_replace($from,$to,$new);
+        $blocks=parse_blocks($raw);
+        $page_changed=false;
+
+        foreach($blocks as &$block){
+            if(($block['blockName']??'')!=='johndesign/section') continue;
+            if(empty($block['attrs']['fields']) || !is_array($block['attrs']['fields'])) continue;
+
+            foreach($block['attrs']['fields'] as $key=>$value){
+                if(!is_string($value) || $value==='') continue;
+                $next=$value;
+
+                foreach($replacements as $from=>$to){
+                    $next=str_replace($from,$to,$next);
+                }
+                foreach($dedupe as $phrase){
+                    $pattern='/(?:'.preg_quote($phrase,'/').'\\s*){2,}/u';
+                    $next=preg_replace($pattern,$phrase.' ',$next);
+                }
+
+                $next=trim(preg_replace('/[ \\t]{2,}/',' ',$next));
+                if($next!==$value){
+                    $block['attrs']['fields'][$key]=$next;
+                    $page_changed=true;
+                }
+            }
         }
+        unset($block);
 
-        // Normalise espaces laissés par la suppression de petites légendes.
-        $new=preg_replace('/\s{2,}/',' ',$new);
-
-        if($new!==$raw){
-            wp_update_post(['ID'=>$page->ID,'post_content'=>wp_slash($new)]);
+        if($page_changed){
+            wp_update_post(['ID'=>$page->ID,'post_content'=>wp_slash(serialize_blocks($blocks))]);
             $changed++;
         }
     }
 
     return $changed;
 }
-
 function jd_core_find_home_truck_image_2140(){
     $front=(int)get_option('page_on_front');
     if(!$front) return '';

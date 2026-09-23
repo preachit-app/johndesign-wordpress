@@ -1,14 +1,43 @@
 (()=>{
 'use strict';
 
-/**
- * The global navigation is a <details> element so it can collapse on mobile.
- * Native closed <details> content is not rendered on desktop unless the open
- * state is explicitly set. Keep it open on desktop and closed on mobile.
- */
+const links=[
+  ['Site internet','/creation-site-internet/'],
+  ['Identité visuelle','/identite-visuelle/'],
+  ['Print & signalétique','/print-signaletique/'],
+  ['Réalisations','/realisations/'],
+  ['À propos','/a-propos/']
+];
+
 const menu=document.querySelector('.jd-preview-nav');
 if(menu){
-  const desktop=window.matchMedia('(min-width:768px)');
+  let nav=menu.querySelector('nav');
+  if(!nav){
+    nav=document.createElement('nav');
+    menu.appendChild(nav);
+  }
+
+  nav.classList.add('jd-desktop-nav');
+  nav.innerHTML='';
+
+  links.forEach(([label,href])=>{
+    const a=document.createElement('a');
+    a.href=href;
+    a.textContent=label;
+    a.className='jd-nav-link';
+    nav.appendChild(a);
+  });
+
+  const cta=document.createElement('a');
+  cta.href='/contact/';
+  cta.textContent='Contact';
+  cta.className='jd-nav-cta';
+  nav.appendChild(cta);
+
+  const header=menu.closest('header') || menu.closest('[class*="header"]') || menu.parentElement;
+  if(header) header.classList.add('jd-sticky-header');
+
+  const desktop=window.matchMedia('(min-width:1024px)');
   const sync=()=>{
     if(desktop.matches){
       menu.open=true;

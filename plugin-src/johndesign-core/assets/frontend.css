@@ -64,3 +64,77 @@ html,body{max-width:100%;overflow-x:hidden}
   .jd-site-grid{gap:14px!important}
 }
 
+
+
+/* John Design Core 2.14.1 — sticky service navigation */
+.jd-sticky-header{
+  position:sticky!important;
+  top:0!important;
+  z-index:9999!important;
+  isolation:isolate;
+  box-shadow:0 0 0 100vmax #fff,0 10px 26px rgba(20,20,20,.08);
+  clip-path:inset(0 -100vmax -30px -100vmax)
+}
+.jd-preview-nav nav.jd-desktop-nav{align-items:center;gap:18px}
+.jd-preview-nav nav.jd-desktop-nav .jd-nav-link{
+  color:inherit;
+  text-decoration:none;
+  font-size:14px;
+  line-height:1.2;
+  font-weight:650;
+  white-space:nowrap
+}
+.jd-preview-nav nav.jd-desktop-nav .jd-nav-link:hover{
+  text-decoration:underline;
+  text-underline-offset:4px
+}
+.jd-preview-nav nav.jd-desktop-nav .jd-nav-cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  padding:10px 17px;
+  border-radius:999px;
+  white-space:nowrap;
+  text-decoration:none
+}
+@media (min-width:1024px){
+  .jd-preview-nav>summary{display:none!important}
+  .jd-preview-nav[open]>nav.jd-desktop-nav,
+  .jd-preview-nav nav.jd-desktop-nav{
+    display:flex!important;
+    position:static!important;
+    visibility:visible!important;
+    opacity:1!important;
+    transform:none!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    max-width:none!important
+  }
+}
+@media (max-width:1180px) and (min-width:1024px){
+  .jd-preview-nav nav.jd-desktop-nav{gap:11px}
+  .jd-preview-nav nav.jd-desktop-nav .jd-nav-link{font-size:12px}
+  .jd-preview-nav nav.jd-desktop-nav .jd-nav-cta{padding:9px 13px}
+}
+
+/* Section 01 — réalisations mises en avant, visuellement séparées du hero et de la section 02. */
+.jd-home-work-feature{
+  box-sizing:border-box;
+  width:calc(100% - 48px)!important;
+  max-width:1440px!important;
+  margin:34px auto 52px!important;
+  padding-top:64px!important;
+  padding-bottom:64px!important;
+  background:#f1ecfb!important;
+  border-radius:42px!important
+}
+@media(max-width:767px){
+  .jd-home-work-feature{
+    width:calc(100% - 24px)!important;
+    margin:20px auto 34px!important;
+    padding-top:40px!important;
+    padding-bottom:40px!important;
+    border-radius:28px!important
+  }
+}
