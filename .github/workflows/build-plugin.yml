@@ -21,6 +21,9 @@ jobs:
             unzip -t dist/johndesign-core.zip
             unzip -qo dist/johndesign-core.zip -d plugin-src
           fi
+      - name: Validate PHP syntax
+        run: |
+          find plugin-src/johndesign-core -name '*.php' -print0 | xargs -0 -n1 php -l
       - name: Build verified ZIP from source
         run: |
           rm -f dist/johndesign-core.zip
