@@ -15,4 +15,4 @@ Ce dépôt alimente les mises à jour automatiques du site WordPress John Design
 - `dist/johndesign-core.zip` : paquet du plugin
 - `updates/johndesign-core.json` : manifeste de mise à jour
 
-Version publiée : **2.12.7**.
+Version publiée : **2.12.8**.
