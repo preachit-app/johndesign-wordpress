@@ -1,4 +1,5 @@
 <?php
+// 2.13.3 launch marker: legacy anchors enabled.
 if (!defined('ABSPATH')) exit;
 function jd_core_sections(){
  static $data=null;
