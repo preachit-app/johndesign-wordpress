@@ -66,14 +66,24 @@ html,body{max-width:100%;overflow-x:hidden}
 
 
 
-/* John Design Core 2.14.1 — sticky service navigation */
-.jd-sticky-header{
-  position:sticky!important;
+/* John Design Core 2.14.2 — fixed service navigation */
+.jd-header-spacer{height:0}
+.jd-header{
+  transition:box-shadow .18s ease,margin .18s ease,width .18s ease,border-radius .18s ease
+}
+.jd-header.is-fixed{
+  position:fixed!important;
   top:0!important;
-  z-index:9999!important;
-  isolation:isolate;
-  box-shadow:0 0 0 100vmax #fff,0 10px 26px rgba(20,20,20,.08);
-  clip-path:inset(0 -100vmax -30px -100vmax)
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  z-index:10000!important;
+  margin:0 auto!important;
+  width:calc(100% - 48px)!important;
+  max-width:1208px!important;
+  border-radius:0 0 28px 28px!important;
+  box-shadow:
+    0 -12px 0 18px #fff,
+    0 14px 30px rgba(20,20,20,.12)!important
 }
 .jd-preview-nav nav.jd-desktop-nav{align-items:center;gap:18px}
 .jd-preview-nav nav.jd-desktop-nav .jd-nav-link{
@@ -116,6 +126,15 @@ html,body{max-width:100%;overflow-x:hidden}
   .jd-preview-nav nav.jd-desktop-nav{gap:11px}
   .jd-preview-nav nav.jd-desktop-nav .jd-nav-link{font-size:12px}
   .jd-preview-nav nav.jd-desktop-nav .jd-nav-cta{padding:9px 13px}
+}
+@media(max-width:767px){
+  .jd-header.is-fixed{
+    width:100%!important;
+    max-width:none!important;
+    border-radius:0 0 22px 22px!important;
+    padding-left:22px!important;
+    padding-right:22px!important
+  }
 }
 
 /* Section 01 — réalisations mises en avant, visuellement séparées du hero et de la section 02. */
