@@ -1,0 +1,11 @@
+/* John Design Core 2.12.2 — website portfolio screenshots */
+.jd-site-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px!important}
+.jd-site-card,.jd-site-card.is-featured{grid-column:auto!important;transition:transform .22s ease,box-shadow .22s ease}
+.jd-site-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(32,25,45,.12)}
+.jd-site-preview-link{display:block;position:relative;text-decoration:none;color:inherit}
+.jd-site-browser{aspect-ratio:16/9!important;background:#f2f2f2!important}
+.jd-site-browser img{object-fit:cover!important;object-position:top center!important;transition:transform .45s cubic-bezier(.2,.7,.2,1),filter .25s ease!important;filter:saturate(.98)}
+.jd-site-card:hover .jd-site-browser img{transform:scale(1.012);filter:saturate(1.03)}
+.jd-site-info{background:#fff}
+.jd-site-open{white-space:nowrap}
+@media(max-width:760px){.jd-site-grid{grid-template-columns:1fr!important;gap:18px!important}.jd-site-card:hover{transform:none}.jd-site-browser{aspect-ratio:16/10!important}}
