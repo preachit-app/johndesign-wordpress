@@ -2,7 +2,8 @@ name: Build John Design Core
 on:
   push:
     paths:
-      - 'plugin-src/**'
+      - 'plugin-src/johndesign-core/**'
+      - 'plugin-src/package.b64.part*'
       - '.github/workflows/build-plugin.yml'
   workflow_dispatch:
 permissions:
@@ -12,16 +13,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Rebuild and verify plugin ZIP
+      - name: Bootstrap source from verified package if needed
         run: |
-          mkdir -p dist
-          cat             plugin-src/package.b64.part1             plugin-src/package.b64.part2a             plugin-src/package.b64.part2b             plugin-src/package.b64.part3             plugin-src/package.b64.part4             plugin-src/package.b64.part5             | tr -d '\n\r ' | base64 --decode > dist/johndesign-core.zip
+          if [ ! -f plugin-src/johndesign-core/johndesign-core.php ]; then
+            mkdir -p dist plugin-src
+            cat               plugin-src/package.b64.part1               plugin-src/package.b64.part2a               plugin-src/package.b64.part2b               plugin-src/package.b64.part3               plugin-src/package.b64.part4               plugin-src/package.b64.part5               | tr -d '\n\r ' | base64 --decode > dist/johndesign-core.zip
+            unzip -t dist/johndesign-core.zip
+            unzip -qo dist/johndesign-core.zip -d plugin-src
+          fi
+      - name: Build verified ZIP from source
+        run: |
+          rm -f dist/johndesign-core.zip
+          cd plugin-src
+          zip -qr ../dist/johndesign-core.zip johndesign-core
+          cd ..
           unzip -t dist/johndesign-core.zip
-      - name: Commit verified distribution ZIP
+      - name: Commit source and verified distribution ZIP
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist/johndesign-core.zip
+          git add plugin-src/johndesign-core dist/johndesign-core.zip
           git diff --cached --quiet && exit 0
-          git commit -m "Build verified John Design Core distribution"
+          git commit -m "Sync John Design Core source and distribution"
           git push
