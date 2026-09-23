@@ -22,11 +22,11 @@ function jd_core_seo_map(){
             'description' => 'Graphiste à Aix-en-Provence et Pertuis : sites internet, logos, print et signalétique. John Design accompagne aussi vos projets partout en France.',
         ],
         'creation-site-internet' => [
-            'focus' => 'création de site internet à Pertuis',
-            'secondary' => 'création site web Pertuis, création site internet Aix-en-Provence, site vitrine',
+            'focus' => 'création de site internet',
+            'secondary' => 'création site web, site vitrine, création site internet Aix-en-Provence, création site internet Pertuis',
             'intent' => 'Trouver un prestataire local pour créer ou refondre un site professionnel.',
-            'title' => 'Création site internet Pertuis & Aix | John Design',
-            'description' => 'Création de site internet à Pertuis et Aix-en-Provence : site vitrine clair, responsive et pensé pour votre activité, jusqu’à la mise en ligne.',
+            'title' => 'Création de site internet | John Design',
+            'description' => 'Création de site internet : un site vitrine clair, responsive et pensé pour votre activité. John Design vous accompagne de la conception à la mise en ligne.',
         ],
         'identite-visuelle' => [
             'focus' => 'création de logo à Aix-en-Provence',
@@ -184,8 +184,8 @@ function jd_core_seo_content_tuning_map(){
             'later'=>'Ainsi, votre identité, votre site et vos supports avancent dans la même direction, avec une approche simple et concrète.',
         ],
         'creation-site-internet'=>[
-            'intro'=>'Pour votre création de site internet à Pertuis, John Design conçoit un site clair, responsive et cohérent avec votre activité.',
-            'later'=>'De plus, chaque création de site internet à Pertuis est pensée pour guider vos visiteurs vers l’essentiel et faciliter la prise de contact.',
+            'intro'=>'Pour votre création de site internet, John Design conçoit un site clair, responsive et cohérent avec votre activité.',
+            'later'=>'De plus, chaque création de site internet est pensée pour guider vos visiteurs vers l’essentiel et faciliter la prise de contact.',
         ],
         'identite-visuelle'=>[
             'intro'=>'Pour votre création de logo à Aix-en-Provence, John Design construit une identité visuelle reconnaissable, cohérente et facile à décliner.',

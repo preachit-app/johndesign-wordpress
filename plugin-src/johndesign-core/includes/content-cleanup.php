@@ -1,0 +1,140 @@
+<?php
+if (!defined('ABSPATH')) exit;
+
+/**
+ * Nettoyage éditorial demandé après mise en production.
+ * - retire les légendes de démonstration inutiles
+ * - corrige le doublon de la page Site internet
+ * - remplace le titre "Une marque qui dit bonjour."
+ * - retire la note sur les vignettes de sites
+ * - réutilise la photo camion/stickers de l'accueil sur la section IA de Print & signalétique
+ */
+function jd_core_cleanup_all_managed_pages_2140(){
+    $replacements=[
+        'Composition John Design · concept de démonstration, sans commande client.'=>'',
+        'Étude créative fictive : aucun client, aucune commande ni résultat commercial n’est associé à cette composition.'=>'',
+        'Les vignettes présentent une capture ou le nom du projet. Les sites des clients peuvent évoluer après leur livraison.'=>'',
+        'Une marque qui dit bonjour.'=>'Une identité qui vous ressemble.',
+        'Pour votre création de site internet à Pertuis, John Design conçoit un site clair, responsive et cohérent avec votre activité. Pour votre création de site internet à Pertuis, John Design conçoit un site clair, responsive et cohérent avec votre activité.'=>'Pour votre création de site internet, John Design conçoit un site clair, responsive et cohérent avec votre activité.',
+        'Pour votre création de site internet à Pertuis, John Design conçoit un site clair, responsive et cohérent avec votre activité.'=>'Pour votre création de site internet, John Design conçoit un site clair, responsive et cohérent avec votre activité.',
+        'De plus, chaque création de site internet à Pertuis est pensée pour guider vos visiteurs vers l’essentiel et faciliter la prise de contact.'=>'De plus, chaque création de site internet est pensée pour guider vos visiteurs vers l’essentiel et faciliter la prise de contact.',
+    ];
+
+    $pages=get_posts([
+        'post_type'=>'page',
+        'post_status'=>['publish','draft','private'],
+        'numberposts'=>-1,
+        'suppress_filters'=>false,
+    ]);
+
+    $changed=0;
+    foreach($pages as $page){
+        $raw=(string)$page->post_content;
+        if(strpos($raw,'wp:johndesign/section')===false) continue;
+
+        $new=$raw;
+        foreach($replacements as $from=>$to){
+            $new=str_replace($from,$to,$new);
+        }
+
+        // Normalise espaces laissés par la suppression de petites légendes.
+        $new=preg_replace('/\s{2,}/',' ',$new);
+
+        if($new!==$raw){
+            wp_update_post(['ID'=>$page->ID,'post_content'=>wp_slash($new)]);
+            $changed++;
+        }
+    }
+
+    return $changed;
+}
+
+function jd_core_find_home_truck_image_2140(){
+    $front=(int)get_option('page_on_front');
+    if(!$front) return '';
+
+    $blocks=parse_blocks((string)get_post_field('post_content',$front));
+    $defs=jd_core_sections();
+
+    foreach($blocks as $block){
+        if(($block['blockName']??'')!=='johndesign/section') continue;
+        $sid=$block['attrs']['sectionId']??'';
+        $def=$defs[$sid]??null;
+        if(!$def) continue;
+
+        $haystack=wp_strip_all_tags(wp_json_encode($block['attrs']['fields']??[],JSON_UNESCAPED_UNICODE));
+        $template_text=wp_strip_all_tags((string)($def['template']??''));
+        $alltext=mb_strtolower($haystack.' '.$template_text);
+
+        if(strpos($alltext,'ia fait des merveilles')===false && strpos($alltext,'stickers')===false) continue;
+
+        foreach(($def['fields']??[]) as $field){
+            if(($field['type']??'')!=='image') continue;
+            $key=$field['key']??'';
+            if(!$key) continue;
+            $value=$block['attrs']['fields'][$key]??($field['default']??'');
+            if($value && strpos((string)$value,'{{THEME_URI}}')===false) return (string)$value;
+        }
+    }
+    return '';
+}
+
+function jd_core_apply_truck_to_print_ai_2140($image){
+    if(!$image) return false;
+
+    $page=get_page_by_path('print-signaletique');
+    if(!($page instanceof WP_Post)) return false;
+
+    $blocks=parse_blocks((string)$page->post_content);
+    $defs=jd_core_sections();
+    $changed=false;
+
+    foreach($blocks as &$block){
+        if(($block['blockName']??'')!=='johndesign/section') continue;
+        $sid=$block['attrs']['sectionId']??'';
+        $def=$defs[$sid]??null;
+        if(!$def) continue;
+
+        $fields=$block['attrs']['fields']??[];
+        $haystack=mb_strtolower(wp_strip_all_tags(wp_json_encode($fields,JSON_UNESCAPED_UNICODE).' '.($def['template']??'')));
+        if(strpos($haystack,'ia fait des merveilles')===false && strpos($haystack,'stickers')===false) continue;
+
+        foreach(($def['fields']??[]) as $field){
+            if(($field['type']??'')!=='image') continue;
+            $key=$field['key']??'';
+            if(!$key) continue;
+            if(!isset($block['attrs']['fields']) || !is_array($block['attrs']['fields'])) $block['attrs']['fields']=[];
+            if(($block['attrs']['fields'][$key]??'')!==$image){
+                $block['attrs']['fields'][$key]=$image;
+                $changed=true;
+            }
+            break;
+        }
+    }
+    unset($block);
+
+    if($changed){
+        wp_update_post(['ID'=>$page->ID,'post_content'=>wp_slash(serialize_blocks($blocks))]);
+    }
+    return $changed;
+}
+
+function jd_core_content_cleanup_2140(){
+    if(get_option('jd_core_content_cleanup_version')===JD_CORE_VERSION) return;
+
+    $changed=jd_core_cleanup_all_managed_pages_2140();
+    $truck=jd_core_find_home_truck_image_2140();
+    $print_changed=jd_core_apply_truck_to_print_ai_2140($truck);
+
+    update_option('jd_core_content_cleanup_diag',[
+        'changed_pages'=>$changed,
+        'truck_found'=>(bool)$truck,
+        'print_changed'=>(bool)$print_changed,
+        'checked_at'=>current_time('mysql'),
+    ],false);
+    update_option('jd_core_content_cleanup_version',JD_CORE_VERSION,false);
+
+    wp_cache_flush();
+    if(function_exists('wp_cache_clear_cache')) wp_cache_clear_cache();
+}
+add_action('admin_init','jd_core_content_cleanup_2140',45);
