@@ -39,4 +39,13 @@ function jd_core_admin_page(){ ?>
 <p><strong>Sitemap WordPress :</strong> <code><?php echo esc_html(home_url('/wp-sitemap.xml')); ?></code></p>
 <p><small>Sur la préproduction, garder l’indexation désactivée. Elle ne devra être activée qu’au moment de la mise en ligne définitive.</small></p>
 
+<h2>7. Préparation à la mise en ligne</h2>
+<?php $launch_checks=function_exists('jd_core_launch_checks')?jd_core_launch_checks():[]; ?>
+<table class="widefat striped" style="max-width:900px"><tbody>
+<?php foreach($launch_checks as $check): ?>
+<tr><td style="width:230px"><strong><?php echo esc_html($check['label']); ?></strong></td><td style="width:90px"><?php echo !empty($check['ok'])?'<span style="color:#16803a;font-weight:700">OK</span>':'<span style="color:#b42318;font-weight:700">À vérifier</span>'; ?></td><td><?php echo esc_html($check['detail']); ?></td></tr>
+<?php endforeach; ?>
+</tbody></table>
+<p><small>Les anciennes URL principales sont redirigées automatiquement, notamment <code>/creation-site-web-sur-mesure/</code> vers <code>/creation-site-internet/</code>. Sur WP Tiger, l’indexation doit rester désactivée jusqu’à la publication.</small></p>
+
 </div><?php }

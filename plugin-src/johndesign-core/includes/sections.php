@@ -14,7 +14,7 @@ function jd_core_render_section($attrs){
  $all=jd_core_sections();$id=sanitize_key($attrs['sectionId']??'');if(!$id||empty($all[$id]))return '';$def=$all[$id];$html=$def['template'];$fields=is_array($attrs['fields']??null)?$attrs['fields']:[];
  $site_url=rtrim(home_url(),'/');$theme_uri=rtrim(get_stylesheet_directory_uri(),'/');
  foreach($def['fields'] as $f){$key=$f['key'];$val=array_key_exists($key,$fields)?$fields[$key]:($f['default']??'');$val=str_replace(['{{SITE_URL}}','{{THEME_URI}}'],[$site_url,$theme_uri],$val);if($f['type']==='url'||$f['type']==='image')$safe=esc_url($val);else $safe=wp_kses_post($val);$html=str_replace('{{'.$key.'}}',$safe,$html);}
- $html=str_replace('{{CONTACT_FORM_HOME}}',jd_core_render_form('home'),$html);$html=str_replace('{{CONTACT_FORM_FULL}}',jd_core_render_form('full'),$html);$html=str_replace('{{SITE_URL}}',$site_url,$html);$html=str_replace('{{THEME_URI}}',$theme_uri,$html);return $html;
+ $html=preg_replace('/<section class="([^"]*\\bjd-reviews\\b[^"]*)"(?![^>]*\\bid=)/','<section class="$1" id="avis"',$html,1);\n $html=str_replace('{{CONTACT_FORM_HOME}}',jd_core_render_form('home'),$html);$html=str_replace('{{CONTACT_FORM_FULL}}',jd_core_render_form('full'),$html);$html=str_replace('{{SITE_URL}}',$site_url,$html);$html=str_replace('{{THEME_URI}}',$theme_uri,$html);return $html;
 }
 function jd_core_register_block(){
  wp_register_script('jd-section-editor',JD_CORE_URL.'assets/editor.js',['wp-blocks','wp-element','wp-components','wp-block-editor','wp-server-side-render','wp-i18n'],JD_CORE_VERSION,true);
