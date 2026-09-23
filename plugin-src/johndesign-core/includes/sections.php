@@ -34,7 +34,7 @@ function jd_core_render_section($attrs){
 function jd_core_register_block(){
  wp_register_script('jd-section-editor',JD_CORE_URL.'assets/editor.js',['wp-blocks','wp-element','wp-components','wp-block-editor','wp-server-side-render','wp-i18n'],JD_CORE_VERSION,true);
  wp_register_style('jd-section-editor-style',JD_CORE_URL.'assets/editor.css',[],JD_CORE_VERSION);
- wp_localize_script('jd-section-editor','JD_SECTIONS',array_map(function($d){$used=[];if(!empty($d['template'])){preg_match_all('/\{\{(f\d+)\}\}/',$d['template'],$m);$used=array_values(array_unique($m[1]??[]));}return ['title'=>$d['title'],'fields'=>$d['fields'],'usedKeys'=>$used];},jd_core_sections()));
+ wp_localize_script('jd-section-editor','JD_SECTIONS',array_map(function($d){$used=[];if(!empty($d['template'])){preg_match_all('/\{\{(f\d+)\}\}/',$d['template'],$m);$used=array_values(array_unique($m[1]??[]));}return ['title'=>$d['title'],'fields'=>$d['fields'],'usedKeys'=>$used,'template'=>$d['template']??''];},jd_core_sections()));
  register_block_type('johndesign/section',['api_version'=>3,'editor_script'=>'jd-section-editor','editor_style'=>'jd-section-editor-style','render_callback'=>'jd_core_render_section','attributes'=>['sectionId'=>['type'=>'string','default'=>''],'fields'=>['type'=>'object','default'=>[]]],'supports'=>['html'=>false,'align'=>false]]);
 }
 add_action('init','jd_core_register_block');

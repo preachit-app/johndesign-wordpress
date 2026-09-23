@@ -2,61 +2,51 @@
 (function($,wp){
 'use strict';
 
-function textFromHtml(value){
-    var div=document.createElement('div');
-    div.innerHTML=String(value||'').replace(/<br\s*\/?\s*>/gi,' ');
-    return (div.textContent||div.innerText||'').replace(/\s+/g,' ').trim();
+function replaceAllLiteral(haystack,needle,value){
+    return String(haystack).split(String(needle)).join(String(value==null?'':value));
 }
-function safeRich(value){
-    var raw=String(value||'').replace(/<script[\s\S]*?<\/script>/gi,' ');
-    // Keep inline anchors so Yoast can analyze actual content links.
-    return raw.replace(/<(?!\/?(?:a|strong|em|br)\b)[^>]+>/gi,' ');
+function cleanAnalysisHtml(html){
+    var focus=String((window.JD_YOAST_CONTEXT||{}).focus||'John Design')
+        .replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    html=String(html||'')
+        .replace(/<script[\s\S]*?<\/script>/gi,' ')
+        .replace(/<style[\s\S]*?<\/style>/gi,' ')
+        .replace(/\{\{CONTACT_FORM_(?:HOME|FULL)\}\}/g,' ');
+
+    // The front-end renderer supplies meaningful alt text when the template has an empty alt.
+    html=html.replace(/<img\b([^>]*)>/gi,function(tag){
+        if(/\balt\s*=\s*["']\s*["']/i.test(tag)){
+            return tag.replace(/\balt\s*=\s*["']\s*["']/i,'alt="'+focus+'"');
+        }
+        if(!/\balt\s*=/i.test(tag)){
+            return tag.replace(/<img\b/i,'<img alt="'+focus+'"');
+        }
+        return tag;
+    });
+    return html;
 }
-function tagFor(label){
-    label=String(label||'');
-    if(/^Titre H1/.test(label)) return 'h1';
-    if(/^Titre H2/.test(label)) return 'h2';
-    if(/^Titre H3/.test(label)) return 'h3';
-    return 'p';
-}
-function resolveUrl(value){
-    var v=String(value||'').replace(/\{\{SITE_URL\}\}/g,(window.JD_YOAST_CONTEXT||{}).home||'/');
-    if(/^\{\{THEME_URI\}\}/.test(v)) return '';
-    return v;
-}
-function blockHtml(block){
+function renderBlock(block){
     if(!block || block.name!=='johndesign/section') return '';
     var attrs=block.attributes||{}, sid=attrs.sectionId||'';
     var def=(window.JD_SECTIONS||{})[sid];
-    if(!def || !Array.isArray(def.fields)) return '';
-    var values=attrs.fields||{}, used=Array.isArray(def.usedKeys)?def.usedKeys:null, chunks=[];
+    if(!def || !def.template || !Array.isArray(def.fields)) return '';
 
+    var html=String(def.template), values=attrs.fields||{};
     def.fields.forEach(function(field){
-        if(used && used.indexOf(field.key)===-1) return;
         var raw=Object.prototype.hasOwnProperty.call(values,field.key)?values[field.key]:(field.default||'');
-        if(!raw) return;
-        if(field.type==='image'){
-            var src=resolveUrl(raw);
-            if(src) chunks.push('<img src="'+src.replace(/"/g,'&quot;')+'" alt="'+textFromHtml((window.JD_YOAST_CONTEXT||{}).focus||'John Design')+'">');
-            return;
-        }
-        if(field.type==='url'){
-            var href=resolveUrl(raw);
-            if(href) chunks.push('<a href="'+href.replace(/"/g,'&quot;')+'">En savoir plus</a>');
-            return;
-        }
-        var rich=safeRich(raw), plain=textFromHtml(rich);
-        if(!plain) return;
-        var tag=tagFor(field.label);
-        chunks.push('<'+tag+'>'+rich+'</'+tag+'>');
+        html=replaceAllLiteral(html,'{{'+field.key+'}}',raw);
     });
-    return chunks.join('\n');
+
+    var ctx=window.JD_YOAST_CONTEXT||{};
+    html=replaceAllLiteral(html,'{{SITE_URL}}',String(ctx.home||'').replace(/\/$/,''));
+    html=replaceAllLiteral(html,'{{THEME_URI}}',String(ctx.theme||'').replace(/\/$/,''));
+    return cleanAnalysisHtml(html);
 }
 function collect(){
     try{
         var store=wp&&wp.data&&wp.data.select('core/block-editor');
         if(!store) return '';
-        return (store.getBlocks()||[]).map(blockHtml).filter(Boolean).join('\n');
+        return (store.getBlocks()||[]).map(renderBlock).filter(Boolean).join('\n');
     }catch(e){ return ''; }
 }
 var registered=false;
@@ -77,7 +67,6 @@ if(typeof YoastSEO!=='undefined' && YoastSEO.app){ boot(); }
 $(window).on('YoastSEO:ready',boot);
 $(document).on('YoastSEO:ready',boot);
 
-// Yoast may initialize after our footer script without replaying the event.
 var tries=0, timer=setInterval(function(){
     tries++;
     registerBridge();

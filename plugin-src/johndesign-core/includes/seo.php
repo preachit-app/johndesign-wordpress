@@ -352,6 +352,7 @@ function jd_core_enqueue_yoast_analysis_bridge(){
         'key'=>$key,
         'focus'=>$map[$key]['focus']??'',
         'home'=>home_url('/'),
+        'theme'=>get_stylesheet_directory_uri(),
     ]);
 }
 add_action('admin_enqueue_scripts','jd_core_enqueue_yoast_analysis_bridge',30);
