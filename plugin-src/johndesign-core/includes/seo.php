@@ -15,36 +15,44 @@ function jd_core_has_external_seo(){
 function jd_core_seo_map(){
     return [
         'home' => [
-            'title' => 'John Design — Graphiste, sites internet, print & signalétique',
-            'description' => 'John Design accompagne entreprises, associations et indépendants pour leur identité visuelle, site internet, print et signalétique. Un seul interlocuteur, de l’idée à la livraison.',
+            'focus' => 'graphiste indépendant',
+            'title' => 'Graphiste indépendant — Web, identité & print | John Design',
+            'description' => 'Graphiste indépendant, John Design crée sites internet, identités visuelles, supports print et signalétique pour entreprises, associations et indépendants.',
         ],
         'creation-site-internet' => [
-            'title' => 'Création de site internet — John Design',
-            'description' => 'Création et refonte de sites internet clairs, rapides et cohérents avec votre identité. John Design vous accompagne de la conception à la mise en ligne.',
+            'focus' => 'site',
+            'title' => 'Création de site internet sur mesure | John Design',
+            'description' => 'Votre site doit être clair, rapide et fidèle à votre activité. John Design conçoit votre site internet sur mesure, de la structure à la mise en ligne.',
         ],
         'identite-visuelle' => [
-            'title' => 'Identité visuelle & logo — John Design',
-            'description' => 'Logo, identité visuelle et univers de marque : John Design construit une image cohérente, reconnaissable et adaptée à tous vos supports.',
+            'focus' => 'identité',
+            'title' => 'Identité visuelle & création de logo | John Design',
+            'description' => 'Votre identité doit être reconnaissable et simple à utiliser. John Design crée logo, univers graphique et déclinaisons cohérentes pour votre activité.',
         ],
         'print-signaletique' => [
-            'title' => 'Print, signalétique & marquage — John Design',
-            'description' => 'Supports imprimés, panneaux, adhésifs, signalétique et marquage : John Design conçoit votre communication et peut accompagner sa fabrication et son installation.',
+            'focus' => 'print',
+            'title' => 'Print, signalétique & marquage | John Design',
+            'description' => 'John Design conçoit vos supports print, panneaux, adhésifs, signalétique et marquage, avec accompagnement possible jusqu’à la fabrication et la pose.',
         ],
         'realisations' => [
-            'title' => 'Réalisations — John Design',
-            'description' => 'Découvrez une sélection de projets John Design : sites internet, identités visuelles, print, signalétique, marquage et supports de communication.',
+            'focus' => 'réalisations',
+            'title' => 'Réalisations — Web, print & signalétique | John Design',
+            'description' => 'Découvrez les réalisations John Design : sites internet, identité visuelle, print, signalétique, marquage et supports de communication pour de vrais projets.',
         ],
         'a-propos' => [
-            'title' => 'À propos — John Design',
-            'description' => 'Découvrez John Design, studio créatif indépendant : un interlocuteur unique pour construire une communication cohérente, du premier concept à la livraison.',
+            'focus' => 'graphiste indépendant',
+            'title' => 'Graphiste indépendant — À propos | John Design',
+            'description' => 'Jonathan Romain est graphiste indépendant depuis 2015. Découvrez John Design et une approche directe, créative et concrète de la communication visuelle.',
         ],
         'methode' => [
-            'title' => 'Méthode & accompagnement — John Design',
-            'description' => 'Une méthode simple et claire pour avancer de l’idée au projet final : cadrage, création, ajustements, production et livraison.',
+            'focus' => 'méthode',
+            'title' => 'Méthode de création & accompagnement | John Design',
+            'description' => 'Découvrez la méthode John Design : échange, cadrage, création, ajustements, préparation des fichiers et accompagnement jusqu’au lancement de votre projet.',
         ],
         'contact' => [
-            'title' => 'Contact & devis — John Design',
-            'description' => 'Parlez de votre projet à John Design : site internet, identité visuelle, print, signalétique ou besoin global. Demande de contact et devis.',
+            'focus' => 'contact',
+            'title' => 'Contact & devis graphiste | John Design',
+            'description' => 'Contactez John Design pour parler de votre projet : site internet, identité, print, signalétique ou communication globale. Demande de devis et premier échange.',
         ],
         'mentions-legales' => [
             'title' => 'Mentions légales — John Design',
@@ -152,3 +160,70 @@ add_filter('wpseo_opengraph_title',function($value){return jd_core_yoast_value($
 add_filter('wpseo_opengraph_desc',function($value){return jd_core_yoast_value($value,'description');},20);
 add_filter('wpseo_twitter_title',function($value){return jd_core_yoast_value($value,'title');},20);
 add_filter('wpseo_twitter_description',function($value){return jd_core_yoast_value($value,'description');},20);
+
+
+/**
+ * Synchronise les champs éditables de Yoast avec la stratégie John Design.
+ * On ne fabrique pas les scores : Yoast garde son analyse réelle.
+ */
+function jd_core_seo_page_id($key){
+    if($key==='home') return (int)get_option('page_on_front');
+    $page=get_page_by_path($key);
+    return ($page instanceof WP_Post)?(int)$page->ID:0;
+}
+function jd_core_sync_yoast_meta($force=false){
+    if(!defined('WPSEO_VERSION')) return ['updated'=>0,'missing'=>[]];
+    $map=jd_core_seo_map();
+    $updated=0;$missing=[];
+    foreach($map as $key=>$data){
+        if(empty($data['focus'])) continue;
+        $id=jd_core_seo_page_id($key);
+        if(!$id){$missing[]=$key;continue;}
+        update_post_meta($id,'_yoast_wpseo_focuskw',sanitize_text_field($data['focus']));
+        update_post_meta($id,'_yoast_wpseo_title',sanitize_text_field($data['title']));
+        update_post_meta($id,'_yoast_wpseo_metadesc',sanitize_text_field($data['description']));
+        $updated++;
+    }
+    update_option('jd_core_yoast_sync_version',JD_CORE_VERSION,false);
+    update_option('jd_core_yoast_sync_diag',[
+        'updated'=>$updated,
+        'missing'=>$missing,
+        'checked_at'=>current_time('mysql'),
+    ],false);
+    return ['updated'=>$updated,'missing'=>$missing];
+}
+add_action('admin_init',function(){
+    if(!defined('WPSEO_VERSION')) return;
+    if(get_option('jd_core_yoast_sync_version')!==JD_CORE_VERSION) jd_core_sync_yoast_meta();
+},30);
+
+function jd_core_manual_yoast_sync(){
+    if(!current_user_can('manage_options')) wp_die('Accès refusé');
+    check_admin_referer('jd_sync_yoast');
+    $result=jd_core_sync_yoast_meta(true);
+    wp_safe_redirect(add_query_arg([
+        'page'=>'jd-core',
+        'yoast_synced'=>1,
+        'yoast_updated'=>(int)$result['updated'],
+    ],admin_url('admin.php')).'#jd-seo');
+    exit;
+}
+add_action('admin_post_jd_sync_yoast','jd_core_manual_yoast_sync');
+
+/**
+ * Les modules John Design sont des blocs dynamiques. Cette intégration officielle
+ * fournit leur contenu réel à l'analyse JavaScript de Yoast dans Gutenberg.
+ */
+function jd_core_enqueue_yoast_analysis_bridge(){
+    if(!defined('WPSEO_VERSION')) return;
+    $screen=function_exists('get_current_screen')?get_current_screen():null;
+    if(!$screen || $screen->base!=='post' || $screen->post_type!=='page') return;
+    wp_enqueue_script(
+        'jd-yoast-analysis',
+        JD_CORE_URL.'assets/yoast-analysis.js',
+        ['jquery','wp-data'],
+        JD_CORE_VERSION,
+        true
+    );
+}
+add_action('admin_enqueue_scripts','jd_core_enqueue_yoast_analysis_bridge',30);

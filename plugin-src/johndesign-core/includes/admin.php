@@ -37,6 +37,18 @@ function jd_core_admin_page(){ ?>
 <?php $seo_external=function_exists('jd_core_has_external_seo')&&jd_core_has_external_seo(); $yoast=defined('WPSEO_VERSION'); $public=(int)get_option('blog_public')===1; ?>
 <p><strong>Indexation WordPress :</strong> <?php echo $public?'<span style="color:#16803a;font-weight:700">autorisée</span>':'<span style="color:#b42318;font-weight:700">désactivée</span>'; ?> &nbsp;·&nbsp; <strong>SEO :</strong> <?php echo $yoast?'Yoast SEO actif — titres et descriptions John Design injectés dans Yoast':($seo_external?'plugin SEO externe actif':'métadonnées John Design actives'); ?></p>
 <p><strong>Sitemap WordPress :</strong> <code><?php echo esc_html(home_url('/wp-sitemap.xml')); ?></code></p>
+<div id="jd-seo"></div>
+<?php $yoastdiag=get_option('jd_core_yoast_sync_diag',[]); ?>
+<h3>Optimisation Yoast des pages</h3>
+<p>John Design renseigne automatiquement les requêtes cibles, titres SEO et méta-descriptions, puis transmet le contenu réel des modules dynamiques à l’analyse Yoast dans Gutenberg.</p>
+<?php if(isset($_GET['yoast_synced'])): ?><div class="notice notice-success inline"><p>Yoast synchronisé sur <?php echo absint($_GET['yoast_updated']??0); ?> pages.</p></div><?php endif; ?>
+<?php if(!empty($yoastdiag)): ?><p><small>Dernière synchronisation : <?php echo esc_html($yoastdiag['checked_at']??''); ?> · <?php echo absint($yoastdiag['updated']??0); ?> pages mises à jour<?php if(!empty($yoastdiag['missing'])) echo ' · pages manquantes : '.esc_html(implode(', ',$yoastdiag['missing'])); ?>.</small></p><?php endif; ?>
+<table class="widefat striped" style="max-width:900px;margin:12px 0 14px"><thead><tr><th>Page</th><th>Requête cible Yoast</th></tr></thead><tbody>
+<?php foreach(jd_core_seo_map() as $slug=>$seo_row): if(empty($seo_row['focus'])) continue; ?>
+<tr><td><strong><?php echo esc_html($slug==='home'?'Accueil':$slug); ?></strong></td><td><?php echo esc_html($seo_row['focus']); ?></td></tr>
+<?php endforeach; ?>
+</tbody></table>
+<form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>"><input type="hidden" name="action" value="jd_sync_yoast"><?php wp_nonce_field('jd_sync_yoast'); ?><button class="button button-secondary">Resynchroniser Yoast maintenant</button></form>
 <p><small>Sur la préproduction, garder l’indexation désactivée. Elle ne devra être activée qu’au moment de la mise en ligne définitive.</small></p>
 
 <h2>7. Préparation à la mise en ligne</h2>
