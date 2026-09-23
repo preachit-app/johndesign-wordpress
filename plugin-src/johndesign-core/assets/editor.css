@@ -1,0 +1,55 @@
+/* John Design — editor experience (V2.12.3) */
+body.jd-managed-page-editor .editor-post-title,
+body.jd-managed-page-editor .edit-post-visual-editor__post-title-wrapper,
+body.jd-managed-page-editor .wp-block-post-title.editor-post-title,
+body.jd-managed-page-editor .wp-block-post-title{
+  display:none!important;
+}
+body.jd-managed-page-editor .editor-styles-wrapper{
+  padding-top:26px!important;
+}
+body.jd-managed-page-editor .is-root-container,
+body.jd-managed-page-editor .editor-styles-wrapper .is-root-container{
+  max-width:none!important;
+  padding-left:22px!important;
+  padding-right:22px!important;
+}
+.jd-module-editor-shell{
+  position:relative;
+  margin:0 0 28px!important;
+  border:1px solid #dedbe5;
+  border-radius:18px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 3px 16px rgba(29,29,27,.04);
+}
+.jd-module-editor-shell.is-selected{
+  border-color:#7656aa;
+  box-shadow:0 0 0 2px rgba(118,86,170,.13);
+}
+.jd-module-editor-bar{
+  min-height:50px;
+  padding:9px 12px 9px 15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  background:#f5f2fa;
+  border-bottom:1px solid #e6e1ec;
+}
+.jd-module-editor-id{display:flex;align-items:center;gap:9px;min-width:0;color:#1d1d1b}
+.jd-module-editor-id strong{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jd-module-editor-id small{font-size:10px;color:#77716f;background:#fff;border-radius:999px;padding:3px 8px;white-space:nowrap}
+.jd-module-dot{width:10px;height:10px;flex:0 0 10px;border-radius:50%;background:#cbb7ee;box-shadow:0 0 0 4px rgba(203,183,238,.28)}
+.jd-module-editor-preview{background:#fff;overflow:hidden}
+.jd-module-editor-preview .wp-block-group:first-child{margin-top:0!important}
+.jd-inspector-image{margin-bottom:20px}
+.jd-inspector-image-preview{display:block;width:100%;max-height:150px;object-fit:cover;border-radius:10px;margin:6px 0 9px;background:#f2f2f2}
+.jd-inspector-image-empty{display:grid;place-items:center;min-height:80px;border:1px dashed #aaa;border-radius:10px;color:#777;margin:6px 0 9px;font-size:12px}
+.jd-inspector-image .components-button+ .components-button{margin-left:6px}
+.jd-inspector-help{font-size:12px;color:#666;line-height:1.55}
+.jd-inspector-help code{font-size:11px}
+@media(max-width:782px){
+  .jd-module-editor-bar{align-items:flex-start;flex-direction:column}
+  .jd-module-editor-id{flex-wrap:wrap}
+}
