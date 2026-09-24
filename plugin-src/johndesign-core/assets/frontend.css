@@ -725,3 +725,64 @@ figure>figcaption{
   .jd-site-info{padding:13px!important}
   .jd-site-info h3{font-size:16px!important}
 }
+
+
+/* John Design Core 2.16.1 — parcours visuel page Site internet */
+.jd-web-flow-section{
+  box-sizing:border-box!important;
+}
+
+.jd-web-flow-soft{
+  background:#f1ecfb!important;
+}
+
+.jd-web-flow-pink{
+  background:#f8e7ee!important;
+}
+
+.jd-web-flow-card{
+  width:calc(100% - 48px)!important;
+  max-width:1440px!important;
+  margin:34px auto 58px!important;
+  border-radius:38px!important;
+  background:#fff!important;
+  box-shadow:0 12px 36px rgba(25,25,25,.055)!important;
+  overflow:hidden!important;
+}
+
+/* Le titre de la section "Tout ce qu'il faut..." doit avoir le même poids
+   visuel que les autres grands titres de la page. */
+.jd-web-flow-scope h2{
+  font-size:clamp(48px,5.2vw,74px)!important;
+  line-height:.98!important;
+  letter-spacing:-.05em!important;
+  max-width:760px!important;
+}
+
+.jd-web-flow-faq{
+  margin-top:0!important;
+}
+
+.jd-web-maintenance-in-flow{
+  margin-top:34px!important;
+  margin-bottom:34px!important;
+}
+
+.jd-web-flow-cta{
+  margin-top:0!important;
+}
+
+@media(max-width:760px){
+  .jd-web-flow-card{
+    width:calc(100% - 24px)!important;
+    margin:22px auto 38px!important;
+    border-radius:28px!important;
+  }
+  .jd-web-flow-scope h2{
+    font-size:clamp(38px,11vw,52px)!important;
+  }
+  .jd-web-maintenance-in-flow{
+    margin-top:22px!important;
+    margin-bottom:22px!important;
+  }
+}
