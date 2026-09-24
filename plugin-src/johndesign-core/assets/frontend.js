@@ -61,57 +61,29 @@ if(menu){
  */
 const cleanPath=window.location.pathname.replace(/\/+$/,'')||'/';
 
-/* Print & signalétique : remplace explicitement le visuel IA par la vraie photo Eco Clim. */
+/* Print & signalétique : reconstruit la section IA sur le modèle exact de l'accueil. */
 if(cleanPath==='/print-signaletique'){
   const truck=window.JD_CORE_ASSETS&&window.JD_CORE_ASSETS.truck;
-  if(truck){
-    const sections=[...document.querySelectorAll('.jd-section, section')];
-    const target=sections.find(section=>{
-      const text=(section.textContent||'').toLowerCase();
-      return text.includes('ia fait des merveilles') && text.includes('stickers');
-    });
+  const sections=[...document.querySelectorAll('.jd-section, section')];
+  const target=sections.find(section=>{
+    const text=(section.textContent||'').toLowerCase();
+    return text.includes('ia fait des merveilles') && text.includes('stickers');
+  });
 
-    if(target){
-      const applyTruck=(img)=>{
-        img.src=truck;
-        img.removeAttribute('srcset');
-        img.removeAttribute('sizes');
-        img.removeAttribute('width');
-        img.removeAttribute('height');
-        img.alt='Habillage adhésif Eco Clim System sur véhicule utilitaire';
-        img.classList.add('jd-print-real-truck');
-      };
-
-      const existing=target.querySelector('img');
-      if(existing){
-        applyTruck(existing);
-      }else{
-        const selectors=[
-          'figure','picture','.jd-visual','.jd-section-visual',
-          '.jd-split-visual','.jd-media','.jd-image','.jd-card-visual'
-        ];
-        let visual=null;
-        for(const selector of selectors){
-          visual=target.querySelector(selector);
-          if(visual) break;
-        }
-
-        if(!visual){
-          const wrappers=[...target.querySelectorAll(':scope > div, :scope > .jd-inner, :scope > .jd-wrap')];
-          const row=wrappers.find(el=>el.children&&el.children.length>=2);
-          if(row) visual=row.children[row.children.length-1];
-        }
-
-        if(visual){
-          const replacement=document.createElement('div');
-          replacement.className='jd-print-real-truck-wrap';
-          const img=document.createElement('img');
-          applyTruck(img);
-          replacement.appendChild(img);
-          visual.replaceWith(replacement);
-        }
-      }
-    }
+  if(target && truck){
+    target.classList.add('jd-print-home-proof');
+    target.innerHTML=
+      '<div class="jd-print-home-proof__inner">'+
+        '<div class="jd-print-home-proof__copy">'+
+          '<p class="jd-print-home-proof__eyebrow">DU DESIGN, ET QUELQU’UN AVEC VOUS</p>'+
+          '<h2>L’IA fait des merveilles.<br>Mais elle ne pose pas<br>vos stickers.</h2>'+
+          '<p class="jd-print-home-proof__text">Les idées prennent vie sur un écran, mais aussi sur votre vitrine, vos panneaux et les murs de votre commerce. Et là, vous pouvez compter sur moi : on en discute, on regarde ensemble, et je vous accompagne jusqu’à la pose.</p>'+
+          '<a class="jd-print-home-proof__cta" href="/contact/">Parlons de votre projet <span aria-hidden="true">↗</span></a>'+
+        '</div>'+
+        '<figure class="jd-print-home-proof__visual">'+
+          '<img src="'+truck+'" alt="Habillage adhésif Eco Clim System sur véhicule utilitaire">'+
+        '</figure>'+
+      '</div>';
   }
 }
 
