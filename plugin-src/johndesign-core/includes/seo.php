@@ -19,7 +19,7 @@ function jd_core_seo_map(){
             'secondary' => 'graphiste Pertuis, graphiste indépendant, communication visuelle',
             'intent' => 'Trouver un graphiste local capable de gérer web, identité, print et signalétique.',
             'title' => 'Graphiste à Aix-en-Provence & Pertuis | John Design',
-            'description' => 'Graphiste à Aix-en-Provence et Pertuis : sites internet, logos, print et signalétique. John Design accompagne aussi vos projets partout en France.',
+            'description' => 'Graphiste à Aix-en-Provence et Pertuis : sites internet, logos, impression et signalétique. John Design accompagne aussi vos projets partout en France.',
         ],
         'creation-site-internet' => [
             'focus' => 'création de site internet',
@@ -39,8 +39,8 @@ function jd_core_seo_map(){
             'focus' => 'signalétique entreprise',
             'secondary' => 'marquage véhicule Pertuis, panneau publicitaire, adhésifs, enseigne, impression',
             'intent' => 'Trouver un prestataire local pour concevoir et produire des supports visibles sur le terrain.',
-            'title' => 'Signalétique, print & marquage | John Design',
-            'description' => 'Signalétique, panneaux, adhésifs, marquage véhicule et supports imprimés : John Design vous accompagne de la création à la fabrication et à la pose.',
+            'title' => 'Impression, signalétique & marquage | John Design',
+            'description' => 'Cartes de visite, affiches, panneaux, adhésifs, marquage véhicule et autres supports : de la création à la fabrication et à la pose selon le projet.',
         ],
         'realisations' => [
             'secondary' => 'portfolio graphiste, réalisations site internet, logo, signalétique',
@@ -141,7 +141,7 @@ add_action('wp_head',function(){
                 'Création de site internet',
                 'Identité visuelle',
                 'Logo',
-                'Print',
+                'Impression',
                 'Signalétique',
                 'Marquage',
             ],
@@ -180,20 +180,20 @@ add_filter('wpseo_twitter_description',function($value){return jd_core_yoast_val
 function jd_core_seo_content_tuning_map(){
     return [
         'home'=>[
-            'intro'=>'Graphiste à Aix-en-Provence et autour de Pertuis, John Design vous accompagne avec un seul interlocuteur pour construire une communication cohérente.',
-            'later'=>'Ainsi, votre identité, votre site et vos supports avancent dans la même direction, avec une approche simple et concrète.',
+            'intro'=>'John Design réunit création de site internet, logo, impression et signalétique avec un seul interlocuteur.',
+            'later'=>'De l’idée à la livraison, votre site, votre identité et vos supports restent cohérents.',
         ],
         'creation-site-internet'=>[
-            'intro'=>'Pour votre création de site internet, John Design conçoit un site clair, responsive et cohérent avec votre activité.',
-            'later'=>'De plus, chaque création de site internet est pensée pour guider vos visiteurs vers l’essentiel et faciliter la prise de contact.',
+            'intro'=>'Je crée ou refonds votre site internet pour qu’il soit professionnel, rapide, responsive et simple à faire évoluer.',
+            'later'=>'Le site présente clairement votre activité et facilite les demandes de contact. Une IA ou un constructeur peut mettre une page en ligne rapidement ; quand il faut corriger un problème, optimiser le mobile ou faire évoluer le site, vous gardez ici un interlocuteur qui connaît le projet.',
         ],
         'identite-visuelle'=>[
-            'intro'=>'John Design construit une identité visuelle reconnaissable, cohérente et facile à décliner sur tous vos supports.',
-            'later'=>'Ensuite, votre identité visuelle peut se prolonger naturellement sur vos supports web, print et signalétique.',
+            'intro'=>'Je crée votre logo et votre identité visuelle : couleurs, typographies et règles simples pour garder une image cohérente sur tous vos supports.',
+            'later'=>'Votre identité est pensée pour fonctionner aussi bien sur votre site que sur vos cartes, affiches, panneaux ou véhicules.',
         ],
         'print-signaletique'=>[
-            'intro'=>'John Design conçoit des supports visibles et cohérents avec votre identité, du fichier jusqu’à la fabrication.',
-            'later'=>'Enfin, vos supports peuvent être déclinés sur panneaux, adhésifs, marquage véhicule et autres formats selon le projet.',
+            'intro'=>'Je conçois vos cartes de visite, flyers, affiches, panneaux, adhésifs et marquages, puis je peux vous accompagner jusqu’à la fabrication.',
+            'later'=>'Vous gardez un seul interlocuteur pour la création, la fabrication et, selon le projet, la pose.',
         ],
     ];
 }

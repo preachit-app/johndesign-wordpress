@@ -73,11 +73,11 @@ function jd_core_home_services_snapshot_2151(){
      </a>
      <a class="jd-home-service-mini is-id" href="'.esc_url(home_url('/identite-visuelle/')).'">
        <span class="jd-home-service-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10"></circle><path d="M16 6v20M6 16h20M9 9l14 14M23 9L9 23"></path></svg></span>
-       <span class="jd-home-service-label">Identité visuelle</span>
+       <span class="jd-home-service-label">Logo &amp; identité</span>
      </a>
      <a class="jd-home-service-mini is-print" href="'.esc_url(home_url('/print-signaletique/')).'">
        <span class="jd-home-service-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 12V5h16v7M8 23H5V12h22v11h-3"></path><rect x="8" y="19" width="16" height="8" rx="1"></rect></svg></span>
-       <span class="jd-home-service-label">Print</span>
+       <span class="jd-home-service-label">Supports imprimés</span>
      </a>
      <a class="jd-home-service-mini is-sign" href="'.esc_url(home_url('/print-signaletique/')).'">
        <span class="jd-home-service-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 7h18v12H7zM16 19v8M11 27h10"></path><path d="M10 11h12M10 15h8"></path></svg></span>
@@ -91,8 +91,8 @@ function jd_core_web_maintenance_2151(){
  return '<section class="jd-web-maintenance">
    <div class="jd-web-maintenance-copy">
      <p class="jd-eyebrow">APRÈS LA MISE EN LIGNE</p>
-     <h2>Votre site peut continuer<br>à être suivi.</h2>
-     <p>Si vous le souhaitez, je peux aussi rester à vos côtés pour garder le site propre, à jour et facile à faire évoluer.</p>
+     <h2>Maintenance &amp; suivi<br>de votre site internet.</h2>
+     <p>Mises à jour, sauvegardes, surveillance et petites évolutions : je peux continuer à m’occuper du site après sa mise en ligne.</p>
    </div>
    <div class="jd-web-maintenance-items">
      <div><strong>Mises à jour &amp; sauvegardes</strong><span>WordPress, extensions et sauvegardes régulières.</span></div>

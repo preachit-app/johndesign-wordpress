@@ -2,9 +2,9 @@
 'use strict';
 
 const links=[
-  ['Site internet','/creation-site-internet/'],
-  ['Identité visuelle','/identite-visuelle/'],
-  ['Print & signalétique','/print-signaletique/'],
+  ['Sites internet','/creation-site-internet/'],
+  ['Logo & identité','/identite-visuelle/'],
+  ['Impression & signalétique','/print-signaletique/'],
   ['Réalisations','/realisations/'],
   ['À propos','/a-propos/']
 ];
