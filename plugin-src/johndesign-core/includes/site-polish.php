@@ -121,11 +121,71 @@ function jd_core_refresh_unmaxdevie_2139(){
     wp_remote_get($shot,['timeout'=>0.01,'blocking'=>false,'redirection'=>2]);
     return $changed;
 }
+function jd_core_realisations_cleanup_2154(){
+    $page=get_page_by_path('realisations');
+    if(!($page instanceof WP_Post)) return false;
+
+    $raw=(string)$page->post_content;
+    if(!$raw || strpos($raw,'wp:johndesign/section')===false) return false;
+
+    $blocks=parse_blocks($raw);
+    $changed=false;
+    $next=[];
+
+    foreach($blocks as $block){
+        if(($block['blockName']??'')!=='johndesign/section'){
+            $next[]=$block;
+            continue;
+        }
+
+        $fields=$block['attrs']['fields']??[];
+        $joined='';
+        if(is_array($fields)){
+            foreach($fields as $value){
+                if(is_string($value)) $joined.=' '.wp_strip_all_tags($value);
+            }
+        }
+        $plain=mb_strtolower($joined);
+
+        // Remove the old introductory hero completely.
+        if(strpos($plain,'quelques projets')!==false || strpos($plain,'du vrai, pas du remplissage')!==false){
+            $changed=true;
+            continue;
+        }
+
+        if(is_array($fields)){
+            foreach($fields as $key=>$value){
+                if(!is_string($value)) continue;
+                $new=str_ireplace(
+                    ['Le travail en images.','Le travail en images'],
+                    ['Découvrez mes réalisations.','Découvrez mes réalisations.'],
+                    $value
+                );
+                if($new!==$value){
+                    $block['attrs']['fields'][$key]=$new;
+                    $changed=true;
+                }
+            }
+        }
+
+        $next[]=$block;
+    }
+
+    if($changed){
+        wp_update_post([
+            'ID'=>$page->ID,
+            'post_content'=>wp_slash(serialize_blocks($next))
+        ]);
+    }
+    return $changed;
+}
+
 function jd_core_site_polish_2139(){
     if(get_option('jd_core_site_polish_version')===JD_CORE_VERSION) return;
 
     jd_core_home_merchandising_2139();
     jd_core_refresh_unmaxdevie_2139();
+    jd_core_realisations_cleanup_2154();
 
     update_option('jd_core_site_polish_version',JD_CORE_VERSION,false);
 

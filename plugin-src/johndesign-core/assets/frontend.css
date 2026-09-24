@@ -604,3 +604,20 @@ figure>figcaption{
   width:auto!important;
   max-width:none!important;
 }
+
+
+/* John Design Core 2.15.4 — maintenance encadrée + respiration */
+.jd-web-maintenance-injected{
+  width:100%;
+}
+.jd-web-maintenance{
+  width:calc(100% - 48px)!important;
+  max-width:1440px!important;
+  margin:34px auto 72px!important;
+}
+@media(max-width:767px){
+  .jd-web-maintenance{
+    width:calc(100% - 24px)!important;
+    margin:22px auto 48px!important;
+  }
+}

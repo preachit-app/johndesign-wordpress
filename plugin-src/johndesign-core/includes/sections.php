@@ -118,3 +118,24 @@ add_filter('render_block',function($block_content,$block){
  if(stripos($plain,'ET POUR LA SUITE')===false) return $block_content;
  return '<div class="jd-web-maintenance-injected">'.jd_core_web_maintenance_2151().'</div>'.$block_content;
 },25,2);
+
+
+function jd_core_realisations_render_cleanup_2154($block_content,$block){
+ if(!is_page('realisations')) return $block_content;
+ if(($block['blockName']??'')!=='johndesign/section') return $block_content;
+
+ $plain=mb_strtolower(wp_strip_all_tags($block_content));
+ if(strpos($plain,'quelques projets')!==false || strpos($plain,'du vrai, pas du remplissage')!==false){
+   return '';
+ }
+
+ if(strpos($plain,'le travail en images')!==false){
+   $block_content=str_ireplace(
+     ['Le travail en images.','Le travail en images'],
+     ['Découvrez mes réalisations.','Découvrez mes réalisations.'],
+     $block_content
+   );
+ }
+ return $block_content;
+}
+add_filter('render_block','jd_core_realisations_render_cleanup_2154',40,2);
