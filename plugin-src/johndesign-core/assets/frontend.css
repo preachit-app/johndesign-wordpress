@@ -73,16 +73,16 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 .jd-header.is-fixed{
   position:fixed!important;
-  top:0!important;
+  top:10px!important;
   left:50%!important;
   transform:translateX(-50%)!important;
   z-index:10000!important;
   margin:0 auto!important;
-  width:calc(100% - 48px)!important;
+  width:calc(100% - 68px)!important;
   max-width:1208px!important;
-  border-radius:0 0 28px 28px!important;
+  border-radius:28px!important;
   box-shadow:
-    0 -12px 0 18px #fff,
+    0 0 0 10px #fff,
     0 14px 30px rgba(20,20,20,.12)!important
 }
 .jd-preview-nav nav.jd-desktop-nav{align-items:center;gap:18px}
@@ -129,9 +129,13 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 @media(max-width:767px){
   .jd-header.is-fixed{
-    width:100%!important;
+    top:8px!important;
+    width:calc(100% - 32px)!important;
     max-width:none!important;
-    border-radius:0 0 22px 22px!important;
+    border-radius:22px!important;
+    box-shadow:
+      0 0 0 8px #fff,
+      0 12px 26px rgba(20,20,20,.12)!important;
     padding-left:22px!important;
     padding-right:22px!important
   }
