@@ -2,14 +2,14 @@
 /**
  * Plugin Name: John Design Core
  * Description: Modules Gutenberg John Design, import V2.12, portfolio, formulaire sécurisé et mises à jour GitHub.
- * Version: 2.15.1
+ * Version: 2.15.2
  * Update URI: https://github.com/preachit-app/johndesign-wordpress
  * Requires at least: 6.6
  * Requires PHP: 8.0
  * Author: John Design
  */
 if (!defined('ABSPATH')) exit;
-define('JD_CORE_VERSION', '2.15.1');
+define('JD_CORE_VERSION', '2.15.2');
 define('JD_CORE_DIR', plugin_dir_path(__FILE__));
 define('JD_CORE_URL', plugin_dir_url(__FILE__));
 require_once JD_CORE_DIR.'includes/sections.php';
@@ -62,7 +62,7 @@ function jd_core_whatsapp_button_2151(){
     $message=rawurlencode('Bonjour John Design, je vous contacte depuis le site au sujet de mon projet.');
     $url='https://wa.me/'.$number.'?text='.$message;
     echo '<a class="jd-whatsapp-float" href="'.esc_url($url).'" target="_blank" rel="noopener noreferrer" aria-label="Contacter John Design sur WhatsApp" title="WhatsApp">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4.5c-6.3 0-11.4 4.9-11.4 11 0 2.1.6 4.1 1.7 5.8L4.5 27.5l6.4-1.7c1.6.9 3.3 1.3 5.1 1.3 6.3 0 11.4-4.9 11.4-11S22.3 4.5 16 4.5zm0 20.6c-1.6 0-3.2-.4-4.6-1.2l-.7-.4-3.8 1 1-3.7-.4-.7a9.1 9.1 0 0 1-1.4-4.8c0-5 4.3-9.1 9.7-9.1 5.3 0 9.7 4.1 9.7 9.1S21.3 25.1 16 25.1zm5.5-6.8c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.7.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.2.9 3.1 1 4.2.9.7-.1 1.8-.7 2.1-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4.5c-6.3 0-11.4 4.9-11.4 11 0 2.1.6 4.1 1.7 5.8L4.5 27.5l6.4-1.7c1.6.9 3.3 1.3 5.1 1.3 6.3 0 11.4-4.9 11.4-11S22.3 4.5 16 4.5zm0 20.6c-1.6 0-3.2-.4-4.6-1.2l-.7-.4-3.8 1 1-3.7-.4-.7a9.1 9.1 0 0 1-1.4-4.8c0-5 4.3-9.1 9.7-9.1 5.3 0 9.7 4.1 9.7 9.1S21.3 25.1 16 25.1zm5.5-6.8c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.7.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.2.9 3.1 1 4.2.9.7-.1 1.8-.7 2.1-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg><span>WhatsApp</span>
     </a>';
 }
 add_action('wp_footer','jd_core_whatsapp_button_2151',30);

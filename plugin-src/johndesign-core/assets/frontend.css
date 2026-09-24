@@ -421,3 +421,87 @@ figure>figcaption{
     height:50px;
   }
 }
+
+
+/* John Design Core 2.15.2 — stabilité de la section Réalisations */
+.jd-home-work-feature .jd-home-work-head,
+.jd-home-work-feature .jd-home-work-grid,
+.jd-home-work-feature .jd-work-controls,
+.jd-home-work-feature .jd-home-work-actions{
+  width:100%!important;
+  max-width:1208px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+.jd-home-work-feature .jd-home-work-head{
+  display:grid!important;
+  grid-template-columns:minmax(520px,1fr) minmax(320px,430px)!important;
+  gap:52px!important;
+  align-items:end!important;
+}
+.jd-home-work-feature .jd-home-work-head>div{
+  min-width:0!important;
+}
+.jd-home-work-feature .jd-home-work-head h2{
+  max-width:720px!important;
+  min-width:0!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  text-wrap:initial!important;
+  white-space:normal!important;
+  font-size:clamp(46px,4vw,68px)!important;
+  line-height:.98!important;
+}
+.jd-home-work-feature .jd-home-work-head .jd-lead{
+  width:100%!important;
+  max-width:430px!important;
+  min-width:300px!important;
+  justify-self:end!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+@media(max-width:980px){
+  .jd-home-work-feature .jd-home-work-head{
+    grid-template-columns:1fr!important;
+    gap:18px!important;
+  }
+  .jd-home-work-feature .jd-home-work-head h2{
+    max-width:760px!important;
+  }
+  .jd-home-work-feature .jd-home-work-head .jd-lead{
+    min-width:0!important;
+    max-width:650px!important;
+    justify-self:start!important;
+  }
+}
+
+/* WhatsApp — bouton compact type capsule, plus explicite qu'une bulle seule. */
+.jd-whatsapp-float{
+  width:auto!important;
+  min-width:126px!important;
+  height:48px!important;
+  padding:0 18px 0 15px!important;
+  gap:9px!important;
+  border-radius:999px!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  line-height:1!important;
+}
+.jd-whatsapp-float svg{
+  width:21px!important;
+  height:21px!important;
+  flex:0 0 21px!important;
+}
+.jd-whatsapp-float span{
+  display:inline-block!important;
+}
+@media(max-width:600px){
+  .jd-whatsapp-float{
+    right:14px!important;
+    bottom:14px!important;
+    min-width:118px!important;
+    height:46px!important;
+    padding:0 16px 0 14px!important;
+    font-size:13px!important;
+  }
+}
