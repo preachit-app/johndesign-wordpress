@@ -29,18 +29,18 @@ function jd_core_seo_map(){
             'description' => 'Création de site internet : un site vitrine clair, responsive et pensé pour votre activité. John Design vous accompagne de la conception à la mise en ligne.',
         ],
         'identite-visuelle' => [
-            'focus' => 'création de logo à Aix-en-Provence',
+            'focus' => 'création de logo',
             'secondary' => 'identité visuelle Aix-en-Provence, création logo Pertuis, charte graphique',
             'intent' => 'Trouver un graphiste pour créer un logo et une identité visuelle professionnelle.',
-            'title' => 'Création logo Aix-en-Provence | John Design',
-            'description' => 'Création de logo à Aix-en-Provence et Pertuis : identité visuelle, couleurs, typographies, charte graphique et déclinaisons pour votre activité.',
+            'title' => 'Création de logo & identité visuelle | John Design',
+            'description' => 'Création de logo et d’identité visuelle : couleurs, typographies, charte graphique et déclinaisons pensées pour votre activité et vos supports.',
         ],
         'print-signaletique' => [
-            'focus' => 'signalétique à Pertuis',
+            'focus' => 'signalétique entreprise',
             'secondary' => 'marquage véhicule Pertuis, panneau publicitaire, adhésifs, enseigne, impression',
             'intent' => 'Trouver un prestataire local pour concevoir et produire des supports visibles sur le terrain.',
-            'title' => 'Signalétique Pertuis & Aix-en-Provence | John Design',
-            'description' => 'Signalétique à Pertuis et Aix-en-Provence : panneaux, adhésifs, marquage véhicule et supports imprimés, de la création à la fabrication et la pose.',
+            'title' => 'Signalétique, print & marquage | John Design',
+            'description' => 'Signalétique, panneaux, adhésifs, marquage véhicule et supports imprimés : John Design vous accompagne de la création à la fabrication et à la pose.',
         ],
         'realisations' => [
             'secondary' => 'portfolio graphiste, réalisations site internet, logo, signalétique',
@@ -188,12 +188,12 @@ function jd_core_seo_content_tuning_map(){
             'later'=>'De plus, chaque création de site internet est pensée pour guider vos visiteurs vers l’essentiel et faciliter la prise de contact.',
         ],
         'identite-visuelle'=>[
-            'intro'=>'Pour votre création de logo à Aix-en-Provence, John Design construit une identité visuelle reconnaissable, cohérente et facile à décliner.',
-            'later'=>'Ensuite, chaque création de logo à Aix-en-Provence peut se prolonger naturellement sur vos supports web, print et signalétique.',
+            'intro'=>'John Design construit une identité visuelle reconnaissable, cohérente et facile à décliner sur tous vos supports.',
+            'later'=>'Ensuite, votre identité visuelle peut se prolonger naturellement sur vos supports web, print et signalétique.',
         ],
         'print-signaletique'=>[
-            'intro'=>'Pour votre signalétique à Pertuis, John Design conçoit des supports visibles et cohérents avec votre identité, du fichier jusqu’à la fabrication.',
-            'later'=>'Enfin, votre signalétique à Pertuis peut être déclinée sur panneaux, adhésifs, marquage véhicule et autres supports selon le projet.',
+            'intro'=>'John Design conçoit des supports visibles et cohérents avec votre identité, du fichier jusqu’à la fabrication.',
+            'later'=>'Enfin, vos supports peuvent être déclinés sur panneaux, adhésifs, marquage véhicule et autres formats selon le projet.',
         ],
     ];
 }
@@ -275,9 +275,8 @@ function jd_core_apply_seo_content_tuning(){
     ],false);
 }
 add_action('admin_init',function(){
-    $schema='2141';
+    $schema='2146';
     if(get_option('jd_core_seo_content_tuning_schema')!==$schema){
-        jd_core_apply_seo_content_tuning();
         update_option('jd_core_seo_content_tuning_schema',$schema,false);
     }
 },25);

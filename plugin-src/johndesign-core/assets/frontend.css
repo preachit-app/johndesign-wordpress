@@ -82,8 +82,8 @@ html,body{max-width:100%;overflow-x:hidden}
   max-width:none!important;
   border-radius:var(--jd-header-radius,32px)!important;
   box-shadow:
-    0 0 0 10px #fff,
-    0 14px 30px rgba(20,20,20,.12)!important;
+    0 0 0 4px #fff,
+    0 12px 26px rgba(20,20,20,.10)!important;
 }
 .jd-preview-nav nav.jd-desktop-nav{align-items:center;gap:18px}
 .jd-preview-nav nav.jd-desktop-nav .jd-nav-link{
@@ -134,8 +134,8 @@ html,body{max-width:100%;overflow-x:hidden}
     max-width:none!important;
     border-radius:22px!important;
     box-shadow:
-      0 0 0 7px #fff,
-      0 12px 26px rgba(20,20,20,.12)!important;
+      0 0 0 4px #fff,
+      0 10px 22px rgba(20,20,20,.10)!important;
     padding-left:22px!important;
     padding-right:22px!important
   }
