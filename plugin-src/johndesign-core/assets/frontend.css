@@ -1731,8 +1731,7 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   }
 }
 
-
-/* John Design Core 2.16.11 — galerie signalétique intégrée au bloc Print */
+/* John Design Core 2.16.12 — galerie signalétique avec vraies images séparées */
 .jd-print-proof-v2__visual{display:none!important}
 
 .jd-print-proof-slider{
@@ -1743,26 +1742,46 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   min-width:0!important;
   overflow:hidden!important;
   border-radius:32px!important;
-  background:#fff!important;
+  background:#f1efed!important;
   box-shadow:0 10px 32px rgba(25,25,25,.06)!important;
   touch-action:pan-y!important;
 }
-.jd-print-proof-slider__frame{
+.jd-print-proof-slider__slides{
   position:absolute!important;
   inset:0!important;
-  background-repeat:no-repeat!important;
-  background-size:100% 500%!important;
-  transition:background-position .48s cubic-bezier(.2,.7,.2,1)!important;
+}
+.jd-print-proof-slider__slide{
+  position:absolute!important;
+  inset:0!important;
+  margin:0!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transition:opacity .48s cubic-bezier(.2,.7,.2,1),visibility .48s!important;
+}
+.jd-print-proof-slider__slide.is-active{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+.jd-print-proof-slider__slide img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  object-fit:cover!important;
+  object-position:center!important;
 }
 .jd-print-proof-slider::after{
   content:''!important;
   position:absolute!important;
+  z-index:1!important;
   left:0!important;
   right:0!important;
   bottom:0!important;
   height:96px!important;
   pointer-events:none!important;
-  background:linear-gradient(to top,rgba(0,0,0,.22),rgba(0,0,0,0))!important;
+  background:linear-gradient(to top,rgba(0,0,0,.20),rgba(0,0,0,0))!important;
 }
 .jd-print-proof-slider__ui{
   position:absolute!important;
@@ -1786,7 +1805,7 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   padding:0!important;
   border:0!important;
   border-radius:999px!important;
-  background:rgba(255,255,255,.58)!important;
+  background:rgba(255,255,255,.62)!important;
   cursor:pointer!important;
   transition:width .18s ease,background .18s ease!important;
 }
@@ -1807,7 +1826,7 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   justify-content:center!important;
   border:0!important;
   border-radius:50%!important;
-  background:rgba(255,255,255,.94)!important;
+  background:rgba(255,255,255,.95)!important;
   color:#191919!important;
   font-size:18px!important;
   line-height:1!important;
@@ -1842,7 +1861,7 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
 }
 
 @media(prefers-reduced-motion:reduce){
-  .jd-print-proof-slider__frame,
+  .jd-print-proof-slider__slide,
   .jd-print-proof-slider__arrow,
   .jd-print-proof-slider__dot{
     transition:none!important;

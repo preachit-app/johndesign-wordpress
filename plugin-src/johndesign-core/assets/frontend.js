@@ -184,24 +184,27 @@ document.querySelectorAll('.jd-site-card').forEach(card=>{
 
 /* Galerie signalétique dans la section "L’IA fait des merveilles". */
 document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
-  const frame=slider.querySelector('.jd-print-proof-slider__frame');
+  const slides=[...slider.querySelectorAll('[data-jd-print-slide]')];
+  const dots=[...slider.querySelectorAll('[data-jd-print-dot]')];
   const prev=slider.querySelector('[data-jd-print-prev]');
   const next=slider.querySelector('[data-jd-print-next]');
-  const dots=[...slider.querySelectorAll('[data-jd-print-dot]')];
-  const count=parseInt(slider.dataset.count||String(dots.length||1),10);
-  let labels=[];
-  try{ labels=JSON.parse(slider.dataset.labels||'[]'); }catch(e){}
+  const count=slides.length;
+  if(!count) return;
+
   let index=0;
   let timer=null;
   let startX=null;
 
   const render=()=>{
-    const pct=count<=1?0:(index/(count-1))*100;
-    frame.style.backgroundPosition='center '+pct+'%';
-    if(labels[index]) frame.setAttribute('aria-label',labels[index]);
+    slides.forEach((slide,i)=>{
+      const active=i===index;
+      slide.classList.toggle('is-active',active);
+      slide.setAttribute('aria-hidden',active?'false':'true');
+    });
     dots.forEach((dot,i)=>{
-      dot.classList.toggle('is-active',i===index);
-      if(i===index) dot.setAttribute('aria-current','true');
+      const active=i===index;
+      dot.classList.toggle('is-active',active);
+      if(active) dot.setAttribute('aria-current','true');
       else dot.removeAttribute('aria-current');
     });
   };
@@ -211,7 +214,13 @@ document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
     render();
   };
 
-  const stop=()=>{ if(timer){ clearInterval(timer); timer=null; } };
+  const stop=()=>{
+    if(timer){
+      clearInterval(timer);
+      timer=null;
+    }
+  };
+
   const start=()=>{
     stop();
     if(count>1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
@@ -223,12 +232,21 @@ document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
   next?.addEventListener('click',()=>{go(index+1);start();});
   dots.forEach((dot,i)=>dot.addEventListener('click',()=>{go(i);start();}));
 
-  slider.addEventListener('pointerdown',e=>{startX=e.clientX;stop();},{passive:true});
+  slider.addEventListener('pointerdown',e=>{
+    startX=e.clientX;
+    stop();
+  },{passive:true});
+
   slider.addEventListener('pointerup',e=>{
     if(startX!==null){
       const dx=e.clientX-startX;
       if(Math.abs(dx)>45) go(index+(dx<0?1:-1));
     }
+    startX=null;
+    start();
+  },{passive:true});
+
+  slider.addEventListener('pointercancel',()=>{
     startX=null;
     start();
   },{passive:true});
