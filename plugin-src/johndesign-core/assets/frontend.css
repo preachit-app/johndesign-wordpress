@@ -66,24 +66,24 @@ html,body{max-width:100%;overflow-x:hidden}
 
 
 
-/* John Design Core 2.14.2 — fixed service navigation */
+/* John Design Core 2.14.4 — header flottant permanent */
 .jd-header-spacer{height:0}
 .jd-header{
-  transition:box-shadow .18s ease,margin .18s ease,width .18s ease,border-radius .18s ease
+  transition:box-shadow .18s ease;
 }
 .jd-header.is-fixed{
   position:fixed!important;
-  top:10px!important;
+  top:var(--jd-header-top,18px)!important;
   left:50%!important;
   transform:translateX(-50%)!important;
   z-index:10000!important;
-  margin:0 auto!important;
-  width:calc(100% - 68px)!important;
-  max-width:1208px!important;
-  border-radius:28px!important;
+  margin:0!important;
+  width:min(var(--jd-header-width,calc(100% - 64px)),calc(100% - 64px))!important;
+  max-width:none!important;
+  border-radius:var(--jd-header-radius,32px)!important;
   box-shadow:
     0 0 0 10px #fff,
-    0 14px 30px rgba(20,20,20,.12)!important
+    0 14px 30px rgba(20,20,20,.12)!important;
 }
 .jd-preview-nav nav.jd-desktop-nav{align-items:center;gap:18px}
 .jd-preview-nav nav.jd-desktop-nav .jd-nav-link{
@@ -129,12 +129,12 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 @media(max-width:767px){
   .jd-header.is-fixed{
-    top:8px!important;
-    width:calc(100% - 32px)!important;
+    top:12px!important;
+    width:calc(100% - 28px)!important;
     max-width:none!important;
     border-radius:22px!important;
     box-shadow:
-      0 0 0 8px #fff,
+      0 0 0 7px #fff,
       0 12px 26px rgba(20,20,20,.12)!important;
     padding-left:22px!important;
     padding-right:22px!important

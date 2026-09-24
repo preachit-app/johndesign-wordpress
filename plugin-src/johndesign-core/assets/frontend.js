@@ -50,35 +50,31 @@ if(menu){
 }
 
 /**
- * Fixed-on-scroll header.
- * We use a real fixed state instead of CSS sticky because some WordPress/theme
- * wrappers can create containing/overflow contexts that prevent sticky from
- * reaching the viewport top.
+ * Le header reste flottant en permanence, avec exactement la largeur,
+ * l'espace supérieur et les arrondis de sa position naturelle.
  */
 if(header){
+  const natural=header.getBoundingClientRect();
+  const computed=window.getComputedStyle(header);
+  const naturalTop=Math.max(14,Math.round(natural.top));
+  const naturalWidth=Math.max(280,Math.round(natural.width));
+  const naturalRadius=computed.borderTopLeftRadius||'32px';
+
+  header.style.setProperty('--jd-header-top',naturalTop+'px');
+  header.style.setProperty('--jd-header-width',naturalWidth+'px');
+  header.style.setProperty('--jd-header-radius',naturalRadius);
+
   const spacer=document.createElement('div');
   spacer.className='jd-header-spacer';
+  spacer.style.height=Math.ceil(natural.height)+'px';
   header.parentNode.insertBefore(spacer,header);
 
-  let trigger=0;
-  const measure=()=>{
-    const wasFixed=header.classList.contains('is-fixed');
-    if(wasFixed) header.classList.remove('is-fixed');
-    spacer.style.height='0px';
-    trigger=header.getBoundingClientRect().top+window.scrollY;
-    if(wasFixed) update();
-  };
+  header.classList.add('is-fixed');
+  document.documentElement.classList.add('jd-header-fixed');
 
-  const update=()=>{
-    const fixed=window.scrollY>=trigger;
-    header.classList.toggle('is-fixed',fixed);
-    document.documentElement.classList.toggle('jd-header-fixed',fixed);
-    spacer.style.height=fixed?(header.offsetHeight+24)+'px':'0px';
+  const resize=()=>{
+    spacer.style.height=Math.ceil(header.offsetHeight)+'px';
   };
-
-  measure();
-  update();
-  window.addEventListener('scroll',update,{passive:true});
-  window.addEventListener('resize',()=>{measure();update();});
+  window.addEventListener('resize',resize,{passive:true});
 }
 })();
