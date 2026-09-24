@@ -61,6 +61,17 @@ if(menu){
  */
 const cleanPath=window.location.pathname.replace(/\/+$/,'')||'/';
 
+if(['/creation-site-internet','/identite-visuelle','/print-signaletique'].includes(cleanPath)){
+  const ctaMap={
+    '/creation-site-internet':'Parlons de votre site',
+    '/identite-visuelle':'Parlons de votre identité',
+    '/print-signaletique':'Parlons de votre projet'
+  };
+  document.querySelectorAll('.wp-block-button__link').forEach(a=>{
+    if(a.textContent.trim()==='Parlons de votre projet') a.textContent=ctaMap[cleanPath]+' ↗';
+  });
+}
+
 if(cleanPath==='/a-propos'){
   const sourcePhoto=document.querySelector('.jd-about .jd-jonathan-photo img');
   const introVisual=document.querySelector('.jd-intro-visual');

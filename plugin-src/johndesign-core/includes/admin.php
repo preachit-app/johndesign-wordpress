@@ -16,6 +16,8 @@ function jd_core_save_settings(){
  check_admin_referer('jd_save_settings');
  update_option('jd_contact_email',sanitize_email($_POST['contact_email']??'jonathan@johndesign.net'));
  update_option('jd_contact_copy_email',sanitize_email($_POST['contact_copy_email']??''));
+ $wa=preg_replace('/[^0-9+]/','',(string)($_POST['whatsapp_number']??''));
+ update_option('jd_whatsapp_number',$wa);
  wp_safe_redirect(admin_url('admin.php?page=jd-core&saved=1'));exit;
 }
 add_action('admin_post_jd_save_settings','jd_core_save_settings');
@@ -28,6 +30,7 @@ function jd_core_admin_page(){ ?>
 <table class="form-table" role="presentation"><tbody>
 <tr><th scope="row"><label for="jd-contact-email">Boîte principale</label></th><td><input id="jd-contact-email" name="contact_email" type="email" class="regular-text" value="<?php echo esc_attr(jd_core_contact_email()); ?>"><p class="description">Adresse professionnelle qui reçoit les demandes.</p></td></tr>
 <tr><th scope="row"><label for="jd-contact-copy-email">Copie directe (optionnel)</label></th><td><input id="jd-contact-copy-email" name="contact_copy_email" type="email" class="regular-text" value="<?php echo esc_attr(jd_core_contact_copy_email()); ?>" placeholder="votre-adresse@gmail.com"><p class="description">Pour recevoir une copie directement dans Gmail sans passer par un redirecteur externe.</p></td></tr>
+<tr><th scope="row"><label for="jd-whatsapp-number">WhatsApp</label></th><td><input id="jd-whatsapp-number" name="whatsapp_number" type="text" class="regular-text" value="<?php echo esc_attr(get_option('jd_whatsapp_number','')); ?>" placeholder="+33612345678"><p class="description">Numéro au format international. Le bouton flottant n’apparaît que si ce champ est renseigné.</p></td></tr>
 </tbody></table>
 <button class="button button-primary">Enregistrer</button>
 </form>

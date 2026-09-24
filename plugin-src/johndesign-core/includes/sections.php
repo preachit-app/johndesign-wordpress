@@ -64,30 +64,42 @@ function jd_core_register_block(){
 add_action('init','jd_core_register_block');
 
 
-function jd_core_home_services_snapshot_2150(){
+function jd_core_home_services_snapshot_2151(){
  return '<section class="jd-home-services-snapshot" aria-label="Les services John Design">
-   <div class="jd-home-services-top">
-     <p class="jd-home-services-kicker">EN UN COUP D’ŒIL</p>
-     <p class="jd-home-services-title">Un seul interlocuteur. Quatre terrains.</p>
-   </div>
    <div class="jd-home-services-grid">
      <a class="jd-home-service-mini is-web" href="'.esc_url(home_url('/creation-site-internet/')).'">
        <span class="jd-home-service-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="3"></rect><path d="M4 11h24M10 8.5h.1M14 8.5h.1"></path></svg></span>
-       <span>Sites internet</span>
+       <span class="jd-home-service-label">Sites internet</span>
      </a>
      <a class="jd-home-service-mini is-id" href="'.esc_url(home_url('/identite-visuelle/')).'">
        <span class="jd-home-service-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10"></circle><path d="M16 6v20M6 16h20M9 9l14 14M23 9L9 23"></path></svg></span>
-       <span>Identité visuelle</span>
+       <span class="jd-home-service-label">Identité visuelle</span>
      </a>
      <a class="jd-home-service-mini is-print" href="'.esc_url(home_url('/print-signaletique/')).'">
        <span class="jd-home-service-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 12V5h16v7M8 23H5V12h22v11h-3"></path><rect x="8" y="19" width="16" height="8" rx="1"></rect></svg></span>
-       <span>Print</span>
+       <span class="jd-home-service-label">Print</span>
      </a>
      <a class="jd-home-service-mini is-sign" href="'.esc_url(home_url('/print-signaletique/')).'">
        <span class="jd-home-service-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 7h18v12H7zM16 19v8M11 27h10"></path><path d="M10 11h12M10 15h8"></path></svg></span>
-       <span>Signalétique</span>
+       <span class="jd-home-service-label">Signalétique</span>
      </a>
    </div>
+ </section>';
+}
+
+function jd_core_web_maintenance_2151(){
+ return '<section class="jd-web-maintenance">
+   <div class="jd-web-maintenance-copy">
+     <p class="jd-eyebrow">APRÈS LA MISE EN LIGNE</p>
+     <h2>Votre site peut continuer<br>à être suivi.</h2>
+     <p>Si vous le souhaitez, je peux aussi rester à vos côtés pour garder le site propre, à jour et facile à faire évoluer.</p>
+   </div>
+   <div class="jd-web-maintenance-items">
+     <div><strong>Mises à jour &amp; sauvegardes</strong><span>WordPress, extensions et sauvegardes régulières.</span></div>
+     <div><strong>Surveillance</strong><span>Vérification du bon fonctionnement et des points essentiels.</span></div>
+     <div><strong>Petites évolutions</strong><span>Textes, images, nouvelles sections ou ajustements au fil du temps.</span></div>
+   </div>
+   <a class="jd-web-maintenance-link" href="'.esc_url(home_url('/contact/')).'">Parlons du suivi ↗</a>
  </section>';
 }
 
@@ -95,5 +107,14 @@ add_filter('render_block',function($block_content,$block){
  if(!is_front_page()) return $block_content;
  if(($block['blockName']??'')!=='johndesign/section') return $block_content;
  if(($block['attrs']['sectionId']??'')!=='home-01') return $block_content;
- return $block_content.jd_core_home_services_snapshot_2150();
+ return $block_content.jd_core_home_services_snapshot_2151();
 },20,2);
+
+
+add_filter('render_block',function($block_content,$block){
+ if(!is_page('creation-site-internet')) return $block_content;
+ if(($block['blockName']??'')!=='johndesign/section') return $block_content;
+ $plain=wp_strip_all_tags($block_content);
+ if(stripos($plain,'ET POUR LA SUITE')===false) return $block_content;
+ return '<div class="jd-web-maintenance-injected">'.jd_core_web_maintenance_2151().'</div>'.$block_content;
+},25,2);
