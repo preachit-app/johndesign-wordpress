@@ -111,14 +111,7 @@ add_filter('render_block',function($block_content,$block){
 },20,2);
 
 
-add_filter('render_block',function($block_content,$block){
- if(!is_page('creation-site-internet')) return $block_content;
- if(($block['blockName']??'')!=='johndesign/section') return $block_content;
- $plain=wp_strip_all_tags($block_content);
- if(stripos($plain,'ET POUR LA SUITE')===false) return $block_content;
- return '<div class="jd-web-maintenance-injected">'.jd_core_web_maintenance_2151().'</div>'.$block_content;
-},25,2);
-
+// Maintenance Site internet : injection gérée par includes/web-layout.php depuis 2.16.2.
 
 function jd_core_realisations_render_cleanup_2154($block_content,$block){
  if(!is_page('realisations')) return $block_content;

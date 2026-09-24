@@ -168,4 +168,44 @@ if(header){
   };
   window.addEventListener('resize',resize,{passive:true});
 }
+
+/* Galerie horizontale des sites réalisés. */
+document.querySelectorAll('[data-jd-web-portfolio]').forEach(gallery=>{
+  const track=gallery.querySelector('[data-jd-web-portfolio-track]');
+  const prev=gallery.querySelector('[data-jd-web-portfolio-prev]');
+  const next=gallery.querySelector('[data-jd-web-portfolio-next]');
+  if(!track) return;
+
+  const step=()=>{
+    const card=track.querySelector('.jd-web-portfolio-card');
+    if(!card) return Math.max(280,track.clientWidth*.8);
+    const styles=getComputedStyle(track);
+    const gap=parseFloat(styles.columnGap||styles.gap||'18')||18;
+    return card.getBoundingClientRect().width+gap;
+  };
+
+  const sync=()=>{
+    if(prev) prev.disabled=track.scrollLeft<=4;
+    if(next) next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-4;
+  };
+
+  if(prev) prev.addEventListener('click',()=>track.scrollBy({left:-step(),behavior:'smooth'}));
+  if(next) next.addEventListener('click',()=>track.scrollBy({left:step(),behavior:'smooth'}));
+  track.addEventListener('scroll',sync,{passive:true});
+  window.addEventListener('resize',sync,{passive:true});
+  sync();
+});
+
+/* Le portfolio principal se comporte comme une galerie : toute la carte est cliquable. */
+document.querySelectorAll('.jd-site-card').forEach(card=>{
+  const link=card.querySelector('a.jd-site-preview-link[href],a.jd-site-open[href]');
+  if(!link) return;
+  card.classList.add('is-clickable');
+  card.addEventListener('click',event=>{
+    if(event.target.closest('a,button')) return;
+    if(link.target==='_blank') window.open(link.href,'_blank','noopener');
+    else window.location.href=link.href;
+  });
+});
+
 })();

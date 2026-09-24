@@ -786,3 +786,287 @@ figure>figcaption{
     margin-bottom:22px!important;
   }
 }
+
+
+/* John Design Core 2.16.2 — galerie web premium + maintenance fiabilisée */
+
+/* Galerie horizontale de la page Création de site internet. */
+.jd-web-portfolio-strip{
+  box-sizing:border-box!important;
+  width:calc(100% - 48px)!important;
+  max-width:1440px!important;
+  margin:34px auto 42px!important;
+  padding:54px 46px 38px!important;
+  border-radius:38px!important;
+  background:#f4f3f1!important;
+  overflow:hidden!important;
+}
+.jd-web-portfolio-head{
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:32px!important;
+  margin-bottom:30px!important;
+}
+.jd-web-portfolio-head h2{
+  margin:8px 0 12px!important;
+  font-size:clamp(44px,4.8vw,70px)!important;
+  line-height:.98!important;
+  letter-spacing:-.05em!important;
+}
+.jd-web-portfolio-head>div>p:last-child{
+  margin:0!important;
+  max-width:620px!important;
+  font-size:16px!important;
+  line-height:1.55!important;
+}
+.jd-web-portfolio-controls{
+  display:flex!important;
+  gap:9px!important;
+  flex:0 0 auto!important;
+}
+.jd-web-portfolio-nav{
+  width:46px!important;
+  height:46px!important;
+  border:0!important;
+  border-radius:50%!important;
+  background:#fff!important;
+  color:#191919!important;
+  font-size:21px!important;
+  line-height:1!important;
+  cursor:pointer!important;
+  box-shadow:0 8px 24px rgba(25,25,25,.08)!important;
+  transition:transform .18s ease,box-shadow .18s ease,opacity .18s ease!important;
+}
+.jd-web-portfolio-nav:hover{
+  transform:translateY(-2px)!important;
+  box-shadow:0 12px 30px rgba(25,25,25,.13)!important;
+}
+.jd-web-portfolio-nav:disabled{
+  opacity:.32!important;
+  cursor:default!important;
+  transform:none!important;
+}
+.jd-web-portfolio-track{
+  display:flex!important;
+  gap:18px!important;
+  overflow-x:auto!important;
+  scroll-snap-type:x mandatory!important;
+  scroll-behavior:smooth!important;
+  overscroll-behavior-x:contain!important;
+  padding:2px 2px 14px!important;
+  scrollbar-width:thin!important;
+  scrollbar-color:#777 #e3e1dd!important;
+}
+.jd-web-portfolio-track::-webkit-scrollbar{height:7px!important}
+.jd-web-portfolio-track::-webkit-scrollbar-track{
+  background:#e3e1dd!important;
+  border-radius:999px!important;
+}
+.jd-web-portfolio-track::-webkit-scrollbar-thumb{
+  background:#777!important;
+  border-radius:999px!important;
+}
+.jd-web-portfolio-card{
+  flex:0 0 min(390px,31vw)!important;
+  min-width:300px!important;
+  scroll-snap-align:start!important;
+  display:block!important;
+  box-sizing:border-box!important;
+  padding:12px!important;
+  border-radius:28px!important;
+  background:#fff!important;
+  color:#191919!important;
+  text-decoration:none!important;
+  box-shadow:0 9px 28px rgba(25,25,25,.06)!important;
+  transform:translateY(0)!important;
+  transition:transform .22s ease,box-shadow .22s ease!important;
+}
+.jd-web-portfolio-card:hover{
+  transform:translateY(-6px)!important;
+  box-shadow:0 18px 42px rgba(25,25,25,.12)!important;
+}
+.jd-web-portfolio-visual{
+  position:relative!important;
+  display:block!important;
+  aspect-ratio:16/10!important;
+  overflow:hidden!important;
+  border-radius:21px!important;
+  background:#ebe9e5!important;
+}
+.jd-web-portfolio-visual img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:top center!important;
+  transition:transform .45s cubic-bezier(.2,.7,.2,1),filter .25s ease!important;
+}
+.jd-web-portfolio-card:hover .jd-web-portfolio-visual img{
+  transform:scale(1.025)!important;
+  filter:brightness(.88)!important;
+}
+.jd-web-portfolio-arrow{
+  position:absolute!important;
+  top:14px!important;
+  right:14px!important;
+  width:42px!important;
+  height:42px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:50%!important;
+  background:#fff!important;
+  color:#191919!important;
+  font-size:18px!important;
+  box-shadow:0 6px 20px rgba(25,25,25,.10)!important;
+  transition:transform .2s ease!important;
+}
+.jd-web-portfolio-card:hover .jd-web-portfolio-arrow{
+  transform:translate(2px,-2px)!important;
+}
+.jd-web-portfolio-hover{
+  position:absolute!important;
+  left:16px!important;
+  bottom:16px!important;
+  padding:9px 12px!important;
+  border-radius:999px!important;
+  background:#191919!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:800!important;
+  opacity:0!important;
+  transform:translateY(5px)!important;
+  transition:opacity .2s ease,transform .2s ease!important;
+}
+.jd-web-portfolio-card:hover .jd-web-portfolio-hover{
+  opacity:1!important;
+  transform:translateY(0)!important;
+}
+.jd-web-portfolio-meta{
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  padding:15px 6px 5px!important;
+}
+.jd-web-portfolio-meta strong{
+  font-size:17px!important;
+  line-height:1.1!important;
+}
+.jd-web-portfolio-meta>span{
+  min-width:0!important;
+  max-width:48%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  font-size:11px!important;
+  color:#77727d!important;
+}
+.jd-web-portfolio-card.is-accent-1 .jd-web-portfolio-arrow{background:#c7b5ef!important}
+.jd-web-portfolio-card.is-accent-2 .jd-web-portfolio-arrow{background:#d9fb70!important}
+.jd-web-portfolio-card.is-accent-3 .jd-web-portfolio-arrow{background:#f4b2ca!important}
+
+/* Portfolio principal : même direction premium, sans changer son contenu. */
+.jd-site-card,
+.jd-site-card.is-featured{
+  padding:12px!important;
+  border-radius:30px!important;
+  background:#fff!important;
+  box-shadow:0 10px 30px rgba(32,25,45,.07)!important;
+  cursor:pointer!important;
+  overflow:hidden!important;
+  transition:transform .22s ease,box-shadow .22s ease!important;
+}
+.jd-site-card:hover{
+  transform:translateY(-6px)!important;
+  box-shadow:0 20px 46px rgba(32,25,45,.13)!important;
+}
+.jd-site-preview-link{
+  position:relative!important;
+  display:block!important;
+  border-radius:22px!important;
+  overflow:hidden!important;
+}
+.jd-site-preview-link::after{
+  content:'↗'!important;
+  position:absolute!important;
+  top:13px!important;
+  right:13px!important;
+  width:40px!important;
+  height:40px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:50%!important;
+  background:#fff!important;
+  color:#191919!important;
+  font-size:17px!important;
+  box-shadow:0 6px 18px rgba(25,25,25,.10)!important;
+  transition:transform .2s ease!important;
+}
+.jd-site-card:hover .jd-site-preview-link::after{
+  transform:translate(2px,-2px)!important;
+}
+.jd-site-browser,
+.jd-site-card.is-featured .jd-site-browser{
+  border-radius:22px!important;
+  overflow:hidden!important;
+  aspect-ratio:16/10!important;
+}
+.jd-site-card:hover .jd-site-browser img{
+  transform:scale(1.025)!important;
+}
+.jd-site-info{
+  padding:17px 7px 6px!important;
+  background:transparent!important;
+}
+.jd-site-open{
+  background:#f1ecfb!important;
+  transition:transform .2s ease,background .2s ease!important;
+}
+.jd-site-card:hover .jd-site-open{
+  transform:translate(2px,-2px)!important;
+  background:#d9fb70!important;
+}
+
+@media(max-width:900px){
+  .jd-web-portfolio-strip{
+    padding:42px 28px 30px!important;
+  }
+  .jd-web-portfolio-head{
+    align-items:flex-start!important;
+  }
+  .jd-web-portfolio-card{
+    flex-basis:min(390px,72vw)!important;
+  }
+}
+@media(max-width:600px){
+  .jd-web-portfolio-strip{
+    width:calc(100% - 24px)!important;
+    margin:22px auto 32px!important;
+    padding:34px 18px 24px!important;
+    border-radius:28px!important;
+  }
+  .jd-web-portfolio-head{
+    display:block!important;
+    margin-bottom:22px!important;
+  }
+  .jd-web-portfolio-head h2{
+    font-size:clamp(38px,11vw,50px)!important;
+  }
+  .jd-web-portfolio-controls{
+    margin-top:18px!important;
+  }
+  .jd-web-portfolio-card{
+    flex-basis:82vw!important;
+    min-width:260px!important;
+    border-radius:24px!important;
+  }
+  .jd-web-portfolio-visual{
+    border-radius:18px!important;
+  }
+  .jd-web-portfolio-hover{
+    opacity:1!important;
+    transform:none!important;
+  }
+}
