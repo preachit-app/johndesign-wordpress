@@ -2,14 +2,14 @@
 /**
  * Plugin Name: John Design Core
  * Description: Modules Gutenberg John Design, import V2.12, portfolio, formulaire sécurisé et mises à jour GitHub.
- * Version: 2.16.2
+ * Version: 2.16.3
  * Update URI: https://github.com/preachit-app/johndesign-wordpress
  * Requires at least: 6.6
  * Requires PHP: 8.0
  * Author: John Design
  */
 if (!defined('ABSPATH')) exit;
-define('JD_CORE_VERSION', '2.16.2');
+define('JD_CORE_VERSION', '2.16.3');
 define('JD_CORE_DIR', plugin_dir_path(__FILE__));
 define('JD_CORE_URL', plugin_dir_url(__FILE__));
 require_once JD_CORE_DIR.'includes/sections.php';
@@ -22,6 +22,7 @@ require_once JD_CORE_DIR.'includes/site-polish.php';
 require_once JD_CORE_DIR.'includes/content-cleanup.php';
 require_once JD_CORE_DIR.'includes/clarity.php';
 require_once JD_CORE_DIR.'includes/web-layout.php';
+require_once JD_CORE_DIR.'includes/service-galleries.php';
 
 /** Persist the large V2.12 section library in WordPress so future updates can be lightweight. */
 function jd_core_seed_content_library_2124(){
@@ -45,6 +46,10 @@ add_action('admin_init', function(){
 function jd_core_front_assets_2124(){
     wp_enqueue_style('jd-core-frontend', JD_CORE_URL.'assets/frontend.css', [], JD_CORE_VERSION);
     wp_enqueue_script('jd-core-frontend', JD_CORE_URL.'assets/frontend.js', [], JD_CORE_VERSION, true);
+    wp_localize_script('jd-core-frontend','JD_CORE_ASSETS',[
+        'umdv'=>JD_CORE_URL.'assets/portfolio/umdv-site.webp',
+        'truck'=>JD_CORE_URL.'assets/portfolio/eco-clim-truck.webp',
+    ]);
 }
 add_action('wp_enqueue_scripts','jd_core_front_assets_2124',30);
 add_action('enqueue_block_editor_assets','jd_core_front_assets_2124',30);

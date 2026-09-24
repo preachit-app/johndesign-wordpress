@@ -68,46 +68,6 @@ if(waButton && !waButton.querySelector('span')){
   waButton.appendChild(label);
 }
 
-const jdTruckFromHome=async()=>{
-  if(cleanPath!=='/print-signaletique') return;
-  const sections=[...document.querySelectorAll('.jd-section')];
-  const target=sections.find(section=>{
-    const t=(section.textContent||'').toLowerCase();
-    return t.includes('ia fait des merveilles') && t.includes('stickers');
-  });
-  if(!target) return;
-
-  try{
-    const response=await fetch(window.location.origin+'/',{credentials:'same-origin',cache:'no-store'});
-    if(!response.ok) return;
-    const html=await response.text();
-    const doc=new DOMParser().parseFromString(html,'text/html');
-
-    let source=[...doc.querySelectorAll('img')].find(img=>{
-      const alt=(img.getAttribute('alt')||'').toLowerCase();
-      return alt.includes('eco clim');
-    });
-
-    if(!source){
-      const holder=[...doc.querySelectorAll('figure,.jd-home-work-item,.jd-section')].find(el=>{
-        return (el.textContent||'').toLowerCase().includes('eco clim');
-      });
-      if(holder) source=holder.querySelector('img');
-    }
-
-    const targetImg=target.querySelector('img');
-    if(!source || !targetImg) return;
-
-    const src=source.getAttribute('src');
-    if(!src) return;
-    targetImg.setAttribute('src',src);
-    targetImg.removeAttribute('srcset');
-    targetImg.removeAttribute('sizes');
-    targetImg.setAttribute('alt','Habillage adhésif Eco Clim System sur véhicule utilitaire');
-  }catch(e){}
-};
-jdTruckFromHome();
-
 if(['/creation-site-internet','/identite-visuelle','/print-signaletique'].includes(cleanPath)){
   const ctaMap={
     '/creation-site-internet':'Parlons de votre site',
@@ -169,15 +129,15 @@ if(header){
   window.addEventListener('resize',resize,{passive:true});
 }
 
-/* Galerie horizontale des sites réalisés. */
-document.querySelectorAll('[data-jd-web-portfolio]').forEach(gallery=>{
-  const track=gallery.querySelector('[data-jd-web-portfolio-track]');
-  const prev=gallery.querySelector('[data-jd-web-portfolio-prev]');
-  const next=gallery.querySelector('[data-jd-web-portfolio-next]');
+/* Galeries horizontales des pages services. */
+document.querySelectorAll('[data-jd-horizontal-gallery]').forEach(gallery=>{
+  const track=gallery.querySelector('[data-jd-gallery-track]');
+  const prev=gallery.querySelector('[data-jd-gallery-prev]');
+  const next=gallery.querySelector('[data-jd-gallery-next]');
   if(!track) return;
 
   const step=()=>{
-    const card=track.querySelector('.jd-web-portfolio-card');
+    const card=track.firstElementChild;
     if(!card) return Math.max(280,track.clientWidth*.8);
     const styles=getComputedStyle(track);
     const gap=parseFloat(styles.columnGap||styles.gap||'18')||18;
@@ -195,6 +155,19 @@ document.querySelectorAll('[data-jd-web-portfolio]').forEach(gallery=>{
   window.addEventListener('resize',sync,{passive:true});
   sync();
 });
+
+/* Utilise la capture fournie pour Un Max de Vie partout où ce projet apparaît. */
+const umdvShot=window.JD_CORE_ASSETS&&window.JD_CORE_ASSETS.umdv;
+if(umdvShot){
+  document.querySelectorAll('a[href*="unmaxdevie.com"]').forEach(link=>{
+    const holder=link.closest('.jd-site-card,.jd-home-work-item')||link;
+    const img=holder.querySelector('img');
+    if(!img) return;
+    img.src=umdvShot;
+    img.removeAttribute('srcset');
+    img.removeAttribute('sizes');
+  });
+}
 
 /* Le portfolio principal se comporte comme une galerie : toute la carte est cliquable. */
 document.querySelectorAll('.jd-site-card').forEach(card=>{

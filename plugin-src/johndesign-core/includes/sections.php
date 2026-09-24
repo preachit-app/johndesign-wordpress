@@ -24,8 +24,9 @@ function jd_core_render_image_alt($html){
  },$html);
 }
 function jd_core_get_truck_image_src(){
- $src=(string)get_option('jd_core_truck_image_src','');
- return $src;
+ $local=JD_CORE_DIR.'assets/portfolio/eco-clim-truck.webp';
+ if(file_exists($local)) return JD_CORE_URL.'assets/portfolio/eco-clim-truck.webp';
+ return (string)get_option('jd_core_truck_image_src','');
 }
 function jd_core_render_form($variant='home'){return jd_core_contact_form($variant);}
 function jd_core_render_section($attrs){

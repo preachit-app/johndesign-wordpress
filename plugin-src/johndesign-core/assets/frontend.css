@@ -1070,3 +1070,220 @@ figure>figcaption{
     transform:none!important;
   }
 }
+
+
+/* John Design Core 2.16.3 — galeries image-only */
+
+/* Galerie web : capture seule, bord ultra-fin, aucun cartouche. */
+.jd-web-portfolio-card{
+  flex:0 0 min(400px,32vw)!important;
+  min-width:300px!important;
+  padding:3px!important;
+  border:1px solid rgba(25,25,25,.14)!important;
+  border-radius:23px!important;
+  background:#fff!important;
+  box-shadow:0 5px 18px rgba(25,25,25,.045)!important;
+}
+.jd-web-portfolio-card:hover{
+  transform:translateY(-4px)!important;
+  box-shadow:0 12px 28px rgba(25,25,25,.09)!important;
+}
+.jd-web-portfolio-visual{
+  border-radius:19px!important;
+}
+.jd-web-portfolio-card:hover .jd-web-portfolio-visual img{
+  transform:scale(1.018)!important;
+  filter:none!important;
+}
+.jd-web-portfolio-meta,
+.jd-web-portfolio-arrow,
+.jd-web-portfolio-hover{
+  display:none!important;
+}
+
+/* Portfolio principal : exactement la même logique, image seule. */
+.jd-site-card,
+.jd-site-card.is-featured{
+  padding:3px!important;
+  border:1px solid rgba(25,25,25,.14)!important;
+  border-radius:23px!important;
+  background:#fff!important;
+  box-shadow:0 5px 18px rgba(25,25,25,.045)!important;
+}
+.jd-site-card:hover{
+  transform:translateY(-4px)!important;
+  box-shadow:0 12px 28px rgba(25,25,25,.09)!important;
+}
+.jd-site-preview-link{
+  border-radius:19px!important;
+}
+.jd-site-preview-link::after{
+  display:none!important;
+  content:none!important;
+}
+.jd-site-browser,
+.jd-site-card.is-featured .jd-site-browser{
+  border-radius:19px!important;
+}
+.jd-site-info,
+.jd-site-open{
+  display:none!important;
+}
+
+/* Contrôles communs aux galeries horizontales. */
+.jd-horizontal-gallery-controls{
+  display:flex!important;
+  gap:9px!important;
+  flex:0 0 auto!important;
+}
+.jd-horizontal-gallery-nav{
+  width:46px!important;
+  height:46px!important;
+  border:0!important;
+  border-radius:50%!important;
+  background:#fff!important;
+  color:#191919!important;
+  font-size:21px!important;
+  line-height:1!important;
+  cursor:pointer!important;
+  box-shadow:0 7px 20px rgba(25,25,25,.075)!important;
+  transition:transform .18s ease,box-shadow .18s ease,opacity .18s ease!important;
+}
+.jd-horizontal-gallery-nav:hover{
+  transform:translateY(-2px)!important;
+  box-shadow:0 11px 27px rgba(25,25,25,.12)!important;
+}
+.jd-horizontal-gallery-nav:disabled{
+  opacity:.3!important;
+  cursor:default!important;
+  transform:none!important;
+}
+
+/* Petites galeries Identité / Print. */
+.jd-service-gallery{
+  box-sizing:border-box!important;
+  width:calc(100% - 48px)!important;
+  max-width:1440px!important;
+  margin:34px auto 46px!important;
+  padding:48px 46px 34px!important;
+  border-radius:38px!important;
+  background:#f4f3f1!important;
+  overflow:hidden!important;
+}
+.jd-service-gallery-head{
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:space-between!important;
+  gap:30px!important;
+  margin-bottom:28px!important;
+}
+.jd-service-gallery-head h2{
+  margin:8px 0 0!important;
+  font-size:clamp(38px,4.2vw,60px)!important;
+  line-height:1!important;
+  letter-spacing:-.045em!important;
+}
+.jd-service-gallery-track{
+  display:flex!important;
+  gap:16px!important;
+  overflow-x:auto!important;
+  scroll-snap-type:x mandatory!important;
+  scroll-behavior:smooth!important;
+  overscroll-behavior-x:contain!important;
+  padding:2px 2px 13px!important;
+  scrollbar-width:thin!important;
+  scrollbar-color:#777 #e3e1dd!important;
+}
+.jd-service-gallery-track::-webkit-scrollbar{height:7px!important}
+.jd-service-gallery-track::-webkit-scrollbar-track{
+  background:#e3e1dd!important;
+  border-radius:999px!important;
+}
+.jd-service-gallery-track::-webkit-scrollbar-thumb{
+  background:#777!important;
+  border-radius:999px!important;
+}
+.jd-service-gallery-item{
+  flex:0 0 min(380px,30vw)!important;
+  min-width:285px!important;
+  aspect-ratio:4/3!important;
+  scroll-snap-align:start!important;
+  padding:3px!important;
+  border:1px solid rgba(25,25,25,.14)!important;
+  border-radius:23px!important;
+  background:#fff!important;
+  box-shadow:0 5px 18px rgba(25,25,25,.04)!important;
+  overflow:hidden!important;
+  transition:transform .22s ease,box-shadow .22s ease!important;
+}
+.jd-service-gallery-item:hover{
+  transform:translateY(-4px)!important;
+  box-shadow:0 12px 28px rgba(25,25,25,.085)!important;
+}
+.jd-service-gallery-item img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  border-radius:19px!important;
+  transition:transform .4s cubic-bezier(.2,.7,.2,1)!important;
+}
+.jd-service-gallery-item:hover img{
+  transform:scale(1.018)!important;
+}
+
+/* La vraie photo Eco Clim doit remplir proprement le visuel de la section IA. */
+body.page-id-0 .jd-nothing{display:none} /* règle neutre pour éviter tout impact inattendu */
+body .jd-section img[src*="eco-clim-truck.webp"]{
+  object-fit:cover!important;
+  object-position:center center!important;
+}
+
+@media(max-width:900px){
+  .jd-web-portfolio-card{
+    flex-basis:min(390px,72vw)!important;
+  }
+  .jd-service-gallery{
+    padding:40px 28px 28px!important;
+  }
+  .jd-service-gallery-head{
+    align-items:flex-start!important;
+  }
+  .jd-service-gallery-item{
+    flex-basis:min(370px,70vw)!important;
+  }
+}
+@media(max-width:600px){
+  .jd-web-portfolio-card{
+    flex-basis:82vw!important;
+    min-width:260px!important;
+    border-radius:20px!important;
+  }
+  .jd-web-portfolio-visual{
+    border-radius:16px!important;
+  }
+  .jd-service-gallery{
+    width:calc(100% - 24px)!important;
+    margin:22px auto 34px!important;
+    padding:32px 18px 22px!important;
+    border-radius:28px!important;
+  }
+  .jd-service-gallery-head{
+    display:block!important;
+    margin-bottom:20px!important;
+  }
+  .jd-service-gallery-head h2{
+    font-size:clamp(34px,10vw,46px)!important;
+  }
+  .jd-service-gallery-head .jd-horizontal-gallery-controls{
+    margin-top:17px!important;
+  }
+  .jd-service-gallery-item{
+    flex-basis:80vw!important;
+    min-width:250px!important;
+    border-radius:20px!important;
+  }
+  .jd-service-gallery-item img{
+    border-radius:16px!important;
+  }
+}
