@@ -68,6 +68,46 @@ if(waButton && !waButton.querySelector('span')){
   waButton.appendChild(label);
 }
 
+const jdTruckFromHome=async()=>{
+  if(cleanPath!=='/print-signaletique') return;
+  const sections=[...document.querySelectorAll('.jd-section')];
+  const target=sections.find(section=>{
+    const t=(section.textContent||'').toLowerCase();
+    return t.includes('ia fait des merveilles') && t.includes('stickers');
+  });
+  if(!target) return;
+
+  try{
+    const response=await fetch(window.location.origin+'/',{credentials:'same-origin',cache:'no-store'});
+    if(!response.ok) return;
+    const html=await response.text();
+    const doc=new DOMParser().parseFromString(html,'text/html');
+
+    let source=[...doc.querySelectorAll('img')].find(img=>{
+      const alt=(img.getAttribute('alt')||'').toLowerCase();
+      return alt.includes('eco clim');
+    });
+
+    if(!source){
+      const holder=[...doc.querySelectorAll('figure,.jd-home-work-item,.jd-section')].find(el=>{
+        return (el.textContent||'').toLowerCase().includes('eco clim');
+      });
+      if(holder) source=holder.querySelector('img');
+    }
+
+    const targetImg=target.querySelector('img');
+    if(!source || !targetImg) return;
+
+    const src=source.getAttribute('src');
+    if(!src) return;
+    targetImg.setAttribute('src',src);
+    targetImg.removeAttribute('srcset');
+    targetImg.removeAttribute('sizes');
+    targetImg.setAttribute('alt','Habillage adhésif Eco Clim System sur véhicule utilitaire');
+  }catch(e){}
+};
+jdTruckFromHome();
+
 if(['/creation-site-internet','/identite-visuelle','/print-signaletique'].includes(cleanPath)){
   const ctaMap={
     '/creation-site-internet':'Parlons de votre site',

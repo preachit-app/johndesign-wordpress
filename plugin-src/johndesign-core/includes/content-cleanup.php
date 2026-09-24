@@ -105,18 +105,30 @@ function jd_core_find_home_truck_image_2140(){
         $def=$defs[$sid]??null;
         if(!$def) continue;
 
-        $haystack=wp_strip_all_tags(wp_json_encode($block['attrs']['fields']??[],JSON_UNESCAPED_UNICODE));
-        $template_text=wp_strip_all_tags((string)($def['template']??''));
-        $alltext=mb_strtolower($haystack.' '.$template_text);
+        $fields=$block['attrs']['fields']??[];
+        $haystack=mb_strtolower(
+            wp_strip_all_tags(
+                wp_json_encode($fields,JSON_UNESCAPED_UNICODE).' '.($def['template']??'')
+            )
+        );
 
-        if(strpos($alltext,'ia fait des merveilles')===false && strpos($alltext,'stickers')===false) continue;
+        // We want the real Eco Clim vehicle photo, not the decorative
+        // "Hello, la vraie vie" image from the IA/stickers section.
+        if(strpos($haystack,'eco clim')===false && strpos($haystack,'adhésif')===false && strpos($haystack,'adhesif')===false){
+            continue;
+        }
 
         foreach(($def['fields']??[]) as $field){
             if(($field['type']??'')!=='image') continue;
             $key=$field['key']??'';
             if(!$key) continue;
-            $value=$block['attrs']['fields'][$key]??($field['default']??'');
-            if($value && strpos((string)$value,'{{THEME_URI}}')===false) return (string)$value;
+            $value=$fields[$key]??($field['default']??'');
+            $value=(string)$value;
+            if(!$value || strpos($value,'{{THEME_URI}}')!==false) continue;
+            if(strpos($value,'data:image/')===0 || filter_var($value,FILTER_VALIDATE_URL)){
+                update_option('jd_core_truck_image_src',$value,false);
+                return $value;
+            }
         }
     }
     return '';
@@ -169,12 +181,26 @@ function jd_core_capture_home_truck_2145(){
     $blocks=parse_blocks((string)get_post_field('post_content',$front));
     foreach($blocks as $block){
         if(($block['blockName']??'')!=='johndesign/section') continue;
+
         $attrs=$block['attrs']??[];
         $html=jd_core_render_section($attrs);
         $plain=mb_strtolower(wp_strip_all_tags($html));
-        if(strpos($plain,'ia fait des merveilles')===false && strpos($plain,'stickers')===false) continue;
 
-        if(preg_match("/<img\\b[^>]*\\bsrc=([\"'])(.*?)\\1/i",$html,$m)){
+        if(strpos($plain,'eco clim')===false && stripos($html,'eco clim')===false){
+            continue;
+        }
+
+        // Prefer the exact image identified by its alt/figcaption context.
+        if(preg_match('/<img\\b[^>]*alt=(["\\'])[^"\\']*eco\\s*clim[^"\\']*\\1[^>]*src=(["\\'])(.*?)\\2/i',$html,$m)){
+            $src=html_entity_decode($m[3],ENT_QUOTES|ENT_HTML5,'UTF-8');
+            if(strpos($src,'data:image/')===0 || filter_var($src,FILTER_VALIDATE_URL)){
+                update_option('jd_core_truck_image_src',$src,false);
+                return $src;
+            }
+        }
+
+        // Fallback: any image in the Eco Clim block.
+        if(preg_match('/<img\\b[^>]*\\bsrc=(["\\'])(.*?)\\1/i',$html,$m)){
             $src=html_entity_decode($m[2],ENT_QUOTES|ENT_HTML5,'UTF-8');
             if(strpos($src,'data:image/')===0 || filter_var($src,FILTER_VALIDATE_URL)){
                 update_option('jd_core_truck_image_src',$src,false);
@@ -182,7 +208,8 @@ function jd_core_capture_home_truck_2145(){
             }
         }
     }
-    return '';
+
+    return jd_core_find_home_truck_image_2140();
 }
 
 function jd_core_content_cleanup_2140(){
