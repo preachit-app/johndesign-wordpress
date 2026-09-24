@@ -139,3 +139,35 @@ function jd_core_realisations_render_cleanup_2154($block_content,$block){
  return $block_content;
 }
 add_filter('render_block','jd_core_realisations_render_cleanup_2154',40,2);
+
+
+function jd_core_page_polish_2155($block_content,$block){
+ if(($block['blockName']??'')!=='johndesign/section') return $block_content;
+
+ $plain=mb_strtolower(wp_strip_all_tags($block_content));
+
+ // Réalisations: wording plus simple.
+ if(is_page('realisations')){
+   $block_content=str_ireplace('SITES INTERNET / À EXPLORER','SITES INTERNET',$block_content);
+ }
+
+ // Cette section concept n'apporte plus rien au parcours commercial.
+ if(strpos($plain,'faites impression')!==false){
+   return '';
+ }
+
+ // Les cartes "Et pour la suite" doivent se détacher clairement du fond.
+ if(strpos($plain,'une image cohérente')!==false && strpos($plain,'sur tous vos supports')!==false){
+   if(stripos($block_content,'jd-related-contrast')===false){
+     $block_content=preg_replace(
+       '/(<section\b[^>]*\bclass=")([^"]*)"/i',
+       '$1$2 jd-related-contrast"',
+       $block_content,
+       1
+     );
+   }
+ }
+
+ return $block_content;
+}
+add_filter('render_block','jd_core_page_polish_2155',45,2);

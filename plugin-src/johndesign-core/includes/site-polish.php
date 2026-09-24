@@ -180,12 +180,85 @@ function jd_core_realisations_cleanup_2154(){
     return $changed;
 }
 
+function jd_core_content_simplify_2155(){
+    $changed=false;
+
+    $pages=get_posts([
+        'post_type'=>'page',
+        'post_status'=>['publish','draft','private'],
+        'numberposts'=>-1,
+        'suppress_filters'=>false,
+    ]);
+
+    foreach($pages as $page){
+        if($page->post_name==='concept-faites-impression') continue;
+
+        $raw=(string)$page->post_content;
+        if(!$raw || strpos($raw,'wp:johndesign/section')===false) continue;
+
+        $blocks=parse_blocks($raw);
+        $next=[];
+        $page_changed=false;
+
+        foreach($blocks as $block){
+            if(($block['blockName']??'')!=='johndesign/section'){
+                $next[]=$block;
+                continue;
+            }
+
+            $fields=$block['attrs']['fields']??[];
+            $joined='';
+            if(is_array($fields)){
+                foreach($fields as $value){
+                    if(is_string($value)) $joined.=' '.wp_strip_all_tags($value);
+                }
+            }
+            $plain=mb_strtolower($joined);
+
+            if(strpos($plain,'faites impression')!==false){
+                $page_changed=true;
+                continue;
+            }
+
+            if($page->post_name==='realisations' && is_array($fields)){
+                foreach($fields as $key=>$value){
+                    if(!is_string($value)) continue;
+                    $new=str_ireplace('SITES INTERNET / À EXPLORER','SITES INTERNET',$value);
+                    if($new!==$value){
+                        $block['attrs']['fields'][$key]=$new;
+                        $page_changed=true;
+                    }
+                }
+            }
+
+            $next[]=$block;
+        }
+
+        if($page_changed){
+            wp_update_post([
+                'ID'=>$page->ID,
+                'post_content'=>wp_slash(serialize_blocks($next))
+            ]);
+            $changed=true;
+        }
+    }
+
+    $concept=get_page_by_path('concept-faites-impression');
+    if($concept instanceof WP_Post && $concept->post_status!=='draft'){
+        wp_update_post(['ID'=>$concept->ID,'post_status'=>'draft']);
+        $changed=true;
+    }
+
+    return $changed;
+}
+
 function jd_core_site_polish_2139(){
     if(get_option('jd_core_site_polish_version')===JD_CORE_VERSION) return;
 
     jd_core_home_merchandising_2139();
     jd_core_refresh_unmaxdevie_2139();
     jd_core_realisations_cleanup_2154();
+    jd_core_content_simplify_2155();
 
     update_option('jd_core_site_polish_version',JD_CORE_VERSION,false);
 

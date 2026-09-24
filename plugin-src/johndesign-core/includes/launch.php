@@ -17,6 +17,7 @@ function jd_core_legacy_redirects(){
         '/qui-suis-je/'                  => '/a-propos/',
         '/services/'                     => '/#offres',
         '/avis-clients/'                 => '/#avis',
+        '/concept-faites-impression/'      => '/print-signaletique/',
     ];
 
     if(isset($map[$path])){
