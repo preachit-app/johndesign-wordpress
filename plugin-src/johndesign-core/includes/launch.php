@@ -18,6 +18,9 @@ function jd_core_legacy_redirects(){
         '/services/'                     => '/#offres',
         '/avis-clients/'                 => '/#avis',
         '/concept-faites-impression/'      => '/print-signaletique/',
+        '/offres/'                        => '/#offres',
+        '/univers/'                       => '/realisations/',
+        '/univers-creatif/'               => '/realisations/',
     ];
 
     if(isset($map[$path])){

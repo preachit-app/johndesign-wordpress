@@ -104,12 +104,8 @@ function jd_core_web_maintenance_2151(){
  </section>';
 }
 
-add_filter('render_block',function($block_content,$block){
- if(!is_front_page()) return $block_content;
- if(($block['blockName']??'')!=='johndesign/section') return $block_content;
- if(($block['attrs']['sectionId']??'')!=='home-01') return $block_content;
- return $block_content.jd_core_home_services_snapshot_2151();
-},20,2);
+// Depuis 2.16.9, les raccourcis métiers sont injectés dans le hero d'origine
+// par includes/home-hero.php, à la place du paragraphe descriptif.
 
 
 // Maintenance Site internet : injection gérée par includes/web-layout.php depuis 2.16.2.
