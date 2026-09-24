@@ -1730,3 +1730,121 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
     flex-basis:32px!important;
   }
 }
+
+
+/* John Design Core 2.16.11 — galerie signalétique intégrée au bloc Print */
+.jd-print-proof-v2__visual{display:none!important}
+
+.jd-print-proof-slider{
+  position:relative!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  aspect-ratio:1/1!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  border-radius:32px!important;
+  background:#fff!important;
+  box-shadow:0 10px 32px rgba(25,25,25,.06)!important;
+  touch-action:pan-y!important;
+}
+.jd-print-proof-slider__frame{
+  position:absolute!important;
+  inset:0!important;
+  background-repeat:no-repeat!important;
+  background-size:100% 500%!important;
+  transition:background-position .48s cubic-bezier(.2,.7,.2,1)!important;
+}
+.jd-print-proof-slider::after{
+  content:''!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:96px!important;
+  pointer-events:none!important;
+  background:linear-gradient(to top,rgba(0,0,0,.22),rgba(0,0,0,0))!important;
+}
+.jd-print-proof-slider__ui{
+  position:absolute!important;
+  z-index:2!important;
+  left:18px!important;
+  right:18px!important;
+  bottom:18px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:18px!important;
+}
+.jd-print-proof-slider__dots{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+}
+.jd-print-proof-slider__dot{
+  width:7px!important;
+  height:7px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.58)!important;
+  cursor:pointer!important;
+  transition:width .18s ease,background .18s ease!important;
+}
+.jd-print-proof-slider__dot.is-active{
+  width:23px!important;
+  background:#fff!important;
+}
+.jd-print-proof-slider__arrows{
+  display:flex!important;
+  gap:8px!important;
+}
+.jd-print-proof-slider__arrow{
+  width:42px!important;
+  height:42px!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border:0!important;
+  border-radius:50%!important;
+  background:rgba(255,255,255,.94)!important;
+  color:#191919!important;
+  font-size:18px!important;
+  line-height:1!important;
+  cursor:pointer!important;
+  box-shadow:0 6px 18px rgba(25,25,25,.11)!important;
+  transition:transform .18s ease,background .18s ease!important;
+}
+.jd-print-proof-slider__arrow:hover{
+  transform:translateY(-2px)!important;
+  background:#fff!important;
+}
+.jd-print-proof-slider__arrow:focus-visible,
+.jd-print-proof-slider__dot:focus-visible{
+  outline:2px solid #191919!important;
+  outline-offset:3px!important;
+}
+
+@media(max-width:760px){
+  .jd-print-proof-slider{
+    aspect-ratio:1/1!important;
+    border-radius:24px!important;
+  }
+  .jd-print-proof-slider__ui{
+    left:14px!important;
+    right:14px!important;
+    bottom:14px!important;
+  }
+  .jd-print-proof-slider__arrow{
+    width:40px!important;
+    height:40px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .jd-print-proof-slider__frame,
+  .jd-print-proof-slider__arrow,
+  .jd-print-proof-slider__dot{
+    transition:none!important;
+  }
+}
