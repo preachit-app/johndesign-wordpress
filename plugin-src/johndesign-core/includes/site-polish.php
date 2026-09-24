@@ -2,10 +2,34 @@
 if (!defined('ABSPATH')) exit;
 
 /**
- * Final homepage merchandising:
- * Hero -> Quelques réalisations -> Ce que je fais -> Univers -> ...
- * Also keeps the visible section numbering coherent.
+ * Homepage merchandising 2.16.6.
+ * Ordre demandé :
+ * Hero (+ raccourcis métiers) -> Jonathan -> Offres -> Réalisations -> reste de la page.
  */
+function jd_core_home_block_plain_2166($block){
+    if(($block['blockName']??'')!=='johndesign/section') return '';
+
+    $sid=(string)($block['attrs']['sectionId']??'');
+    $defs=jd_core_sections();
+    $def=$defs[$sid]??[];
+    $values=is_array($block['attrs']['fields']??null)?$block['attrs']['fields']:[];
+    $parts=[$sid];
+
+    foreach((array)($def['fields']??[]) as $field){
+        $key=$field['key']??'';
+        if(!$key) continue;
+        $value=array_key_exists($key,$values)?$values[$key]:($field['default']??'');
+        if(is_string($value)) $parts[]=$value;
+    }
+    foreach($values as $value){
+        if(is_string($value)) $parts[]=$value;
+    }
+
+    $plain=html_entity_decode(wp_strip_all_tags(implode(' ',$parts)),ENT_QUOTES|ENT_HTML5,'UTF-8');
+    $plain=preg_replace('/\s+/u',' ',trim($plain));
+    return mb_strtolower($plain);
+}
+
 function jd_core_home_merchandising_2139(){
     $front=(int)get_option('page_on_front');
     if(!$front) return false;
@@ -15,27 +39,40 @@ function jd_core_home_merchandising_2139(){
 
     $blocks=parse_blocks($raw);
 
-    // Remove the obsolete home-03 block permanently from the homepage content.
+    // Le vieux bloc "univers" home-03 reste supprimé.
     $before=count($blocks);
     $blocks=array_values(array_filter($blocks,function($block){
         return !(($block['blockName']??'')==='johndesign/section' && ($block['attrs']['sectionId']??'')==='home-03');
     }));
-    $removed_universe=count($blocks)!==$before;
+    $changed=count($blocks)!==$before;
 
-    $hero_index=null;
-    $work_index=null;
-    $changed=$removed_universe;
+    $targets=[
+        'hero'=>null,
+        'about'=>null,
+        'services'=>null,
+        'work'=>null,
+    ];
 
     foreach($blocks as $i=>&$block){
         if(($block['blockName']??'')!=='johndesign/section') continue;
+
         $sid=(string)($block['attrs']['sectionId']??'');
+        $plain=jd_core_home_block_plain_2166($block);
 
-        if($sid==='home-01') $hero_index=$i;
-        if($sid==='home-04') $work_index=$i;
+        if($sid==='home-01') $targets['hero']=$i;
+        elseif($sid==='home-02') $targets['services']=$i;
+        elseif($sid==='home-04') $targets['work']=$i;
+        elseif(
+            strpos($plain,'john design')!==false
+            && strpos($plain,'jonathan')!==false
+        ){
+            $targets['about']=$i;
+        }
 
+        // La numérotation visible suit désormais la nouvelle hiérarchie.
         $eyebrows=[
-            'home-04'=>'01 / QUELQUES RÉALISATIONS',
-            'home-02'=>'02 / CE QUE JE FAIS',
+            'home-02'=>'01 / CE QUE JE FAIS',
+            'home-04'=>'02 / DU VRAI TRAVAIL',
         ];
         if(isset($eyebrows[$sid])){
             if(!isset($block['attrs']['fields']) || !is_array($block['attrs']['fields'])) $block['attrs']['fields']=[];
@@ -47,25 +84,49 @@ function jd_core_home_merchandising_2139(){
     }
     unset($block);
 
-    if($hero_index!==null && $work_index!==null && $work_index!==$hero_index+1){
-        $work=$blocks[$work_index];
-        array_splice($blocks,$work_index,1);
-        // Re-find the hero after removing the work block.
-        $hero_index=null;
-        foreach($blocks as $i=>$block){
-            if(($block['blockName']??'')==='johndesign/section' && ($block['attrs']['sectionId']??'')==='home-01'){
-                $hero_index=$i;break;
-            }
+    $indices=array_values(array_unique(array_filter(array_values($targets),function($v){
+        return $v!==null;
+    })));
+
+    if(count($indices)>=3){
+        sort($indices);
+        $anchor=$indices[0];
+
+        $ordered=[];
+        foreach(['hero','about','services','work'] as $key){
+            if($targets[$key]!==null) $ordered[]=$blocks[$targets[$key]];
         }
-        if($hero_index!==null){
-            array_splice($blocks,$hero_index+1,0,[$work]);
+
+        $prefix=[];
+        $suffix=[];
+        foreach($blocks as $i=>$block){
+            if(in_array($i,$indices,true)) continue;
+            if($i<$anchor) $prefix[]=$block;
+            else $suffix[]=$block;
+        }
+
+        $new_blocks=array_merge($prefix,$ordered,$suffix);
+        if(serialize_blocks($new_blocks)!==serialize_blocks($blocks)){
+            $blocks=$new_blocks;
             $changed=true;
         }
     }
 
+    update_option('jd_core_home_order_diag_2166',[
+        'hero'=>$targets['hero']!==null,
+        'about'=>$targets['about']!==null,
+        'services'=>$targets['services']!==null,
+        'work'=>$targets['work']!==null,
+        'checked_at'=>current_time('mysql'),
+    ],false);
+
     if($changed){
-        wp_update_post(['ID'=>$front,'post_content'=>wp_slash(serialize_blocks($blocks))]);
+        wp_update_post([
+            'ID'=>$front,
+            'post_content'=>wp_slash(serialize_blocks($blocks))
+        ]);
     }
+
     return $changed;
 }
 
@@ -267,3 +328,4 @@ function jd_core_site_polish_2139(){
     if(function_exists('wp_cache_clear_cache')) wp_cache_clear_cache();
 }
 add_action('admin_init','jd_core_site_polish_2139',40);
+add_action('wp_loaded','jd_core_site_polish_2139',20);
