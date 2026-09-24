@@ -46,7 +46,7 @@ function jd_core_render_section($attrs){
  if($page_key==='print-signaletique' && (stripos(wp_strip_all_tags($html),'IA fait des merveilles')!==false || stripos(wp_strip_all_tags($html),'stickers')!==false)){
   $truck=jd_core_get_truck_image_src();
   if($truck){
-   $html=preg_replace_callback('/<img\\b([^>]*)\\bsrc=(["\\'])(.*?)\\2([^>]*)>/i',function($m)use($truck){
+   $html=preg_replace_callback("/<img\\b([^>]*)\\bsrc=([\"'])(.*?)\\2([^>]*)>/i",function($m)use($truck){
     return '<img'.$m[1].'src="'.$truck.'"'.$m[4].'>';
    },$html,1);
   }

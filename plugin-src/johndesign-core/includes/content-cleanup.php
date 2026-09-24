@@ -164,7 +164,7 @@ function jd_core_capture_home_truck_2145(){
         $plain=mb_strtolower(wp_strip_all_tags($html));
         if(strpos($plain,'ia fait des merveilles')===false && strpos($plain,'stickers')===false) continue;
 
-        if(preg_match('/<img\\b[^>]*\\bsrc=(["\\'])(.*?)\\1/i',$html,$m)){
+        if(preg_match("/<img\\b[^>]*\\bsrc=([\"'])(.*?)\\1/i",$html,$m)){
             $src=html_entity_decode($m[2],ENT_QUOTES|ENT_HTML5,'UTF-8');
             if(strpos($src,'data:image/')===0 || filter_var($src,FILTER_VALIDATE_URL)){
                 update_option('jd_core_truck_image_src',$src,false);
