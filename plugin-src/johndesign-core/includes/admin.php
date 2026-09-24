@@ -11,16 +11,30 @@ function jd_core_install_site(){
  update_option('jd_v212_installed',current_time('mysql'));wp_safe_redirect(admin_url('admin.php?page=jd-core&installed=1'));exit;
 }
 add_action('admin_post_jd_install_site','jd_core_install_site');
-function jd_core_save_settings(){if(!current_user_can('manage_options'))return;check_admin_referer('jd_save_settings');update_option('jd_contact_email',sanitize_email($_POST['contact_email']??'jonathan@johndesign.net'));wp_safe_redirect(admin_url('admin.php?page=jd-core&saved=1'));exit;}
+function jd_core_save_settings(){
+ if(!current_user_can('manage_options'))return;
+ check_admin_referer('jd_save_settings');
+ update_option('jd_contact_email',sanitize_email($_POST['contact_email']??'jonathan@johndesign.net'));
+ update_option('jd_contact_copy_email',sanitize_email($_POST['contact_copy_email']??''));
+ wp_safe_redirect(admin_url('admin.php?page=jd-core&saved=1'));exit;
+}
 add_action('admin_post_jd_save_settings','jd_core_save_settings');
 function jd_core_admin_page(){ ?>
 <div class="wrap"><h1>John Design — V2.12</h1><p>Le thème conserve la maquette V2.12. Chaque section est un module Gutenberg déplaçable ; son texte, ses liens et ses images sont modifiables dans la colonne de réglages du bloc.</p>
 <?php if(isset($_GET['installed'])):?><div class="notice notice-success"><p>Les pages V2.12 ont été créées / mises à jour et la page d’accueil a été définie.</p></div><?php endif; ?>
-<h2>1. E-mail du formulaire</h2><form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>"><input type="hidden" name="action" value="jd_save_settings"><?php wp_nonce_field('jd_save_settings'); ?><input name="contact_email" type="email" class="regular-text" value="<?php echo esc_attr(jd_core_contact_email()); ?>"><button class="button button-primary">Enregistrer</button></form>
+<h2>1. E-mails du formulaire</h2>
+<form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="max-width:760px">
+<input type="hidden" name="action" value="jd_save_settings"><?php wp_nonce_field('jd_save_settings'); ?>
+<table class="form-table" role="presentation"><tbody>
+<tr><th scope="row"><label for="jd-contact-email">Boîte principale</label></th><td><input id="jd-contact-email" name="contact_email" type="email" class="regular-text" value="<?php echo esc_attr(jd_core_contact_email()); ?>"><p class="description">Adresse professionnelle qui reçoit les demandes.</p></td></tr>
+<tr><th scope="row"><label for="jd-contact-copy-email">Copie directe (optionnel)</label></th><td><input id="jd-contact-copy-email" name="contact_copy_email" type="email" class="regular-text" value="<?php echo esc_attr(jd_core_contact_copy_email()); ?>" placeholder="votre-adresse@gmail.com"><p class="description">Pour recevoir une copie directement dans Gmail sans passer par un redirecteur externe.</p></td></tr>
+</tbody></table>
+<button class="button button-primary">Enregistrer</button>
+</form>
 <div id="jd-mail"></div>
 <h2>2. Formulaire & e-mails</h2>
 <?php $maildiag=get_option('jd_core_mail_diag',[]); ?>
-<p>Le formulaire envoie les demandes à <strong><?php echo esc_html(jd_core_contact_email()); ?></strong>. Protection active : nonce WordPress, champ piège invisible, délai minimum, limitation à 5 envois/heure/IP et filtre anti-liens.</p>
+<p>Le formulaire envoie les demandes à <strong><?php echo esc_html(jd_core_contact_email()); ?></strong><?php if(jd_core_contact_copy_email()) echo ' et une copie directe à <strong>'.esc_html(jd_core_contact_copy_email()).'</strong>'; ?>. Les notifications John Design et les confirmations client utilisent maintenant une mise en page HTML de marque. Protection active : nonce WordPress, champ piège invisible, délai minimum, limitation à 5 envois/heure/IP et filtre anti-liens.</p>
 <?php if(isset($_GET['mailtest'])): ?><div class="notice <?php echo $_GET['mailtest']==='1'?'notice-success':'notice-error'; ?>"><p><?php echo $_GET['mailtest']==='1'?'Le test a été transmis par WordPress. Vérifiez maintenant la boîte '.esc_html(jd_core_contact_email()).'.':'Le test a échoué côté WordPress. Le diagnostic ci-dessous donne le dernier état connu.'; ?></p></div><?php endif; ?>
 <?php if(!empty($maildiag)): ?><p><strong>Dernier diagnostic e-mail :</strong> <?php echo ($maildiag['status']??'')==='success'?'<span style="color:#16803a;font-weight:700">OK</span>':'<span style="color:#b42318;font-weight:700">Échec</span>'; ?> — <?php echo esc_html($maildiag['message']??''); ?><br><small><?php echo esc_html($maildiag['checked_at']??''); ?><?php if(!empty($maildiag['to'])) echo ' · vers '.esc_html($maildiag['to']); ?></small></p><?php endif; ?>
 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>"><input type="hidden" name="action" value="jd_test_mail"><?php wp_nonce_field('jd_test_mail'); ?><button class="button">Envoyer un e-mail de test</button></form>

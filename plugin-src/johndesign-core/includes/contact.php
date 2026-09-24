@@ -5,6 +5,16 @@ function jd_core_contact_email(){
     $email=sanitize_email(get_option('jd_contact_email','jonathan@johndesign.net'));
     return is_email($email)?$email:'jonathan@johndesign.net';
 }
+function jd_core_contact_copy_email(){
+    $email=sanitize_email(get_option('jd_contact_copy_email',''));
+    return is_email($email)?$email:'';
+}
+function jd_core_site_from_email(){
+    $host=(string)wp_parse_url(home_url('/'),PHP_URL_HOST);
+    $host=preg_replace('/^www\./i','',$host);
+    $candidate='wordpress@'.$host;
+    return is_email($candidate)?$candidate:jd_core_contact_email();
+}
 function jd_core_mail_diag($status,$data=[]){
     $diag=array_merge([
         'status'=>$status,
@@ -92,6 +102,82 @@ function jd_core_contact_form($variant='home'){
       <?php endif; ?>
     </form>
     <?php return ob_get_clean();
+}
+
+function jd_core_admin_notification_html($data){
+    $name=esc_html($data['name']??'');
+    $email=esc_html($data['email']??'');
+    $phone=esc_html($data['phone']??'');
+    $company=esc_html($data['company']??'');
+    $project=esc_html($data['project']??'');
+    $budget=esc_html($data['budget']??'');
+    $deadline=esc_html($data['deadline']??'');
+    $message=nl2br(esc_html($data['message']??''));
+    $origin=esc_html($data['origin']??'');
+    $reply_href='mailto:'.rawurlencode($data['email']??'').'?subject='.rawurlencode('Re: votre demande — John Design');
+
+    $rows='';
+    $items=[
+        'Nom'=>$name,
+        'E-mail'=>$email,
+        'Téléphone'=>$phone,
+        'Entreprise / activité'=>$company,
+        'Projet'=>$project,
+        'Budget envisagé'=>$budget,
+        'Échéance souhaitée'=>$deadline,
+    ];
+    foreach($items as $label=>$value){
+        if($value==='') continue;
+        $rows.='<tr>'.
+            '<td style="padding:10px 0;color:#6b6870;font-size:14px;vertical-align:top;width:40%;">'.esc_html($label).'</td>'.
+            '<td style="padding:10px 0;color:#191919;font-size:14px;font-weight:700;vertical-align:top;">'.$value.'</td>'.
+        '</tr>';
+    }
+
+    return '<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nouvelle demande John Design</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f2fa;font-family:Arial,Helvetica,sans-serif;color:#191919;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f5f2fa;padding:28px 12px;">
+<tr><td align="center">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:700px;background:#ffffff;border-radius:28px;overflow:hidden;box-shadow:0 12px 34px rgba(25,25,25,.08);">
+<tr><td style="background:#191919;padding:30px 34px;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
+<td><div style="display:inline-block;color:#ffffff;font-weight:900;font-size:27px;line-height:.82;letter-spacing:-1.5px;">john<br>design</div><span style="display:inline-block;color:#c9b4ef;font-size:30px;line-height:1;vertical-align:top;margin-left:7px;">✳</span></td>
+<td align="right" style="color:#c9b4ef;font-size:13px;font-weight:700;">Nouvelle demande</td>
+</tr></table>
+</td></tr>
+
+<tr><td style="padding:40px 38px 18px;">
+<p style="margin:0 0 10px;color:#6b6870;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Formulaire John Design</p>
+<h1 style="margin:0 0 14px;font-size:32px;line-height:1.1;letter-spacing:-1px;">'.$name.' vous contacte<br>pour « '.$project.' ».</h1>
+<p style="margin:0;color:#4b4750;font-size:16px;line-height:1.6;">Voici toutes les informations envoyées depuis le site.</p>
+</td></tr>
+
+<tr><td style="padding:12px 38px 0;">
+<div style="background:#f1ecfb;border-radius:20px;padding:24px 26px;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">'.$rows.'</table>
+<div style="height:1px;background:#d9cdef;margin:12px 0 18px;"></div>
+<p style="margin:0 0 8px;color:#6b6870;font-size:14px;">Message</p>
+<p style="margin:0;font-size:15px;line-height:1.65;color:#191919;">'.$message.'</p>
+</div>
+</td></tr>
+
+<tr><td style="padding:26px 38px 40px;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr><td style="background:#191919;border-radius:999px;">
+<a href="'.$reply_href.'" style="display:inline-block;padding:14px 22px;color:#ffffff;text-decoration:none;font-size:14px;font-weight:800;">Répondre à '.$name.'&nbsp; ↗</a>
+</td></tr></table>
+'.($origin!==''?'<p style="margin:24px 0 0;color:#8a858f;font-size:11px;line-height:1.55;">Page d’origine : '.$origin.'</p>':'').'
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>';
 }
 
 function jd_core_customer_confirmation_html($data){
@@ -186,6 +272,7 @@ function jd_core_send_customer_confirmation($data){
     $subject='Votre demande a bien été reçue — John Design';
     $headers=[
         'Content-Type: text/html; charset=UTF-8',
+        'From: John Design <'.jd_core_site_from_email().'>',
         'Reply-To: John Design <'.jd_core_contact_email().'>',
     ];
 
@@ -231,23 +318,34 @@ function jd_core_contact_submit(){
     if(count($links[0])>4) jd_core_contact_redirect($return,'spam');
 
     $subject='[John Design] Nouvelle demande — '.$project;
-    $body="Nouvelle demande depuis le site John Design\n\n".
-          "Nom : $name\n".
-          "E-mail : $email\n".
-          "Téléphone : $phone\n".
-          "Entreprise : $company\n".
-          "Projet : $project\n".
-          "Budget : $budget\n".
-          "Échéance : $deadline\n\n".
-          "Message :\n$message\n\n".
-          "Page d’origine : ".esc_url_raw(wp_get_referer()?:$return)."\n";
-
+    $origin=esc_url_raw(wp_get_referer()?:$return);
+    $mail_data=[
+        'name'=>$name,
+        'email'=>$email,
+        'phone'=>$phone,
+        'company'=>$company,
+        'project'=>$project,
+        'budget'=>$budget,
+        'deadline'=>$deadline,
+        'message'=>$message,
+        'origin'=>$origin,
+    ];
+    $body=jd_core_admin_notification_html($mail_data);
+    $from=jd_core_site_from_email();
     $headers=[
-      'Content-Type: text/plain; charset=UTF-8',
+      'Content-Type: text/html; charset=UTF-8',
+      'From: John Design <'.$from.'>',
       'Reply-To: '.$name.' <'.$email.'>',
     ];
 
     $sent=wp_mail(jd_core_contact_email(),$subject,$body,$headers);
+
+    // Optional direct copy (e.g. personal Gmail) avoids forwarding the message
+    // through the mailbox, which can damage SPF alignment.
+    $copy=jd_core_contact_copy_email();
+    if($sent && $copy && strtolower($copy)!==strtolower(jd_core_contact_email())){
+        wp_mail($copy,$subject,$body,$headers);
+    }
 
     // Only acknowledge receipt to the client after the John Design notification
     // has successfully been handed to WordPress' mail system.
