@@ -184,16 +184,16 @@ function jd_core_seo_content_tuning_map(){
             'later'=>'De l’idée à la livraison, votre site, votre identité et vos supports restent cohérents.',
         ],
         'creation-site-internet'=>[
-            'intro'=>'Je crée ou refonds votre site internet pour qu’il soit professionnel, rapide, responsive et simple à faire évoluer.',
-            'later'=>'Le site présente clairement votre activité et facilite les demandes de contact. Une IA ou un constructeur peut mettre une page en ligne rapidement ; quand il faut corriger un problème, optimiser le mobile ou faire évoluer le site, vous gardez ici un interlocuteur qui connaît le projet.',
+            'intro'=>'Je crée ou refonds votre site : professionnel, rapide, adapté au mobile et simple à faire évoluer.',
+            'later'=>'Un site clair pour vos visiteurs, avec un interlocuteur s’il faut le corriger ou le faire évoluer.',
         ],
         'identite-visuelle'=>[
-            'intro'=>'Je crée votre logo et votre identité visuelle : couleurs, typographies et règles simples pour garder une image cohérente sur tous vos supports.',
-            'later'=>'Votre identité est pensée pour fonctionner aussi bien sur votre site que sur vos cartes, affiches, panneaux ou véhicules.',
+            'intro'=>'Je crée votre logo, vos couleurs, vos typographies et votre charte graphique.',
+            'later'=>'Une identité prête pour votre site, vos cartes, affiches et panneaux.',
         ],
         'print-signaletique'=>[
-            'intro'=>'Je conçois vos cartes de visite, flyers, affiches, panneaux, adhésifs et marquages, puis je peux vous accompagner jusqu’à la fabrication.',
-            'later'=>'Vous gardez un seul interlocuteur pour la création, la fabrication et, selon le projet, la pose.',
+            'intro'=>'Je conçois vos cartes de visite, flyers, affiches et panneaux, jusqu’à la fabrication et à la pose.',
+            'later'=>'Création, fabrication et pose : un seul interlocuteur.',
         ],
     ];
 }
