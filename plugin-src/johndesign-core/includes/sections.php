@@ -23,6 +23,10 @@ function jd_core_render_image_alt($html){
   return preg_replace('/<img\b/i','<img alt="'.esc_attr($alt).'"',$tag,1);
  },$html);
 }
+function jd_core_get_truck_image_src(){
+ $src=(string)get_option('jd_core_truck_image_src','');
+ return $src;
+}
 function jd_core_render_form($variant='home'){return jd_core_contact_form($variant);}
 function jd_core_render_section($attrs){
  $all=jd_core_sections();$id=sanitize_key($attrs['sectionId']??'');if(!$id||empty($all[$id]))return '';$def=$all[$id];$html=$def['template'];$fields=is_array($attrs['fields']??null)?$attrs['fields']:[];
@@ -36,7 +40,18 @@ function jd_core_render_section($attrs){
    $html=preg_replace('/<section\\b/i','<section class="jd-home-work-feature"',$html,1);
   }
  }
- $html=str_replace('{{CONTACT_FORM_HOME}}',jd_core_render_form('home'),$html);$html=str_replace('{{CONTACT_FORM_FULL}}',jd_core_render_form('full'),$html);$html=str_replace('{{SITE_URL}}',$site_url,$html);$html=str_replace('{{THEME_URI}}',$theme_uri,$html);return jd_core_render_image_alt($html);
+ $html=str_replace('{{CONTACT_FORM_HOME}}',jd_core_render_form('home'),$html);$html=str_replace('{{CONTACT_FORM_FULL}}',jd_core_render_form('full'),$html);$html=str_replace('{{SITE_URL}}',$site_url,$html);$html=str_replace('{{THEME_URI}}',$theme_uri,$html);
+ $page_key='';
+ if(is_front_page())$page_key='home';elseif(is_page()){$p=get_queried_object();if($p instanceof WP_Post)$page_key=$p->post_name;}
+ if($page_key==='print-signaletique' && (stripos(wp_strip_all_tags($html),'IA fait des merveilles')!==false || stripos(wp_strip_all_tags($html),'stickers')!==false)){
+  $truck=jd_core_get_truck_image_src();
+  if($truck){
+   $html=preg_replace_callback('/<img\\b([^>]*)\\bsrc=(["\\'])(.*?)\\2([^>]*)>/i',function($m)use($truck){
+    return '<img'.$m[1].'src="'.$truck.'"'.$m[4].'>';
+   },$html,1);
+  }
+ }
+ return jd_core_render_image_alt($html);
 }
 function jd_core_register_block(){
  wp_register_script('jd-section-editor',JD_CORE_URL.'assets/editor.js',['wp-blocks','wp-element','wp-components','wp-block-editor','wp-server-side-render','wp-i18n'],JD_CORE_VERSION,true);

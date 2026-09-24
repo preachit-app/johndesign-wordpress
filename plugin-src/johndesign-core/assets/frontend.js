@@ -13,6 +13,12 @@ const menu=document.querySelector('.jd-preview-nav');
 const header=document.querySelector('.jd-header');
 
 if(menu){
+  const summary=menu.querySelector('summary');
+  if(summary){
+    summary.textContent='Menu';
+    summary.setAttribute('aria-label','Ouvrir le menu');
+  }
+
   let nav=menu.querySelector('nav');
   if(!nav){
     nav=document.createElement('nav');
