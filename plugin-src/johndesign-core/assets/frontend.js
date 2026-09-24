@@ -61,6 +61,60 @@ if(menu){
  */
 const cleanPath=window.location.pathname.replace(/\/+$/,'')||'/';
 
+/* Print & signalétique : remplace explicitement le visuel IA par la vraie photo Eco Clim. */
+if(cleanPath==='/print-signaletique'){
+  const truck=window.JD_CORE_ASSETS&&window.JD_CORE_ASSETS.truck;
+  if(truck){
+    const sections=[...document.querySelectorAll('.jd-section, section')];
+    const target=sections.find(section=>{
+      const text=(section.textContent||'').toLowerCase();
+      return text.includes('ia fait des merveilles') && text.includes('stickers');
+    });
+
+    if(target){
+      const applyTruck=(img)=>{
+        img.src=truck;
+        img.removeAttribute('srcset');
+        img.removeAttribute('sizes');
+        img.removeAttribute('width');
+        img.removeAttribute('height');
+        img.alt='Habillage adhésif Eco Clim System sur véhicule utilitaire';
+        img.classList.add('jd-print-real-truck');
+      };
+
+      const existing=target.querySelector('img');
+      if(existing){
+        applyTruck(existing);
+      }else{
+        const selectors=[
+          'figure','picture','.jd-visual','.jd-section-visual',
+          '.jd-split-visual','.jd-media','.jd-image','.jd-card-visual'
+        ];
+        let visual=null;
+        for(const selector of selectors){
+          visual=target.querySelector(selector);
+          if(visual) break;
+        }
+
+        if(!visual){
+          const wrappers=[...target.querySelectorAll(':scope > div, :scope > .jd-inner, :scope > .jd-wrap')];
+          const row=wrappers.find(el=>el.children&&el.children.length>=2);
+          if(row) visual=row.children[row.children.length-1];
+        }
+
+        if(visual){
+          const replacement=document.createElement('div');
+          replacement.className='jd-print-real-truck-wrap';
+          const img=document.createElement('img');
+          applyTruck(img);
+          replacement.appendChild(img);
+          visual.replaceWith(replacement);
+        }
+      }
+    }
+  }
+}
+
 const waButton=document.querySelector('.jd-whatsapp-float');
 if(waButton && !waButton.querySelector('span')){
   const label=document.createElement('span');

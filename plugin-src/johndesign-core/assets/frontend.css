@@ -1287,3 +1287,33 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
     border-radius:16px!important;
   }
 }
+
+
+/* John Design Core 2.16.4 — vraie photo camion sur la section Print */
+.jd-print-real-truck,
+.jd-print-real-truck-wrap img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  border-radius:32px!important;
+}
+.jd-print-real-truck-wrap{
+  width:100%!important;
+  height:100%!important;
+  min-height:420px!important;
+  overflow:hidden!important;
+  border-radius:32px!important;
+  background:#fff!important;
+}
+@media(max-width:760px){
+  .jd-print-real-truck-wrap{
+    min-height:300px!important;
+    border-radius:24px!important;
+  }
+  .jd-print-real-truck,
+  .jd-print-real-truck-wrap img{
+    border-radius:24px!important;
+  }
+}
