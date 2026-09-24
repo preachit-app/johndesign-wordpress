@@ -94,6 +94,104 @@ function jd_core_contact_form($variant='home'){
     <?php return ob_get_clean();
 }
 
+function jd_core_customer_confirmation_html($data){
+    $name=esc_html($data['name']??'');
+    $email=esc_html($data['email']??'');
+    $phone=esc_html($data['phone']??'');
+    $company=esc_html($data['company']??'');
+    $project=esc_html($data['project']??'');
+    $budget=esc_html($data['budget']??'');
+    $deadline=esc_html($data['deadline']??'');
+    $message=nl2br(esc_html($data['message']??''));
+
+    $rows='';
+    $items=[
+        'Projet'=>$project,
+        'Entreprise / activité'=>$company,
+        'Téléphone'=>$phone,
+        'Budget envisagé'=>$budget,
+        'Échéance souhaitée'=>$deadline,
+    ];
+    foreach($items as $label=>$value){
+        if($value==='') continue;
+        $rows.='<tr>'.
+            '<td style="padding:10px 0;color:#6b6870;font-size:14px;vertical-align:top;width:42%;">'.esc_html($label).'</td>'.
+            '<td style="padding:10px 0;color:#191919;font-size:14px;font-weight:700;vertical-align:top;">'.$value.'</td>'.
+        '</tr>';
+    }
+
+    $site=esc_url(home_url('/'));
+    $contact_email=esc_html(jd_core_contact_email());
+
+    return '<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Votre demande a bien été reçue</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f2fa;font-family:Arial,Helvetica,sans-serif;color:#191919;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f5f2fa;padding:28px 12px;">
+<tr><td align="center">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:680px;background:#ffffff;border-radius:28px;overflow:hidden;box-shadow:0 12px 34px rgba(25,25,25,.08);">
+
+<tr><td style="background:#191919;padding:30px 34px;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="font-size:0;line-height:1;">
+<div style="display:inline-block;color:#ffffff;font-weight:900;font-size:27px;line-height:.82;letter-spacing:-1.5px;">john<br>design</div>
+<span style="display:inline-block;color:#c9b4ef;font-size:30px;line-height:1;vertical-align:top;margin-left:7px;">✳</span>
+</td>
+<td align="right" style="color:#c9b4ef;font-size:13px;font-weight:700;">Demande reçue ✓</td>
+</tr>
+</table>
+</td></tr>
+
+<tr><td style="padding:42px 38px 16px;">
+<p style="margin:0 0 10px;color:#6b6870;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Merci pour votre message</p>
+<h1 style="margin:0 0 20px;font-size:34px;line-height:1.08;letter-spacing:-1.2px;color:#191919;">Bonjour '.$name.',<br>votre demande est bien arrivée.</h1>
+<p style="margin:0;font-size:17px;line-height:1.65;color:#3e3b43;">Je l’ai bien reçue et je reviendrai vers vous le plus rapidement possible pour échanger sur votre projet.</p>
+</td></tr>
+
+<tr><td style="padding:18px 38px 0;">
+<div style="background:#f1ecfb;border-radius:20px;padding:24px 26px;">
+<p style="margin:0 0 14px;font-size:15px;font-weight:800;color:#191919;">Récapitulatif de votre demande</p>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">'.$rows.'</table>
+<div style="height:1px;background:#d9cdef;margin:12px 0 18px;"></div>
+<p style="margin:0 0 8px;color:#6b6870;font-size:14px;">Votre message</p>
+<p style="margin:0;font-size:15px;line-height:1.65;color:#191919;">'.$message.'</p>
+</div>
+</td></tr>
+
+<tr><td style="padding:28px 38px 40px;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0">
+<tr><td style="background:#191919;border-radius:999px;">
+<a href="'.$site.'" style="display:inline-block;padding:14px 22px;color:#ffffff;text-decoration:none;font-size:14px;font-weight:800;">Voir John Design&nbsp; ↗</a>
+</td></tr>
+</table>
+<p style="margin:28px 0 0;color:#77727d;font-size:12px;line-height:1.6;">Ce message est une confirmation automatique envoyée après votre demande sur le site John Design. Vous pouvez répondre directement à cet e-mail ou écrire à <a href="mailto:'.$contact_email.'" style="color:#191919;">'.$contact_email.'</a>.</p>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>';
+}
+
+function jd_core_send_customer_confirmation($data){
+    $to=sanitize_email($data['email']??'');
+    if(!is_email($to)) return false;
+
+    $subject='Votre demande a bien été reçue — John Design';
+    $headers=[
+        'Content-Type: text/html; charset=UTF-8',
+        'Reply-To: John Design <'.jd_core_contact_email().'>',
+    ];
+
+    return wp_mail($to,$subject,jd_core_customer_confirmation_html($data),$headers);
+}
+
 function jd_core_contact_submit(){
     if(!isset($_POST['jd_nonce'])||!wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['jd_nonce'])),'jd_contact')) wp_die('Requête invalide.',403);
 
@@ -150,6 +248,22 @@ function jd_core_contact_submit(){
     ];
 
     $sent=wp_mail(jd_core_contact_email(),$subject,$body,$headers);
+
+    // Only acknowledge receipt to the client after the John Design notification
+    // has successfully been handed to WordPress' mail system.
+    if($sent){
+        jd_core_send_customer_confirmation([
+            'name'=>$name,
+            'email'=>$email,
+            'phone'=>$phone,
+            'company'=>$company,
+            'project'=>$project,
+            'budget'=>$budget,
+            'deadline'=>$deadline,
+            'message'=>$message,
+        ]);
+    }
+
     jd_core_contact_redirect($return,$sent?'success':'error');
 }
 add_action('admin_post_nopriv_jd_contact_submit','jd_core_contact_submit');
