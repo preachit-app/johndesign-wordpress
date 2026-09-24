@@ -21,6 +21,9 @@ function jd_core_cleanup_all_managed_pages_2140(){
         'Ensuite, chaque création de logo à Aix-en-Provence peut se prolonger naturellement sur vos supports web, print et signalétique.'=>'Ensuite, votre identité visuelle peut se prolonger naturellement sur vos supports web, print et signalétique.',
         'Pour votre signalétique à Pertuis, John Design conçoit des supports visibles et cohérents avec votre identité, du fichier jusqu’à la fabrication.'=>'John Design conçoit des supports visibles et cohérents avec votre identité, du fichier jusqu’à la fabrication.',
         'Enfin, votre signalétique à Pertuis peut être déclinée sur panneaux, adhésifs, marquage véhicule et autres supports selon le projet.'=>'Enfin, vos supports peuvent être déclinés sur panneaux, adhésifs, marquage véhicule et autres formats selon le projet.',
+        'Ici, pas de longues descriptions : uniquement de vraies réalisations, cadrées de façon uniforme pour laisser le visuel parler.'=>'',
+        'Jonathan Romain · Le Puy-Sainte-Réparade · Partout en France'=>'',
+
     ];
 
     $dedupe=[
@@ -70,7 +73,7 @@ function jd_core_cleanup_all_managed_pages_2140(){
                 $next=preg_replace('/([^.!?<>]{35,}[.!?])(?:\\s|<br\\s*\\/?\\s*>|&nbsp;)+\\1/iu','$1',$next);
 
                 // Remove the unnecessary portfolio disclaimer/copy requested after launch.
-                $next=preg_replace('/Ici,?\\s*pas de longue description[^.!?]*(?:[.!?]|$)/iu','',$next);
+                $next=preg_replace('/Ici,?\\s*pas de longues? descriptions?[^.!?]*(?:[.!?]|$)/iu','',$next);
 
                 $next=trim(preg_replace('/[ \\t]{2,}/',' ',$next));
                 if($next!==$value){

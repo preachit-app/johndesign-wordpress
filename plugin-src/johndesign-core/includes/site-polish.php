@@ -14,9 +14,17 @@ function jd_core_home_merchandising_2139(){
     if(!$raw || strpos($raw,'wp:johndesign/section')===false) return false;
 
     $blocks=parse_blocks($raw);
+
+    // Remove the obsolete home-03 block permanently from the homepage content.
+    $before=count($blocks);
+    $blocks=array_values(array_filter($blocks,function($block){
+        return !(($block['blockName']??'')==='johndesign/section' && ($block['attrs']['sectionId']??'')==='home-03');
+    }));
+    $removed_universe=count($blocks)!==$before;
+
     $hero_index=null;
     $work_index=null;
-    $changed=false;
+    $changed=$removed_universe;
 
     foreach($blocks as $i=>&$block){
         if(($block['blockName']??'')!=='johndesign/section') continue;
@@ -28,7 +36,6 @@ function jd_core_home_merchandising_2139(){
         $eyebrows=[
             'home-04'=>'01 / QUELQUES RÉALISATIONS',
             'home-02'=>'02 / CE QUE JE FAIS',
-            'home-03'=>'03 / L’UNIVERS JOHN DESIGN',
         ];
         if(isset($eyebrows[$sid])){
             if(!isset($block['attrs']['fields']) || !is_array($block['attrs']['fields'])) $block['attrs']['fields']=[];

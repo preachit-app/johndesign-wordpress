@@ -59,6 +59,33 @@ if(menu){
  * Le header reste flottant en permanence, avec exactement la largeur,
  * l'espace supérieur et les arrondis de sa position naturelle.
  */
+const cleanPath=window.location.pathname.replace(/\/+$/,'')||'/';
+
+if(cleanPath==='/a-propos'){
+  const sourcePhoto=document.querySelector('.jd-about .jd-jonathan-photo img');
+  const introVisual=document.querySelector('.jd-intro-visual');
+  if(sourcePhoto && introVisual){
+    const figure=document.createElement('figure');
+    figure.className='jd-about-intro-photo';
+    const img=sourcePhoto.cloneNode(true);
+    img.removeAttribute('loading');
+    img.setAttribute('loading','eager');
+    figure.appendChild(img);
+    introVisual.replaceChildren(figure);
+  }
+
+  const oldFigure=document.querySelector('.jd-about .jd-jonathan-photo');
+  if(oldFigure){
+    const process=document.createElement('div');
+    process.className='jd-about-process-card';
+    process.innerHTML=
+      '<div class="jd-process-step"><strong>01</strong><span>Écouter</span></div>'+
+      '<div class="jd-process-step"><strong>02</strong><span>Cadrer</span></div>'+
+      '<div class="jd-process-step"><strong>03</strong><span>Créer</span></div>';
+    oldFigure.replaceWith(process);
+  }
+}
+
 if(header){
   const natural=header.getBoundingClientRect();
   const computed=window.getComputedStyle(header);
