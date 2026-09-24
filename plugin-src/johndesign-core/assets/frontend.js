@@ -61,32 +61,6 @@ if(menu){
  */
 const cleanPath=window.location.pathname.replace(/\/+$/,'')||'/';
 
-/* Print & signalétique : reconstruit la section IA sur le modèle exact de l'accueil. */
-if(cleanPath==='/print-signaletique'){
-  const truck=window.JD_CORE_ASSETS&&window.JD_CORE_ASSETS.truck;
-  const sections=[...document.querySelectorAll('.jd-section, section')];
-  const target=sections.find(section=>{
-    const text=(section.textContent||'').toLowerCase();
-    return text.includes('ia fait des merveilles') && text.includes('stickers');
-  });
-
-  if(target && truck){
-    target.classList.add('jd-print-home-proof');
-    target.innerHTML=
-      '<div class="jd-print-home-proof__inner">'+
-        '<div class="jd-print-home-proof__copy">'+
-          '<p class="jd-print-home-proof__eyebrow">DU DESIGN, ET QUELQU’UN AVEC VOUS</p>'+
-          '<h2>L’IA fait des merveilles.<br>Mais elle ne pose pas<br>vos stickers.</h2>'+
-          '<p class="jd-print-home-proof__text">Les idées prennent vie sur un écran, mais aussi sur votre vitrine, vos panneaux et les murs de votre commerce. Et là, vous pouvez compter sur moi : on en discute, on regarde ensemble, et je vous accompagne jusqu’à la pose.</p>'+
-          '<a class="jd-print-home-proof__cta" href="/contact/">Parlons de votre projet <span aria-hidden="true">↗</span></a>'+
-        '</div>'+
-        '<figure class="jd-print-home-proof__visual">'+
-          '<img src="'+truck+'" alt="Habillage adhésif Eco Clim System sur véhicule utilitaire">'+
-        '</figure>'+
-      '</div>';
-  }
-}
-
 const waButton=document.querySelector('.jd-whatsapp-float');
 if(waButton && !waButton.querySelector('span')){
   const label=document.createElement('span');
