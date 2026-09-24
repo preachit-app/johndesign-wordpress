@@ -23,6 +23,7 @@ function jd_core_cleanup_all_managed_pages_2140(){
         'Enfin, votre signalétique à Pertuis peut être déclinée sur panneaux, adhésifs, marquage véhicule et autres supports selon le projet.'=>'Enfin, vos supports peuvent être déclinés sur panneaux, adhésifs, marquage véhicule et autres formats selon le projet.',
         'Ici, pas de longues descriptions : uniquement de vraies réalisations, cadrées de façon uniforme pour laisser le visuel parler.'=>'',
         'Jonathan Romain · Le Puy-Sainte-Réparade · Partout en France'=>'',
+        'SITES INTERNET / À EXPLORER'=>'SITES INTERNET',
 
     ];
 
@@ -61,8 +62,10 @@ function jd_core_cleanup_all_managed_pages_2140(){
                 $next=$value;
 
                 foreach($replacements as $from=>$to){
-                    $next=str_replace($from,$to,$next);
+                    $next=str_ireplace($from,$to,$next);
                 }
+
+                $next=str_ireplace('/concept-faites-impression/','/print-signaletique/',$next);
 
                 foreach($dedupe as $phrase){
                     $quoted=preg_quote($phrase,'/');
@@ -83,6 +86,31 @@ function jd_core_cleanup_all_managed_pages_2140(){
             }
         }
         unset($block);
+
+        // Retire réellement de Gutenberg la section fictive "Faites impression"
+        // sur Print & signalétique, au lieu de seulement la masquer au rendu.
+        if($page->post_name==='print-signaletique'){
+            $defs=jd_core_sections();
+            $kept=[];
+            foreach($blocks as $candidate){
+                if(($candidate['blockName']??'')==='johndesign/section'){
+                    $sid=$candidate['attrs']['sectionId']??'';
+                    $def=$defs[$sid]??null;
+                    $fields=$candidate['attrs']['fields']??[];
+                    $haystack=mb_strtolower(
+                        wp_strip_all_tags(
+                            wp_json_encode($fields,JSON_UNESCAPED_UNICODE).' '.($def['template']??'')
+                        )
+                    );
+                    if(strpos($haystack,'faites impression')!==false && strpos($haystack,'une idée du style')!==false){
+                        $page_changed=true;
+                        continue;
+                    }
+                }
+                $kept[]=$candidate;
+            }
+            $blocks=$kept;
+        }
 
         if($page_changed){
             wp_update_post(['ID'=>$page->ID,'post_content'=>wp_slash(serialize_blocks($blocks))]);
@@ -191,7 +219,7 @@ function jd_core_capture_home_truck_2145(){
         }
 
         // Prefer the exact image identified by its alt/figcaption context.
-        if(preg_match('/<img\\b[^>]*alt=(["\\'])[^"\\']*eco\\s*clim[^"\\']*\\1[^>]*src=(["\\'])(.*?)\\2/i',$html,$m)){
+        if(preg_match("/<img\\b[^>]*alt=([\"'])[^\"']*eco\\s*clim[^\"']*\\1[^>]*src=([\"'])(.*?)\\2/i",$html,$m)){
             $src=html_entity_decode($m[3],ENT_QUOTES|ENT_HTML5,'UTF-8');
             if(strpos($src,'data:image/')===0 || filter_var($src,FILTER_VALIDATE_URL)){
                 update_option('jd_core_truck_image_src',$src,false);
@@ -200,7 +228,7 @@ function jd_core_capture_home_truck_2145(){
         }
 
         // Fallback: any image in the Eco Clim block.
-        if(preg_match('/<img\\b[^>]*\\bsrc=(["\\'])(.*?)\\1/i',$html,$m)){
+        if(preg_match("/<img\\b[^>]*\\bsrc=([\"'])(.*?)\\1/i",$html,$m)){
             $src=html_entity_decode($m[2],ENT_QUOTES|ENT_HTML5,'UTF-8');
             if(strpos($src,'data:image/')===0 || filter_var($src,FILTER_VALIDATE_URL)){
                 update_option('jd_core_truck_image_src',$src,false);

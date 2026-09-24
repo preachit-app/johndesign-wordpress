@@ -35,6 +35,40 @@ function jd_core_legacy_redirects(){
 }
 add_action('template_redirect','jd_core_legacy_redirects',1);
 
+/** La page concept redondante reste une redirection 301 et sort des navigations/sitemaps. */
+function jd_core_legacy_concept_page_id_2157(){
+    $page=get_page_by_path('concept-faites-impression');
+    return ($page instanceof WP_Post)?(int)$page->ID:0;
+}
+function jd_core_hide_legacy_concept_menu_2157($items){
+    foreach((array)$items as $key=>$item){
+        $path=parse_url((string)($item->url??''),PHP_URL_PATH);
+        $path='/'.trim((string)$path,'/').'/';
+        if($path==='/concept-faites-impression/') unset($items[$key]);
+    }
+    return array_values($items);
+}
+add_filter('wp_nav_menu_objects','jd_core_hide_legacy_concept_menu_2157',20);
+
+function jd_core_exclude_legacy_concept_yoast_2157($ids){
+    $ids=is_array($ids)?$ids:[];
+    $id=jd_core_legacy_concept_page_id_2157();
+    if($id) $ids[]=$id;
+    return array_values(array_unique(array_map('intval',$ids)));
+}
+add_filter('wpseo_exclude_from_sitemap_by_post_ids','jd_core_exclude_legacy_concept_yoast_2157');
+
+function jd_core_exclude_legacy_concept_core_sitemap_2157($args,$post_type){
+    if($post_type!=='page') return $args;
+    $id=jd_core_legacy_concept_page_id_2157();
+    if(!$id) return $args;
+    $excluded=isset($args['post__not_in'])?(array)$args['post__not_in']:[];
+    $excluded[]=$id;
+    $args['post__not_in']=array_values(array_unique(array_map('intval',$excluded)));
+    return $args;
+}
+add_filter('wp_sitemaps_posts_query_args','jd_core_exclude_legacy_concept_core_sitemap_2157',10,2);
+
 function jd_core_launch_checks(){
     $host=parse_url(home_url('/'),PHP_URL_HOST);
     $is_staging=(bool)preg_match('/wptiger|staging|preprod|dev\./i',(string)$host);

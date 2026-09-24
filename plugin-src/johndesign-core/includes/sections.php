@@ -144,12 +144,13 @@ add_filter('render_block','jd_core_realisations_render_cleanup_2154',40,2);
 function jd_core_page_polish_2155($block_content,$block){
  if(($block['blockName']??'')!=='johndesign/section') return $block_content;
 
+ // Le libellé doit rester simple sur toutes les pages où ce composant apparaît.
+ $block_content=str_ireplace(
+   ['SITES INTERNET / À EXPLORER','SITES INTERNET / A EXPLORER'],
+   'SITES INTERNET',
+   $block_content
+ );
  $plain=mb_strtolower(wp_strip_all_tags($block_content));
-
- // Réalisations: wording plus simple.
- if(is_page('realisations')){
-   $block_content=str_ireplace('SITES INTERNET / À EXPLORER','SITES INTERNET',$block_content);
- }
 
  // Cette section concept n'apporte plus rien au parcours commercial.
  if(strpos($plain,'faites impression')!==false){

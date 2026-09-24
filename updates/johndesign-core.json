@@ -1,6 +1,6 @@
 {
   "name": "John Design Core",
-  "version": "2.15.6",
+  "version": "2.15.7",
   "download_url": "https://raw.githubusercontent.com/preachit-app/johndesign-wordpress/main/dist/johndesign-core.zip",
   "homepage": "https://github.com/preachit-app/johndesign-wordpress",
   "requires": "6.6",
