@@ -68,8 +68,10 @@ function jd_core_home_merchandising_2139(){
  * a new cache key now that the site itself has been repaired.
  */
 function jd_core_refresh_unmaxdevie_2139(){
-    $target='https://www.unmaxdevie.com/?jd-preview=20260923';
-    $shot='https://s0.wp.com/mshots/v1/'.rawurlencode($target).'?w=1200&h=675';
+    // mShots kept serving a stale/wrong visual for this project.
+    // Use a live screenshot endpoint with a new cache key instead.
+    $target='https://www.unmaxdevie.com/';
+    $shot='https://image.thum.io/get/width/1200/crop/675/noanimate/'.rawurlencode($target).'?v=20260924-2';
     $changed=false;
 
     $library=get_option('jd_core_sections_library');
@@ -108,10 +110,10 @@ function jd_core_refresh_unmaxdevie_2139(){
         }
     }
 
+    // Trigger the screenshot once so it is ready when the portfolio loads.
     wp_remote_get($shot,['timeout'=>0.01,'blocking'=>false,'redirection'=>2]);
     return $changed;
 }
-
 function jd_core_site_polish_2139(){
     if(get_option('jd_core_site_polish_version')===JD_CORE_VERSION) return;
 
