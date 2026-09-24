@@ -61,6 +61,13 @@ if(menu){
  */
 const cleanPath=window.location.pathname.replace(/\/+$/,'')||'/';
 
+const waButton=document.querySelector('.jd-whatsapp-float');
+if(waButton && !waButton.querySelector('span')){
+  const label=document.createElement('span');
+  label.textContent='WhatsApp';
+  waButton.appendChild(label);
+}
+
 if(['/creation-site-internet','/identite-visuelle','/print-signaletique'].includes(cleanPath)){
   const ctaMap={
     '/creation-site-internet':'Parlons de votre site',

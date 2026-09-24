@@ -505,3 +505,102 @@ figure>figcaption{
     font-size:13px!important;
   }
 }
+
+
+/* John Design Core 2.15.3 — correction définitive accueil / réalisations */
+.jd-home-work-feature{
+  display:block!important;
+  box-sizing:border-box!important;
+  padding:64px clamp(28px,4vw,64px)!important;
+}
+.jd-home-work-feature .jd-home-work-head,
+.jd-home-work-feature .jd-home-work-grid,
+.jd-home-work-feature .jd-work-controls,
+.jd-home-work-feature .jd-home-work-actions{
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+}
+.jd-home-work-feature .jd-home-work-head{
+  grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr)!important;
+  gap:48px!important;
+}
+.jd-home-work-feature .jd-home-work-head h2{
+  max-width:760px!important;
+}
+.jd-home-work-feature .jd-home-work-head .jd-lead{
+  max-width:390px!important;
+}
+.jd-home-work-feature #jd-work-track{
+  display:flex!important;
+  width:100%!important;
+  max-width:none!important;
+  gap:18px!important;
+  overflow-x:auto!important;
+}
+.jd-home-work-feature #jd-work-track>.jd-home-work-item{
+  flex:0 0 calc((100% - 36px)/3)!important;
+  min-width:calc((100% - 36px)/3)!important;
+  width:calc((100% - 36px)/3)!important;
+  aspect-ratio:1/1!important;
+}
+.jd-home-work-feature .jd-work-controls{
+  display:flex!important;
+  justify-content:space-between!important;
+  align-items:center!important;
+}
+.jd-home-work-feature .jd-home-work-actions{
+  display:flex!important;
+  justify-content:flex-end!important;
+}
+@media(max-width:980px){
+  .jd-home-work-feature{
+    padding:48px 32px!important;
+  }
+  .jd-home-work-feature .jd-home-work-head{
+    grid-template-columns:1fr!important;
+    gap:18px!important;
+  }
+  .jd-home-work-feature .jd-home-work-head .jd-lead{
+    max-width:650px!important;
+  }
+  .jd-home-work-feature #jd-work-track>.jd-home-work-item{
+    flex-basis:calc((100% - 18px)/2)!important;
+    min-width:calc((100% - 18px)/2)!important;
+    width:calc((100% - 18px)/2)!important;
+  }
+}
+@media(max-width:640px){
+  .jd-home-work-feature{
+    padding:38px 20px!important;
+  }
+  .jd-home-work-feature #jd-work-track>.jd-home-work-item{
+    flex-basis:86%!important;
+    min-width:86%!important;
+    width:86%!important;
+  }
+  .jd-home-work-feature .jd-home-work-actions{
+    justify-content:flex-start!important;
+  }
+}
+
+/* WhatsApp : garantir texte + icône visibles dans la capsule. */
+.jd-whatsapp-float{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:#fff!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+}
+.jd-whatsapp-float span{
+  display:inline!important;
+  visibility:visible!important;
+  opacity:1!important;
+  color:#fff!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  width:auto!important;
+  max-width:none!important;
+}
