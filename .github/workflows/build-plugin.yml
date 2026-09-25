@@ -26,7 +26,7 @@ jobs:
           for source in plugin-src/johndesign-core/assets/portfolio/signage-*.webp.b64; do
             [ -f "$source" ] || continue
             target="${source%.b64}"
-            tr -d '\\n\\r ' < "$source" | base64 --decode > "$target"
+            tr -d '\n\r ' < "$source" | base64 --decode > "$target"
             test -s "$target"
           done
       - name: Validate PHP syntax
