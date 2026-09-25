@@ -185,35 +185,85 @@ document.querySelectorAll('.jd-site-card').forEach(card=>{
 
 // Unifier toutes les flèches de CTA : jamais d'emoji, une seule flèche SVG fine.
 const jdThinArrowMarkup='<span class="jd-cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17L17 7"></path><path d="M9 7H17V15"></path></svg></span>';
+const jdDiagonalArrowRegex=/[↗⬈➚⤴][\uFE0E\uFE0F]?/gu;
 
 const jdStripUnicodeArrow=(el)=>{
   const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
   const nodes=[];
   while(walker.nextNode()) nodes.push(walker.currentNode);
+
+  let changed=false;
   nodes.forEach(node=>{
-    node.nodeValue=node.nodeValue
-      .replace(/\s*↗[\uFE0E\uFE0F]?\s*/gu,' ')
+    const before=node.nodeValue||'';
+    const after=before
+      .replace(/\s*[↗⬈➚⤴][\uFE0E\uFE0F]?\s*/gu,' ')
       .replace(/\s{2,}/g,' ');
+    if(after!==before){
+      node.nodeValue=after;
+      changed=true;
+    }
   });
+  return changed;
 };
 
-const jdNormalizeCtaArrows=()=>{
-  document.querySelectorAll('a').forEach(link=>{
-    const hasUnicode=/↗[\uFE0E\uFE0F]?/u.test(link.textContent||'');
-    const hasSvg=!!link.querySelector('.jd-cta-arrow');
-    if(!hasUnicode && !hasSvg) return;
+const jdNormalizeCtaArrows=(root=document)=>{
+  const elements=[];
+  if(root instanceof Element && root.matches('a,button')) elements.push(root);
+  if(root.querySelectorAll) elements.push(...root.querySelectorAll('a,button'));
 
-    jdStripUnicodeArrow(link);
+  [...new Set(elements)].forEach(el=>{
+    if(el.matches('[data-jd-print-prev],[data-jd-print-next],[data-jd-gallery-prev],[data-jd-gallery-next]')) return;
 
-    const arrows=[...link.querySelectorAll('.jd-cta-arrow')];
+    jdDiagonalArrowRegex.lastIndex=0;
+    const hadUnicode=jdDiagonalArrowRegex.test(el.textContent||'');
+    jdDiagonalArrowRegex.lastIndex=0;
+
+    const existing=[...el.querySelectorAll(':scope > .jd-cta-arrow')];
+    if(!hadUnicode && !existing.length) return;
+
+    jdStripUnicodeArrow(el);
+
+    const arrows=[...el.querySelectorAll(':scope > .jd-cta-arrow')];
     arrows.slice(1).forEach(node=>node.remove());
 
     if(!arrows.length){
-      link.insertAdjacentHTML('beforeend',jdThinArrowMarkup);
+      el.insertAdjacentHTML('beforeend',jdThinArrowMarkup);
     }
   });
 };
+
 jdNormalizeCtaArrows();
+
+let jdArrowNormalizeQueued=false;
+const jdQueueArrowNormalize=(root=document)=>{
+  if(jdArrowNormalizeQueued) return;
+  jdArrowNormalizeQueued=true;
+  requestAnimationFrame(()=>{
+    jdArrowNormalizeQueued=false;
+    jdNormalizeCtaArrows(root);
+  });
+};
+
+const jdArrowObserver=new MutationObserver(mutations=>{
+  for(const mutation of mutations){
+    if(mutation.type==='characterData'){
+      const parent=mutation.target.parentElement?.closest('a,button');
+      if(parent){
+        jdQueueArrowNormalize(parent);
+        return;
+      }
+    }
+    for(const node of mutation.addedNodes){
+      if(node.nodeType!==1) continue;
+      const el=node;
+      if(el.matches?.('a,button') || el.querySelector?.('a,button')){
+        jdQueueArrowNormalize(el);
+        return;
+      }
+    }
+  }
+});
+jdArrowObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
 
 /* Galerie signalétique dans la section "L’IA fait des merveilles". */
 document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
