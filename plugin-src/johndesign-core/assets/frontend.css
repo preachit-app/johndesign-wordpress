@@ -1731,7 +1731,7 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   }
 }
 
-/* John Design Core 2.16.13 — galerie signalétique embarquée, fiable et responsive */
+/* John Design Core 2.16.14 — galerie signalétique HD */
 .jd-print-proof-v2__visual{display:none!important}
 
 .jd-print-proof-slider{
@@ -1746,13 +1746,30 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   box-shadow:0 10px 32px rgba(25,25,25,.06)!important;
   touch-action:pan-y!important;
 }
-.jd-print-proof-slider__frame{
+.jd-print-proof-slider__slides,
+.jd-print-proof-slider__slide{
   position:absolute!important;
   inset:0!important;
-  background-repeat:no-repeat!important;
-  background-size:100% 500%!important;
-  background-position:center 0%!important;
-  transition:background-position .48s cubic-bezier(.2,.7,.2,1)!important;
+}
+.jd-print-proof-slider__slide{
+  margin:0!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transition:opacity .35s ease,visibility .35s ease!important;
+}
+.jd-print-proof-slider__slide.is-active{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+.jd-print-proof-slider__slide img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  object-fit:cover!important;
+  object-position:center center!important;
 }
 .jd-print-proof-slider::after{
   content:''!important;
@@ -1767,7 +1784,7 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
 }
 .jd-print-proof-slider__ui{
   position:absolute!important;
-  z-index:2!important;
+  z-index:3!important;
   left:18px!important;
   right:18px!important;
   bottom:18px!important;
@@ -1775,11 +1792,14 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   align-items:center!important;
   justify-content:space-between!important;
   gap:18px!important;
+  pointer-events:none!important;
 }
-.jd-print-proof-slider__dots{
+.jd-print-proof-slider__dots,
+.jd-print-proof-slider__arrows{
   display:flex!important;
   align-items:center!important;
-  gap:7px!important;
+  gap:8px!important;
+  pointer-events:auto!important;
 }
 .jd-print-proof-slider__dot{
   width:7px!important;
@@ -1787,17 +1807,13 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   padding:0!important;
   border:0!important;
   border-radius:999px!important;
-  background:rgba(255,255,255,.62)!important;
+  background:rgba(255,255,255,.65)!important;
   cursor:pointer!important;
   transition:width .18s ease,background .18s ease!important;
 }
 .jd-print-proof-slider__dot.is-active{
   width:23px!important;
   background:#fff!important;
-}
-.jd-print-proof-slider__arrows{
-  display:flex!important;
-  gap:8px!important;
 }
 .jd-print-proof-slider__arrow{
   width:42px!important;
@@ -1808,7 +1824,7 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   justify-content:center!important;
   border:0!important;
   border-radius:50%!important;
-  background:rgba(255,255,255,.95)!important;
+  background:rgba(255,255,255,.96)!important;
   color:#191919!important;
   font-size:18px!important;
   line-height:1!important;
@@ -1825,13 +1841,9 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   outline:2px solid #191919!important;
   outline-offset:3px!important;
 }
-.jd-print-proof-slider--fallback{
-  background:#fff!important;
-}
 
 @media(max-width:760px){
   .jd-print-proof-slider{
-    aspect-ratio:1/1!important;
     border-radius:24px!important;
   }
   .jd-print-proof-slider__ui{
@@ -1846,7 +1858,7 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
 }
 
 @media(prefers-reduced-motion:reduce){
-  .jd-print-proof-slider__frame,
+  .jd-print-proof-slider__slide,
   .jd-print-proof-slider__arrow,
   .jd-print-proof-slider__dot{
     transition:none!important;

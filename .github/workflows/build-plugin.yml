@@ -21,6 +21,14 @@ jobs:
             unzip -t dist/johndesign-core.zip
             unzip -qo dist/johndesign-core.zip -d plugin-src
           fi
+      - name: Decode signage gallery assets
+        run: |
+          for source in plugin-src/johndesign-core/assets/portfolio/signage-*.webp.b64; do
+            [ -f "$source" ] || continue
+            target="${source%.b64}"
+            tr -d '\\n\\r ' < "$source" | base64 --decode > "$target"
+            test -s "$target"
+          done
       - name: Validate PHP syntax
         run: |
           find plugin-src/johndesign-core -name '*.php' -print0 | xargs -0 -n1 php -l
@@ -28,7 +36,7 @@ jobs:
         run: |
           rm -f dist/johndesign-core.zip
           cd plugin-src
-          zip -qr ../dist/johndesign-core.zip johndesign-core
+          zip -qr ../dist/johndesign-core.zip johndesign-core -x 'johndesign-core/assets/portfolio/*.webp.b64' 'johndesign-core/assets/portfolio/signage-sprite.b64'
           cd ..
           unzip -t dist/johndesign-core.zip
       - name: Commit source and verified distribution ZIP

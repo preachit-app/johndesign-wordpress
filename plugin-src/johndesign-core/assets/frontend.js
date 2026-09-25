@@ -184,27 +184,23 @@ document.querySelectorAll('.jd-site-card').forEach(card=>{
 
 /* Galerie signalétique dans la section "L’IA fait des merveilles". */
 document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
-  const frame=slider.querySelector('.jd-print-proof-slider__frame');
-  const sprite=slider.dataset.sprite||'';
+  const slides=[...slider.querySelectorAll('[data-jd-print-slide]')];
   const dots=[...slider.querySelectorAll('[data-jd-print-dot]')];
   const prev=slider.querySelector('[data-jd-print-prev]');
   const next=slider.querySelector('[data-jd-print-next]');
-  const count=parseInt(slider.dataset.count||String(dots.length||1),10);
-  if(!frame || !sprite || count<1) return;
-  frame.style.backgroundImage='url("'+sprite+'")';
-
-  let labels=[];
-  try{ labels=JSON.parse(slider.dataset.labels||'[]'); }catch(e){}
+  const count=slides.length;
+  if(!count) return;
 
   let index=0;
   let timer=null;
   let startX=null;
 
   const render=()=>{
-    const pct=count<=1?0:(index/(count-1))*100;
-    frame.style.backgroundPosition='center '+pct+'%';
-    if(labels[index]) frame.setAttribute('aria-label',labels[index]);
-
+    slides.forEach((slide,i)=>{
+      const active=i===index;
+      slide.classList.toggle('is-active',active);
+      slide.setAttribute('aria-hidden',active?'false':'true');
+    });
     dots.forEach((dot,i)=>{
       const active=i===index;
       dot.classList.toggle('is-active',active);
@@ -225,16 +221,28 @@ document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
     }
   };
 
-  const startAuto=()=>{
+  const start=()=>{
     stop();
     if(count>1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       timer=setInterval(()=>go(index+1),5500);
     }
   };
 
-  prev?.addEventListener('click',()=>{go(index-1);startAuto();});
-  next?.addEventListener('click',()=>{go(index+1);startAuto();});
-  dots.forEach((dot,i)=>dot.addEventListener('click',()=>{go(i);startAuto();}));
+  prev?.addEventListener('click',event=>{
+    event.preventDefault();
+    go(index-1);
+    start();
+  });
+  next?.addEventListener('click',event=>{
+    event.preventDefault();
+    go(index+1);
+    start();
+  });
+  dots.forEach((dot,i)=>dot.addEventListener('click',event=>{
+    event.preventDefault();
+    go(i);
+    start();
+  }));
 
   slider.addEventListener('pointerdown',e=>{
     startX=e.clientX;
@@ -247,21 +255,21 @@ document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
       if(Math.abs(dx)>45) go(index+(dx<0?1:-1));
     }
     startX=null;
-    startAuto();
+    start();
   },{passive:true});
 
   slider.addEventListener('pointercancel',()=>{
     startX=null;
-    startAuto();
+    start();
   },{passive:true});
 
   slider.addEventListener('mouseenter',stop);
-  slider.addEventListener('mouseleave',startAuto);
+  slider.addEventListener('mouseleave',start);
   slider.addEventListener('focusin',stop);
-  slider.addEventListener('focusout',startAuto);
+  slider.addEventListener('focusout',start);
 
   render();
-  startAuto();
+  start();
 });
 
 })();
