@@ -1731,7 +1731,7 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   }
 }
 
-/* John Design Core 2.16.12 — galerie signalétique avec vraies images séparées */
+/* John Design Core 2.16.13 — galerie signalétique embarquée, fiable et responsive */
 .jd-print-proof-v2__visual{display:none!important}
 
 .jd-print-proof-slider{
@@ -1746,31 +1746,13 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   box-shadow:0 10px 32px rgba(25,25,25,.06)!important;
   touch-action:pan-y!important;
 }
-.jd-print-proof-slider__slides{
+.jd-print-proof-slider__frame{
   position:absolute!important;
   inset:0!important;
-}
-.jd-print-proof-slider__slide{
-  position:absolute!important;
-  inset:0!important;
-  margin:0!important;
-  opacity:0!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
-  transition:opacity .48s cubic-bezier(.2,.7,.2,1),visibility .48s!important;
-}
-.jd-print-proof-slider__slide.is-active{
-  opacity:1!important;
-  visibility:visible!important;
-  pointer-events:auto!important;
-}
-.jd-print-proof-slider__slide img{
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  max-width:none!important;
-  object-fit:cover!important;
-  object-position:center!important;
+  background-repeat:no-repeat!important;
+  background-size:100% 500%!important;
+  background-position:center 0%!important;
+  transition:background-position .48s cubic-bezier(.2,.7,.2,1)!important;
 }
 .jd-print-proof-slider::after{
   content:''!important;
@@ -1843,6 +1825,9 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   outline:2px solid #191919!important;
   outline-offset:3px!important;
 }
+.jd-print-proof-slider--fallback{
+  background:#fff!important;
+}
 
 @media(max-width:760px){
   .jd-print-proof-slider{
@@ -1861,7 +1846,7 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
 }
 
 @media(prefers-reduced-motion:reduce){
-  .jd-print-proof-slider__slide,
+  .jd-print-proof-slider__frame,
   .jd-print-proof-slider__arrow,
   .jd-print-proof-slider__dot{
     transition:none!important;

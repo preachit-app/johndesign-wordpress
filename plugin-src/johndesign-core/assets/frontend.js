@@ -184,23 +184,25 @@ document.querySelectorAll('.jd-site-card').forEach(card=>{
 
 /* Galerie signalétique dans la section "L’IA fait des merveilles". */
 document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
-  const slides=[...slider.querySelectorAll('[data-jd-print-slide]')];
+  const frame=slider.querySelector('.jd-print-proof-slider__frame');
   const dots=[...slider.querySelectorAll('[data-jd-print-dot]')];
   const prev=slider.querySelector('[data-jd-print-prev]');
   const next=slider.querySelector('[data-jd-print-next]');
-  const count=slides.length;
-  if(!count) return;
+  const count=parseInt(slider.dataset.count||String(dots.length||1),10);
+  if(!frame || count<1) return;
+
+  let labels=[];
+  try{ labels=JSON.parse(slider.dataset.labels||'[]'); }catch(e){}
 
   let index=0;
   let timer=null;
   let startX=null;
 
   const render=()=>{
-    slides.forEach((slide,i)=>{
-      const active=i===index;
-      slide.classList.toggle('is-active',active);
-      slide.setAttribute('aria-hidden',active?'false':'true');
-    });
+    const pct=count<=1?0:(index/(count-1))*100;
+    frame.style.backgroundPosition='center '+pct+'%';
+    if(labels[index]) frame.setAttribute('aria-label',labels[index]);
+
     dots.forEach((dot,i)=>{
       const active=i===index;
       dot.classList.toggle('is-active',active);
@@ -221,16 +223,16 @@ document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
     }
   };
 
-  const start=()=>{
+  const startAuto=()=>{
     stop();
     if(count>1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       timer=setInterval(()=>go(index+1),5500);
     }
   };
 
-  prev?.addEventListener('click',()=>{go(index-1);start();});
-  next?.addEventListener('click',()=>{go(index+1);start();});
-  dots.forEach((dot,i)=>dot.addEventListener('click',()=>{go(i);start();}));
+  prev?.addEventListener('click',()=>{go(index-1);startAuto();});
+  next?.addEventListener('click',()=>{go(index+1);startAuto();});
+  dots.forEach((dot,i)=>dot.addEventListener('click',()=>{go(i);startAuto();}));
 
   slider.addEventListener('pointerdown',e=>{
     startX=e.clientX;
@@ -243,20 +245,21 @@ document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
       if(Math.abs(dx)>45) go(index+(dx<0?1:-1));
     }
     startX=null;
-    start();
+    startAuto();
   },{passive:true});
 
   slider.addEventListener('pointercancel',()=>{
     startX=null;
-    start();
+    startAuto();
   },{passive:true});
+
   slider.addEventListener('mouseenter',stop);
-  slider.addEventListener('mouseleave',start);
+  slider.addEventListener('mouseleave',startAuto);
   slider.addEventListener('focusin',stop);
-  slider.addEventListener('focusout',start);
+  slider.addEventListener('focusout',startAuto);
 
   render();
-  start();
+  startAuto();
 });
 
 })();
