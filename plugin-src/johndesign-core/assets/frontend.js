@@ -75,7 +75,7 @@ if(['/creation-site-internet','/identite-visuelle','/print-signaletique'].includ
     '/print-signaletique':'Parlons de votre projet'
   };
   document.querySelectorAll('.wp-block-button__link').forEach(a=>{
-    if(a.textContent.trim()==='Parlons de votre projet') a.textContent=ctaMap[cleanPath]+' ↗';
+    if(a.textContent.trim().replace(/\s*↗[\uFE0E\uFE0F]?\s*/gu,' ').trim()==='Parlons de votre projet') a.textContent=ctaMap[cleanPath];
   });
 }
 
@@ -181,6 +181,39 @@ document.querySelectorAll('.jd-site-card').forEach(card=>{
   });
 });
 
+
+
+// Unifier toutes les flèches de CTA : jamais d'emoji, une seule flèche SVG fine.
+const jdThinArrowMarkup='<span class="jd-cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17L17 7"></path><path d="M9 7H17V15"></path></svg></span>';
+
+const jdStripUnicodeArrow=(el)=>{
+  const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
+  const nodes=[];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node=>{
+    node.nodeValue=node.nodeValue
+      .replace(/\s*↗[\uFE0E\uFE0F]?\s*/gu,' ')
+      .replace(/\s{2,}/g,' ');
+  });
+};
+
+const jdNormalizeCtaArrows=()=>{
+  document.querySelectorAll('a').forEach(link=>{
+    const hasUnicode=/↗[\uFE0E\uFE0F]?/u.test(link.textContent||'');
+    const hasSvg=!!link.querySelector('.jd-cta-arrow');
+    if(!hasUnicode && !hasSvg) return;
+
+    jdStripUnicodeArrow(link);
+
+    const arrows=[...link.querySelectorAll('.jd-cta-arrow')];
+    arrows.slice(1).forEach(node=>node.remove());
+
+    if(!arrows.length){
+      link.insertAdjacentHTML('beforeend',jdThinArrowMarkup);
+    }
+  });
+};
+jdNormalizeCtaArrows();
 
 /* Galerie signalétique dans la section "L’IA fait des merveilles". */
 document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{

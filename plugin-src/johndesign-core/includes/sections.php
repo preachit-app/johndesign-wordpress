@@ -100,7 +100,7 @@ function jd_core_web_maintenance_2151(){
      <div><strong>Surveillance</strong><span>Vérification du bon fonctionnement et des points essentiels.</span></div>
      <div><strong>Petites évolutions</strong><span>Textes, images, nouvelles sections ou ajustements au fil du temps.</span></div>
    </div>
-   <a class="jd-web-maintenance-link" href="'.esc_url(home_url('/contact/')).'">Parlons du suivi ↗</a>
+   <a class="jd-web-maintenance-link" href="'.esc_url(home_url('/contact/')).'">Parlons du suivi <span class="jd-cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17L17 7"></path><path d="M9 7H17V15"></path></svg></span></a>
  </section>';
 }
 

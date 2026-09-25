@@ -1563,16 +1563,18 @@ body .jd-section img[src*="eco-clim-truck.webp"]{
   transform:translateY(-2px)!important;
   box-shadow:0 10px 26px rgba(25,25,25,.16)!important;
 }
-.jd-print-proof-v2__cta .jd-cta-arrow{
+.jd-cta-arrow{
   width:20px!important;
   height:20px!important;
   flex:0 0 20px!important;
   display:inline-flex!important;
   align-items:center!important;
   justify-content:center!important;
+  margin-left:2px!important;
   line-height:0!important;
+  vertical-align:middle!important;
 }
-.jd-print-proof-v2__cta .jd-cta-arrow svg{
+.jd-cta-arrow svg{
   display:block!important;
   width:100%!important;
   height:100%!important;
