@@ -3,12 +3,7 @@ if (!defined('ABSPATH')) exit;
 
 /**
  * John Design Core 2.16.13 — galerie signalétique robuste.
- *
- * L'image composée est stockée en Base64 texte dans le plugin pour éviter
- * toute corruption des fichiers binaires lors de la construction du ZIP.
- * Elle contient 5 cadrages carrés empilés verticalement.
  */
-
 function jd_core_print_proof_gallery_labels_21613(){
     return [
         'Habillage adhésif Eco Clim System — vue trois quarts arrière',
@@ -48,9 +43,9 @@ function jd_core_print_proof_html_21613(){
         $dots.='<button type="button" class="jd-print-proof-slider__dot'.($i===0?' is-active':'').'" data-jd-print-dot="'.$i.'" aria-label="Afficher la réalisation '.($i+1).'"'.($i===0?' aria-current="true"':'').'></button>';
     }
 
-    $visual=$sprite
-        ? '<div class="jd-print-proof-slider" data-jd-print-slider data-count="'.count($labels).'" data-labels="'.esc_attr(wp_json_encode($labels,JSON_UNESCAPED_UNICODE)).'">'
-            .'<div class="jd-print-proof-slider__frame" role="img" aria-label="'.esc_attr($labels[0]).'" style="background-image:url(''.esc_attr($sprite).'');background-position:center 0%;"></div>'
+    if($sprite){
+        $visual='<div class="jd-print-proof-slider" data-jd-print-slider data-count="'.count($labels).'" data-labels="'.esc_attr(wp_json_encode($labels,JSON_UNESCAPED_UNICODE)).'" data-sprite="'.esc_attr($sprite).'">'
+            .'<div class="jd-print-proof-slider__frame" role="img" aria-label="'.esc_attr($labels[0]).'"></div>'
             .'<div class="jd-print-proof-slider__ui">'
                 .'<div class="jd-print-proof-slider__dots">'.$dots.'</div>'
                 .'<div class="jd-print-proof-slider__arrows">'
@@ -58,8 +53,10 @@ function jd_core_print_proof_html_21613(){
                     .'<button type="button" class="jd-print-proof-slider__arrow" data-jd-print-next aria-label="Photo suivante">→</button>'
                 .'</div>'
             .'</div>'
-        .'</div>'
-        : '<div class="jd-print-proof-slider jd-print-proof-slider--fallback" aria-label="Galerie signalétique indisponible"></div>';
+        .'</div>';
+    }else{
+        $visual='<div class="jd-print-proof-slider jd-print-proof-slider--fallback" aria-label="Galerie signalétique indisponible"></div>';
+    }
 
     return '<section class="jd-print-proof-v2" aria-label="Accompagnement print et signalétique">'
         .'<div class="jd-print-proof-v2__inner">'

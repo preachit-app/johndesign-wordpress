@@ -185,11 +185,13 @@ document.querySelectorAll('.jd-site-card').forEach(card=>{
 /* Galerie signalétique dans la section "L’IA fait des merveilles". */
 document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
   const frame=slider.querySelector('.jd-print-proof-slider__frame');
+  const sprite=slider.dataset.sprite||'';
   const dots=[...slider.querySelectorAll('[data-jd-print-dot]')];
   const prev=slider.querySelector('[data-jd-print-prev]');
   const next=slider.querySelector('[data-jd-print-next]');
   const count=parseInt(slider.dataset.count||String(dots.length||1),10);
-  if(!frame || count<1) return;
+  if(!frame || !sprite || count<1) return;
+  frame.style.backgroundImage='url("'+sprite+'")';
 
   let labels=[];
   try{ labels=JSON.parse(slider.dataset.labels||'[]'); }catch(e){}
