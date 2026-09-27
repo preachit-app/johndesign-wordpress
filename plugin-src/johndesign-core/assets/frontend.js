@@ -61,6 +61,41 @@ if(menu){
  */
 const cleanPath=window.location.pathname.replace(/\/+$/,'')||'/';
 
+/* Accueil 2.16.18 — ordre commercial : intérêt → preuve → confiance → contact. */
+if(document.body.classList.contains('home')){
+  const roleOrder=['hero','services','work','why','proof','reviews','about','method','faq','contact'];
+  const roleNodes=new Map();
+
+  document.querySelectorAll('[data-jd-home-role]').forEach(node=>{
+    const role=node.getAttribute('data-jd-home-role');
+    if(role && !roleNodes.has(role)) roleNodes.set(role,node);
+  });
+
+  const first=[...roleNodes.values()][0];
+  if(first){
+    const parent=first.parentElement;
+    const ordered=roleOrder.map(role=>roleNodes.get(role)).filter(Boolean);
+    const sameParent=ordered.filter(node=>node.parentElement===parent);
+
+    if(parent && sameParent.length>=6){
+      const markerNode=document.createComment('jd-home-flow');
+      const firstInParent=sameParent.find(node=>node.parentElement===parent);
+      parent.insertBefore(markerNode,firstInParent);
+
+      const fragment=document.createDocumentFragment();
+      roleOrder.forEach(role=>{
+        const node=roleNodes.get(role);
+        if(node && node.parentElement===parent) fragment.appendChild(node);
+      });
+
+      parent.insertBefore(fragment,markerNode);
+      markerNode.remove();
+      document.body.classList.add('jd-home-flow-ready');
+    }
+  }
+}
+
+
 const waButton=document.querySelector('.jd-whatsapp-float');
 if(waButton && !waButton.querySelector('span')){
   const label=document.createElement('span');
