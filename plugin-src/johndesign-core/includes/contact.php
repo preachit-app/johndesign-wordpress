@@ -49,6 +49,16 @@ function jd_core_contact_form($variant='home'){
     $action=esc_url(admin_url('admin-post.php'));
     $start=time();
     $return=esc_url((is_ssl()?'https':'http').'://'.($_SERVER['HTTP_HOST']??'').($_SERVER['REQUEST_URI']??'/'));
+    $requested_project=sanitize_text_field(wp_unslash($_GET['project']??''));
+    $project_options=[
+      'Création de site internet',
+      'Refonte de site internet',
+      'Logo / identité visuelle',
+      'Print / supports imprimés',
+      'Signalétique / marquage',
+      'Projet global',
+      'Autre',
+    ];
     ob_start(); ?>
     <form class="jd-contact-form" method="post" action="<?php echo $action; ?>" autocomplete="on" novalidate>
       <input type="hidden" name="action" value="jd_contact_submit">
@@ -67,11 +77,9 @@ function jd_core_contact_form($variant='home'){
       <div class="jd-field"><label for="<?php echo $uid; ?>project">Votre projet *</label>
         <select id="<?php echo $uid; ?>project" name="project" required>
           <option value="">Choisir</option>
-          <option>Création / refonte de site</option>
-          <option>Identité visuelle / logo</option>
-          <option>Print / signalétique</option>
-          <option>Projet global</option>
-          <option>Autre</option>
+          <?php foreach($project_options as $project_option): ?>
+            <option value="<?php echo esc_attr($project_option); ?>" <?php selected($requested_project,$project_option); ?>><?php echo esc_html($project_option); ?></option>
+          <?php endforeach; ?>
         </select>
       </div>
 
@@ -308,7 +316,7 @@ function jd_core_contact_submit(){
     $deadline=sanitize_text_field(wp_unslash($_POST['deadline']??''));
     $message=sanitize_textarea_field(wp_unslash($_POST['message']??''));
 
-    $allowed_projects=['Création / refonte de site','Identité visuelle / logo','Print / signalétique','Projet global','Autre'];
+    $allowed_projects=['Création de site internet','Refonte de site internet','Logo / identité visuelle','Print / supports imprimés','Signalétique / marquage','Projet global','Autre'];
     if(!$name||mb_strlen($name)>120||!is_email($email)||!in_array($project,$allowed_projects,true)||!$message||mb_strlen($message)>6000||empty($_POST['consent'])){
         jd_core_contact_redirect($return,'invalid');
     }

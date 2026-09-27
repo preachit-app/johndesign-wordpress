@@ -269,6 +269,62 @@ const jdNormalizeCtaArrows=(root=document)=>{
 
 jdNormalizeCtaArrows();
 
+/* Conversion 2.16.19 — CTA plus simple et rassurant. */
+const jdMakeEstimateCta=(link)=>{
+  if(!link || link.dataset.jdEstimateReady==='1') return;
+  link.dataset.jdEstimateReady='1';
+  link.textContent='Demander une estimation';
+  link.insertAdjacentHTML('beforeend',jdThinArrowMarkup);
+
+  const parent=link.parentElement;
+  if(parent && !parent.querySelector(':scope > .jd-estimate-note')){
+    const note=document.createElement('span');
+    note.className='jd-estimate-note';
+    note.textContent='Premier échange sans engagement.';
+    parent.appendChild(note);
+  }
+};
+
+if(cleanPath==='/'){
+  document.querySelectorAll('[data-jd-home-role="contact"] a[href*="/contact"]').forEach(jdMakeEstimateCta);
+}
+if(['/creation-site-internet','/identite-visuelle','/print-signaletique'].includes(cleanPath)){
+  document.querySelectorAll(
+    '.wp-block-post-content .wp-block-button__link[href*="/contact"],'+
+    '.jd-preview-page .wp-block-button__link[href*="/contact"],'+
+    '.jd-print-proof-v2__cta[href*="/contact"]'
+  ).forEach(link=>{
+    if(link.classList.contains('jd-web-maintenance-link')) return;
+    jdMakeEstimateCta(link);
+  });
+}
+
+/* Accueil : 3 avis d'abord, puis affichage complet à la demande. */
+const jdReviews=document.querySelector('[data-jd-home-role="reviews"], .home #avis');
+if(jdReviews){
+  const cards=[...jdReviews.querySelectorAll('.jd-review-card')];
+  if(cards.length>3 && !jdReviews.querySelector('.jd-reviews-toggle')){
+    cards.slice(3).forEach(card=>card.hidden=true);
+    jdReviews.classList.add('jd-reviews-collapsed');
+
+    const toggle=document.createElement('button');
+    toggle.type='button';
+    toggle.className='jd-reviews-toggle';
+    toggle.setAttribute('aria-expanded','false');
+    toggle.textContent='Voir tous les avis';
+
+    toggle.addEventListener('click',()=>{
+      const expanded=toggle.getAttribute('aria-expanded')==='true';
+      cards.slice(3).forEach(card=>card.hidden=expanded);
+      toggle.setAttribute('aria-expanded',expanded?'false':'true');
+      toggle.textContent=expanded?'Voir tous les avis':'Réduire les avis';
+      jdReviews.classList.toggle('jd-reviews-collapsed',expanded);
+    });
+
+    jdReviews.appendChild(toggle);
+  }
+}
+
 let jdArrowNormalizeQueued=false;
 const jdQueueArrowNormalize=(root=document)=>{
   if(jdArrowNormalizeQueued) return;
