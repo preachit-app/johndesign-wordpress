@@ -2,7 +2,7 @@
 if (!defined('ABSPATH')) exit;
 
 /**
- * John Design Core 2.16.3 — petites galeries visuelles par service.
+ * John Design Core 2.16.20 — une seule galerie dédiée par page.
  * Elles réutilisent les images déjà présentes sur chaque page, sans légendes
  * ni textes sur les cartes.
  */
@@ -136,10 +136,10 @@ function jd_core_service_gallery_html_2163($page_key){
 function jd_core_service_gallery_render_2163($block_content,$block){
     if(($block['blockName']??'')!=='johndesign/section') return $block_content;
 
-    $page_key='';
-    if(is_page('identite-visuelle')) $page_key='identite-visuelle';
-    elseif(is_page('print-signaletique')) $page_key='print-signaletique';
-    else return $block_content;
+    // Print possède déjà sa galerie HD dans la section « L’IA fait des merveilles ».
+    // On garde ici uniquement la galerie dédiée de la page Identité visuelle.
+    if(!is_page('identite-visuelle')) return $block_content;
+    $page_key='identite-visuelle';
 
     static $inserted=[];
     if(!empty($inserted[$page_key])) return $block_content;
