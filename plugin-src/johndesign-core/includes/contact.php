@@ -37,10 +37,15 @@ add_action('wp_mail_succeeded',function($mail_data){
     ]);
 });
 
-function jd_core_contact_redirect($return,$status){
+function jd_core_contact_redirect($return,$status,$track_lead=false){
     $return=wp_validate_redirect($return,home_url('/'));
-    $return=remove_query_arg('jd_contact',$return);
-    wp_safe_redirect(add_query_arg('jd_contact',$status,$return).'#jd-contact-status');
+    $return=remove_query_arg(['jd_contact','jd_lead'],$return);
+    $args=['jd_contact'=>$status];
+    if($status==='success' && $track_lead){
+        // Jeton unique par véritable envoi : évite les doublons et ne compte pas le honeypot.
+        $args['jd_lead']=wp_generate_uuid4();
+    }
+    wp_safe_redirect(add_query_arg($args,$return).'#jd-contact-status');
     exit;
 }
 function jd_core_contact_form($variant='home'){
@@ -382,7 +387,7 @@ function jd_core_contact_submit(){
         ]);
     }
 
-    jd_core_contact_redirect($return,$sent?'success':'error');
+    jd_core_contact_redirect($return,$sent?'success':'error',$sent);
 }
 add_action('admin_post_nopriv_jd_contact_submit','jd_core_contact_submit');
 add_action('admin_post_jd_contact_submit','jd_core_contact_submit');

@@ -357,36 +357,71 @@ const jdArrowObserver=new MutationObserver(mutations=>{
 jdArrowObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
 
 /* Tracking conversion — GA4 / Google Ads.
- * Envoie un vrai lead uniquement après confirmation d'envoi du formulaire.
- * Les clics WhatsApp et téléphone restent des événements distincts.
+ * Le site utilise MonsterInsights : sa fonction __gtagTracker est prioritaire.
+ * Un lead est envoyé uniquement après un vrai envoi serveur confirmé par jd_lead.
  */
-const jdPushAnalyticsEvent=(name,params={})=>{
+const JD_GA4_MEASUREMENT_ID='G-S5XE9SGYGR';
+
+const jdEnsureGtagFallback=()=>{
   window.dataLayer=window.dataLayer||[];
   if(typeof window.gtag!=='function'){
     window.gtag=function(){window.dataLayer.push(arguments);};
   }
+
+  const selector='script[data-jd-ga4-fallback="'+JD_GA4_MEASUREMENT_ID+'"]';
+  if(!document.querySelector(selector)){
+    const script=document.createElement('script');
+    script.async=true;
+    script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(JD_GA4_MEASUREMENT_ID);
+    script.dataset.jdGa4Fallback=JD_GA4_MEASUREMENT_ID;
+    document.head.appendChild(script);
+
+    window.gtag('js',new Date());
+    // Pas de page_view supplémentaire : MonsterInsights s'en charge déjà.
+    window.gtag('config',JD_GA4_MEASUREMENT_ID,{send_page_view:false});
+  }
+};
+
+const jdPushAnalyticsEvent=(name,params={})=>{
+  if(typeof window.__gtagTracker==='function'){
+    window.__gtagTracker('event',name,params);
+    return 'monsterinsights';
+  }
+
+  if(typeof window.gtag==='function'){
+    window.gtag('event',name,params);
+    return 'gtag';
+  }
+
+  // Secours uniquement si le tracker MonsterInsights n'est pas disponible.
+  jdEnsureGtagFallback();
   window.gtag('event',name,params);
+  return 'fallback';
 };
 
 const jdQuery=new URLSearchParams(window.location.search);
-if(jdQuery.get('jd_contact')==='success'){
-  const key='jd_generate_lead:'+window.location.pathname+window.location.search;
-  try{
-    if(sessionStorage.getItem(key)!=='1'){
-      jdPushAnalyticsEvent('generate_lead',{
-        currency:'EUR',
-        value:1,
-        lead_source:'website_form'
-      });
-      sessionStorage.setItem(key,'1');
-    }
-  }catch(error){
+const jdLeadToken=jdQuery.get('jd_lead');
+
+if(jdQuery.get('jd_contact')==='success' && jdLeadToken){
+  const key='jd_generate_lead:'+jdLeadToken;
+  const sendLead=()=>{
+    try{
+      if(sessionStorage.getItem(key)==='1') return;
+    }catch(error){}
+
     jdPushAnalyticsEvent('generate_lead',{
       currency:'EUR',
       value:1,
-      lead_source:'website_form'
+      lead_source:'website_form',
+      event_id:jdLeadToken
     });
-  }
+
+    try{sessionStorage.setItem(key,'1');}catch(error){}
+  };
+
+  // MonsterInsights est normalement déjà prêt, mais on laisse aussi passer le chargement différé.
+  if(document.readyState==='complete') sendLead();
+  else window.addEventListener('load',()=>setTimeout(sendLead,250),{once:true});
 }
 
 document.querySelectorAll('a[href*="wa.me/"],a[href*="whatsapp.com/"]').forEach(link=>{
