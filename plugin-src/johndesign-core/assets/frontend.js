@@ -356,6 +356,57 @@ const jdArrowObserver=new MutationObserver(mutations=>{
 });
 jdArrowObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
 
+/* Tracking conversion — GA4 / Google Ads.
+ * Envoie un vrai lead uniquement après confirmation d'envoi du formulaire.
+ * Les clics WhatsApp et téléphone restent des événements distincts.
+ */
+const jdPushAnalyticsEvent=(name,params={})=>{
+  window.dataLayer=window.dataLayer||[];
+  if(typeof window.gtag!=='function'){
+    window.gtag=function(){window.dataLayer.push(arguments);};
+  }
+  window.gtag('event',name,params);
+};
+
+const jdQuery=new URLSearchParams(window.location.search);
+if(jdQuery.get('jd_contact')==='success'){
+  const key='jd_generate_lead:'+window.location.pathname+window.location.search;
+  try{
+    if(sessionStorage.getItem(key)!=='1'){
+      jdPushAnalyticsEvent('generate_lead',{
+        currency:'EUR',
+        value:1,
+        lead_source:'website_form'
+      });
+      sessionStorage.setItem(key,'1');
+    }
+  }catch(error){
+    jdPushAnalyticsEvent('generate_lead',{
+      currency:'EUR',
+      value:1,
+      lead_source:'website_form'
+    });
+  }
+}
+
+document.querySelectorAll('a[href*="wa.me/"],a[href*="whatsapp.com/"]').forEach(link=>{
+  link.addEventListener('click',()=>{
+    jdPushAnalyticsEvent('contact_whatsapp',{
+      contact_method:'whatsapp',
+      link_url:link.href
+    });
+  },{passive:true});
+});
+
+document.querySelectorAll('a[href^="tel:"]').forEach(link=>{
+  link.addEventListener('click',()=>{
+    jdPushAnalyticsEvent('contact_phone',{
+      contact_method:'phone',
+      link_url:link.href
+    });
+  },{passive:true});
+});
+
 /* Galerie signalétique dans la section "L’IA fait des merveilles". */
 document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
   const slides=[...slider.querySelectorAll('[data-jd-print-slide]')];
