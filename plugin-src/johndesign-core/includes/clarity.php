@@ -328,3 +328,28 @@ function jd_core_clarity_render_2160($block_content,$block){
     return $block_content;
 }
 add_filter('render_block','jd_core_clarity_render_2160',60,2);
+
+
+/**
+ * Contact 2.16.22 — le formulaire devient la dernière section avant le footer.
+ * Le bloc décoratif inférieur n'est plus rendu.
+ */
+function jd_core_contact_outro_match_21622($block){
+    $hay='';
+    if(!empty($block['attrs']['fields']) && is_array($block['attrs']['fields'])){
+        foreach($block['attrs']['fields'] as $value){
+            if(is_string($value)) $hay.=' '.jd_core_copy_key_2160($value);
+        }
+    }
+    if(!empty($block['innerHTML'])) $hay.=' '.jd_core_copy_key_2160($block['innerHTML']);
+    return strpos($hay,'quelques mots peuvent suffire')!==false
+        || strpos($hay,'pas besoin d’un brief parfait')!==false
+        || strpos($hay,"pas besoin d'un brief parfait")!==false
+        || strpos($hay,'le premier mot de votre prochain projet')!==false;
+}
+
+function jd_core_contact_outro_render_21622($block_content,$block){
+    if(!is_page('contact')) return $block_content;
+    return jd_core_contact_outro_match_21622($block)?'':$block_content;
+}
+add_filter('render_block','jd_core_contact_outro_render_21622',75,2);

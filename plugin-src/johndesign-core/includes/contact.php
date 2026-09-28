@@ -40,7 +40,7 @@ add_action('wp_mail_succeeded',function($mail_data){
 function jd_core_contact_redirect($return,$status){
     $return=wp_validate_redirect($return,home_url('/'));
     $return=remove_query_arg('jd_contact',$return);
-    wp_safe_redirect(add_query_arg('jd_contact',$status,$return).'#contact');
+    wp_safe_redirect(add_query_arg('jd_contact',$status,$return).'#jd-contact-status');
     exit;
 }
 function jd_core_contact_form($variant='home'){
@@ -50,6 +50,20 @@ function jd_core_contact_form($variant='home'){
     $start=time();
     $return=esc_url((is_ssl()?'https':'http').'://'.($_SERVER['HTTP_HOST']??'').($_SERVER['REQUEST_URI']??'/'));
     $requested_project=sanitize_text_field(wp_unslash($_GET['project']??''));
+
+    $status=isset($_GET['jd_contact'])?sanitize_key(wp_unslash($_GET['jd_contact'])):'';
+    if($status==='success'){
+        ob_start(); ?>
+        <section class="jd-contact-success-panel" id="jd-contact-status" role="status" tabindex="-1" aria-labelledby="jd-contact-success-title">
+          <span class="jd-contact-success-panel__icon" aria-hidden="true">✓</span>
+          <p class="jd-contact-success-panel__eyebrow">DEMANDE ENVOYÉE</p>
+          <h2 id="jd-contact-success-title">Votre message est bien envoyé.</h2>
+          <p>Merci. Votre demande est bien arrivée et je reviens vers vous rapidement pour échanger sur votre projet.</p>
+          <a class="jd-contact-success-panel__link" href="<?php echo esc_url(home_url('/')); ?>">Retour à l’accueil <span aria-hidden="true">↗</span></a>
+        </section>
+        <?php return ob_get_clean();
+    }
+
     $project_options=[
       'Création de site internet',
       'Refonte de site internet',
@@ -61,6 +75,16 @@ function jd_core_contact_form($variant='home'){
     ];
     ob_start(); ?>
     <form class="jd-contact-form" method="post" action="<?php echo $action; ?>" autocomplete="on" novalidate>
+      <?php if($status):
+        $messages=[
+          'invalid'=>'Merci de vérifier les champs obligatoires.',
+          'spam'=>'Votre envoi n’a pas pu être validé. Réessayez dans quelques instants.',
+          'rate'=>'Trop de tentatives rapprochées. Réessayez un peu plus tard.',
+          'error'=>'Le message n’a pas pu être envoyé. Réessayez ou écrivez directement à '.jd_core_contact_email().'.',
+        ];
+        $msg=$messages[$status]??$messages['error']; ?>
+        <div class="jd-form-status is-error" id="jd-contact-status" role="alert" tabindex="-1"><?php echo esc_html($msg); ?></div>
+      <?php endif; ?>
       <input type="hidden" name="action" value="jd_contact_submit">
       <input type="hidden" name="jd_variant" value="<?php echo esc_attr($variant); ?>">
       <input type="hidden" name="jd_started" value="<?php echo esc_attr($start); ?>">
@@ -95,19 +119,7 @@ function jd_core_contact_form($variant='home'){
       <button type="submit">Envoyer ma demande</button>
       <p class="jd-caption">Réponse directement par e-mail. Vos informations ne sont utilisées que pour traiter votre demande.</p>
 
-      <?php if(isset($_GET['jd_contact'])):
-        $status=sanitize_key(wp_unslash($_GET['jd_contact']));
-        $messages=[
-          'success'=>'Merci, votre message a bien été envoyé.',
-          'invalid'=>'Merci de vérifier les champs obligatoires.',
-          'spam'=>'Votre envoi n’a pas pu être validé. Réessayez dans quelques instants.',
-          'rate'=>'Trop de tentatives rapprochées. Réessayez un peu plus tard.',
-          'error'=>'Le message n’a pas pu être envoyé. Réessayez ou écrivez directement à '.jd_core_contact_email().'.',
-        ];
-        $ok=$status==='success';
-        $msg=$messages[$status]??$messages['error']; ?>
-        <p class="jd-form-status <?php echo $ok?'':'is-error'; ?>" role="status"><?php echo esc_html($msg); ?></p>
-      <?php endif; ?>
+
     </form>
     <?php return ob_get_clean();
 }

@@ -2304,3 +2304,85 @@ body.page-id-0 .jd-service-hero-conversion{
     scroll-snap-align:start!important;
   }
 }
+
+
+/* John Design Core 2.16.22 — confirmation formulaire claire et visible */
+.jd-contact-success-panel{
+  box-sizing:border-box!important;
+  width:100%!important;
+  scroll-margin-top:150px!important;
+  padding:clamp(34px,5vw,58px)!important;
+  border:1px solid rgba(25,25,25,.08)!important;
+  border-radius:32px!important;
+  background:#f1ecfb!important;
+  color:#191919!important;
+  box-shadow:0 12px 36px rgba(25,25,25,.05)!important;
+}
+.jd-contact-success-panel__icon{
+  width:48px!important;
+  height:48px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0 0 24px!important;
+  border-radius:50%!important;
+  background:#191919!important;
+  color:#fff!important;
+  font-size:23px!important;
+  font-weight:900!important;
+  line-height:1!important;
+}
+.jd-contact-success-panel__eyebrow{
+  margin:0 0 12px!important;
+  font-size:12px!important;
+  line-height:1.2!important;
+  font-weight:850!important;
+  letter-spacing:.11em!important;
+}
+.jd-contact-success-panel h2{
+  max-width:760px!important;
+  margin:0!important;
+  color:#191919!important;
+  font-size:clamp(38px,5vw,66px)!important;
+  line-height:.98!important;
+  letter-spacing:-.055em!important;
+}
+.jd-contact-success-panel>p:not(.jd-contact-success-panel__eyebrow){
+  max-width:650px!important;
+  margin:22px 0 0!important;
+  color:#4f4a53!important;
+  font-size:17px!important;
+  line-height:1.55!important;
+}
+.jd-contact-success-panel__link{
+  min-height:48px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  margin-top:28px!important;
+  padding:0 20px!important;
+  border-radius:999px!important;
+  background:#191919!important;
+  color:#fff!important;
+  text-decoration:none!important;
+  font-size:13px!important;
+  font-weight:820!important;
+}
+.jd-contact-form .jd-form-status.is-error{
+  scroll-margin-top:150px!important;
+  margin:0 0 24px!important;
+  padding:16px 18px!important;
+  border-radius:16px!important;
+  background:#fff0f0!important;
+  color:#8a2020!important;
+  font-weight:700!important;
+}
+@media(max-width:640px){
+  .jd-contact-success-panel{
+    padding:30px 22px!important;
+    border-radius:24px!important;
+  }
+  .jd-contact-success-panel h2{
+    font-size:clamp(36px,12vw,50px)!important;
+  }
+}
