@@ -64,7 +64,7 @@ function jd_core_contact_form($variant='home'){
           <p class="jd-contact-success-panel__eyebrow">DEMANDE ENVOYÉE</p>
           <h2 id="jd-contact-success-title">Votre message est bien envoyé.</h2>
           <p>Merci. Votre demande est bien arrivée et je reviens vers vous rapidement pour échanger sur votre projet.</p>
-          <a class="jd-contact-success-panel__link" href="<?php echo esc_url(home_url('/')); ?>">Retour à l’accueil <span aria-hidden="true">↗</span></a>
+          <a class="jd-contact-success-panel__link" href="<?php echo esc_url(home_url('/')); ?>">Retour à l’accueil <span aria-hidden="true">&#8599;&#65038;</span></a>
         </section>
         <?php return ob_get_clean();
     }
@@ -172,7 +172,7 @@ function jd_core_admin_notification_html($data){
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:700px;background:#ffffff;border-radius:28px;overflow:hidden;box-shadow:0 12px 34px rgba(25,25,25,.08);">
 <tr><td style="background:#191919;padding:30px 34px;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
-<td><div style="display:inline-block;color:#ffffff;font-weight:900;font-size:27px;line-height:.82;letter-spacing:-1.5px;">john<br>design</div><span style="display:inline-block;color:#c9b4ef;font-size:30px;line-height:1;vertical-align:top;margin-left:7px;">✳</span></td>
+<td><div style="display:inline-block;color:#ffffff;font-weight:900;font-size:27px;line-height:.82;letter-spacing:-1.5px;">john<br>design</div><span style="display:inline-block;color:#9bd35a;font-family:Arial,Helvetica,sans-serif;font-size:31px;font-weight:400;line-height:1;vertical-align:top;margin-left:7px;">&#10033;&#65038;</span></td>
 <td align="right" style="color:#c9b4ef;font-size:13px;font-weight:700;">Nouvelle demande</td>
 </tr></table>
 </td></tr>
@@ -194,7 +194,7 @@ function jd_core_admin_notification_html($data){
 
 <tr><td style="padding:26px 38px 40px;">
 <table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr><td style="background:#191919;border-radius:999px;">
-<a href="'.$reply_href.'" style="display:inline-block;padding:14px 22px;color:#ffffff;text-decoration:none;font-size:14px;font-weight:800;">Répondre à '.$name.'&nbsp; ↗</a>
+<a href="'.$reply_href.'" style="display:inline-block;padding:14px 22px;color:#ffffff;text-decoration:none;font-size:14px;font-weight:800;">Répondre à '.$name.'&nbsp; <span style="font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1;">&#8599;&#65038;</span></a>
 </td></tr></table>
 '.($origin!==''?'<p style="margin:24px 0 0;color:#8a858f;font-size:11px;line-height:1.55;">Page d’origine : '.$origin.'</p>':'').'
 </td></tr>
@@ -251,7 +251,7 @@ function jd_core_customer_confirmation_html($data){
 <tr>
 <td style="font-size:0;line-height:1;">
 <div style="display:inline-block;color:#ffffff;font-weight:900;font-size:27px;line-height:.82;letter-spacing:-1.5px;">john<br>design</div>
-<span style="display:inline-block;color:#c9b4ef;font-size:30px;line-height:1;vertical-align:top;margin-left:7px;">✳</span>
+<span style="display:inline-block;color:#9bd35a;font-family:Arial,Helvetica,sans-serif;font-size:31px;font-weight:400;line-height:1;vertical-align:top;margin-left:7px;">&#10033;&#65038;</span>
 </td>
 <td align="right" style="color:#c9b4ef;font-size:13px;font-weight:700;">Demande reçue ✓</td>
 </tr>
@@ -277,7 +277,7 @@ function jd_core_customer_confirmation_html($data){
 <tr><td style="padding:28px 38px 40px;">
 <table role="presentation" cellspacing="0" cellpadding="0" border="0">
 <tr><td style="background:#191919;border-radius:999px;">
-<a href="'.$site.'" style="display:inline-block;padding:14px 22px;color:#ffffff;text-decoration:none;font-size:14px;font-weight:800;">Voir John Design&nbsp; ↗</a>
+<a href="'.$site.'" style="display:inline-block;padding:14px 22px;color:#ffffff;text-decoration:none;font-size:14px;font-weight:800;">Voir John Design&nbsp; &#8599;&#65038;</a>
 </td></tr>
 </table>
 <p style="margin:28px 0 0;color:#77727d;font-size:12px;line-height:1.6;">Ce message est une confirmation automatique envoyée après votre demande sur le site John Design. Vous pouvez répondre directement à cet e-mail ou écrire à <a href="mailto:'.$contact_email.'" style="color:#191919;">'.$contact_email.'</a>.</p>
