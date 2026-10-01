@@ -179,35 +179,47 @@ function jd_core_web_portfolio_shot_2163($item){
     return 'https://s0.wp.com/mshots/v1/'.rawurlencode($url).'?w=1200&h=750';
 }
 
-function jd_core_web_portfolio_gallery_2163(){
+function jd_core_web_portfolio_gallery_21627(){
     $items=jd_core_web_portfolio_items_2163();
     if(!$items) return '';
 
-    $cards='';
-    foreach($items as $item){
+    $slides='';
+    $dots='';
+    foreach($items as $i=>$item){
         $url=(string)$item['url'];
         $shot=jd_core_web_portfolio_shot_2163($item);
+        $active=$i===0?' is-active':'';
+        $hidden=$i===0?'false':'true';
+        $loading=$i===0?'eager':'lazy';
 
-        $cards.='<a class="jd-web-portfolio-card" href="'.esc_url($url).'" target="_blank" rel="noopener noreferrer" aria-label="Visiter '.esc_attr($item['name']).'">'
-            .'<span class="jd-web-portfolio-visual">'
-                .'<img src="'.esc_url($shot).'" alt="Aperçu du site '.esc_attr($item['name']).'" loading="lazy" decoding="async">'
+        $slides.='<a class="jd-web-proof-slider__slide'.$active.'" data-jd-web-slide="'.$i.'" href="'.esc_url($url).'" target="_blank" rel="noopener noreferrer" aria-hidden="'.$hidden.'" aria-label="Visiter '.esc_attr($item['name']).'">'
+            .'<span class="jd-web-proof-slider__browser">'
+                .'<span class="jd-web-proof-slider__bar" aria-hidden="true"><i></i><i></i><i></i></span>'
+                .'<img src="'.esc_url($shot).'" alt="Aperçu du site '.esc_attr($item['name']).'" loading="'.$loading.'" decoding="async">'
             .'</span>'
         .'</a>';
+
+        $dots.='<button type="button" class="jd-web-proof-slider__dot'.$active.'" data-jd-web-dot="'.$i.'" aria-label="Afficher la réalisation '.($i+1).'"'.($i===0?' aria-current="true"':'').'></button>';
     }
 
-    return '<section class="jd-web-portfolio-strip" data-jd-horizontal-gallery aria-labelledby="jd-web-portfolio-title">'
-        .'<div class="jd-web-portfolio-head">'
-            .'<div>'
-                .'<p class="jd-eyebrow">QUELQUES SITES RÉALISÉS</p>'
-                .'<h2 id="jd-web-portfolio-title">Des sites en ligne,<br>à découvrir.</h2>'
+    return '<section class="jd-web-proof" aria-labelledby="jd-web-proof-title">'
+        .'<div class="jd-web-proof__inner">'
+            .'<div class="jd-web-proof__copy">'
+                .'<p class="jd-eyebrow">DES PROJETS BIEN RÉELS</p>'
+                .'<h2 id="jd-web-proof-title">Des sites déjà<br>en ligne.</h2>'
+                .'<p>Pas de maquettes pour remplir une galerie. Voici quelques sites réellement réalisés pour des entreprises, associations et indépendants.</p>'
+                .'<a class="jd-web-proof__link" href="'.esc_url(home_url('/realisations/')).'">Voir toutes mes réalisations '.jd_core_web_pricing_arrow_21626().'</a>'
             .'</div>'
-            .'<div class="jd-horizontal-gallery-controls" aria-label="Navigation de la galerie">'
-                .'<button type="button" class="jd-horizontal-gallery-nav" data-jd-gallery-prev aria-label="Site précédent">←</button>'
-                .'<button type="button" class="jd-horizontal-gallery-nav" data-jd-gallery-next aria-label="Site suivant">→</button>'
+            .'<div class="jd-web-proof-slider" data-jd-web-slider>'
+                .'<div class="jd-web-proof-slider__slides">'.$slides.'</div>'
+                .'<div class="jd-web-proof-slider__ui">'
+                    .'<div class="jd-web-proof-slider__dots">'.$dots.'</div>'
+                    .'<div class="jd-web-proof-slider__arrows">'
+                        .'<button type="button" class="jd-web-proof-slider__arrow" data-jd-web-prev aria-label="Site précédent">←</button>'
+                        .'<button type="button" class="jd-web-proof-slider__arrow" data-jd-web-next aria-label="Site suivant">→</button>'
+                    .'</div>'
+                .'</div>'
             .'</div>'
-        .'</div>'
-        .'<div class="jd-web-portfolio-track" data-jd-gallery-track>'
-            .$cards
         .'</div>'
     .'</section>';
 }
@@ -398,17 +410,11 @@ function jd_core_web_layout_render_2163($block_content,$block){
     if($type==='remove-studio' || $type==='remove-related') return '';
 
     if($type==='why'){
-        return jd_core_web_layout_add_class_2163(
-            $block_content,
-            'jd-web-flow-section jd-web-flow-soft'
-        );
+        return jd_core_web_portfolio_gallery_21627();
     }
 
     if($type==='scope'){
-        return jd_core_web_layout_add_class_2163(
-            $block_content,
-            'jd-web-flow-section jd-web-flow-card jd-web-flow-scope'
-        ).jd_core_web_pricing_21626();
+        return jd_core_web_pricing_21626();
     }
 
     if($type==='start'){
@@ -427,7 +433,6 @@ function jd_core_web_layout_render_2163($block_content,$block){
         return '<div class="jd-web-maintenance-injected jd-web-maintenance-in-flow">'
             .jd_core_web_maintenance_2151()
             .'</div>'
-            .jd_core_web_portfolio_gallery_2163()
             .$faq;
     }
 
