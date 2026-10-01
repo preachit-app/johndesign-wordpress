@@ -215,7 +215,7 @@ function jd_core_web_portfolio_slider_21632(){
     .'</div>';
 }
 
-function jd_core_web_hero_21632(){
+function jd_core_web_hero_21633(){
     $rating='<a class="jd-web-hero__rating" href="'.esc_url(home_url('/#avis')).'">'
         .'<span aria-hidden="true">★★★★★</span>'
         .'<strong>5,0 Google</strong>'
@@ -224,19 +224,18 @@ function jd_core_web_hero_21632(){
 
     return '<section class="jd-web-hero-v2" aria-labelledby="jd-web-hero-title">'
         .'<div class="jd-web-hero-v2__inner">'
-            .'<div class="jd-web-hero-v2__copy">'
+            .'<div class="jd-web-hero-v2__main">'
                 .'<p class="jd-eyebrow">WEB / WORDPRESS</p>'
                 .'<h1 id="jd-web-hero-title">Création ou refonte<br>de votre site internet.</h1>'
-                .'<p class="jd-web-hero-v2__intro">Je crée ou refonds votre site pour qu’il soit clair, rapide et adapté au mobile, avec un design professionnel pensé pour donner confiance et faciliter les prises de contact.</p>'
-                .'<div class="jd-web-hero-v2__proof">'
-                    .'<h2>Découvrez quelques sites que nous avons créés.</h2>'
-                    .'<p>Nos clients sont satisfaits.</p>'
-                    .$rating
-                .'</div>'
-                .'<a class="jd-web-hero-v2__cta" href="#tarifs">Découvrir nos tarifs '.jd_core_web_pricing_arrow_21626().'</a>'
+                .'<p class="jd-web-hero-v2__intro">Un site clair, rapide et professionnel, pensé pour rassurer vos visiteurs et générer des contacts.</p>'
             .'</div>'
             .'<div class="jd-web-hero-v2__visual">'
                 .jd_core_web_portfolio_slider_21632()
+            .'</div>'
+            .'<div class="jd-web-hero-v2__proof">'
+                .'<h2>Découvrez quelques sites que nous avons créés.</h2>'
+                .'<p>100% de nos clients sont satisfaits.</p>'
+                .$rating
             .'</div>'
         .'</div>'
     .'</section>';
@@ -273,7 +272,7 @@ function jd_core_web_portfolio_gallery_21628(){
         .'<div class="jd-web-proof__inner">'
             .'<div class="jd-web-proof__copy">'
                 .'<p class="jd-eyebrow">RÉALISATIONS WEB</p>'
-                .'<h2 id="jd-web-proof-title">Quelques sites que nous avons créés.</h2><p class="jd-web-proof__satisfaction">Et nos clients sont satisfaits.</p>'
+                .'<h2 id="jd-web-proof-title">Quelques sites que nous avons créés.</h2><p class="jd-web-proof__satisfaction">100% de nos clients sont satisfaits.</p>'
                 .$rating
 
             .'</div>'
@@ -472,7 +471,7 @@ function jd_core_web_layout_render_2163($block_content,$block){
     if(($block['blockName']??'')!=='johndesign/section') return $block_content;
 
     if(stripos($block_content,'<h1')!==false){
-        return jd_core_web_hero_21632();
+        return jd_core_web_hero_21633();
     }
 
     $plain=jd_core_web_layout_plain_2163($block_content);
