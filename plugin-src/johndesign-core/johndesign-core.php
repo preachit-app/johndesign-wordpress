@@ -12,6 +12,7 @@ if (!defined('ABSPATH')) exit;
 define('JD_CORE_VERSION', '2.16.33');
 define('JD_CORE_DIR', plugin_dir_path(__FILE__));
 define('JD_CORE_URL', plugin_dir_url(__FILE__));
+// Distribution rebuild token 2.16.33-b
 // Build sync marker 2.16.33
 // Distribution trigger 2.16.33
 // Distribution build ping 2.16.33
