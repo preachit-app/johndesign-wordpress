@@ -40,29 +40,12 @@ function jd_core_conversion_arrow_21619(){
 function jd_core_conversion_service_panel_21619($page_key){
     $config=jd_core_conversion_config_21619($page_key);
     if(!$config) return '';
+    if($page_key==='creation-site-internet') return '';
 
     $contact=add_query_arg('project',$config['project'],home_url('/contact/'));
     $rating='<a class="jd-service-conversion__rating" href="'.esc_url(home_url('/#avis')).'">'
         .'<span aria-hidden="true">★★★★★</span><strong>5,0 Google</strong><em>16 avis clients</em>'
     .'</a>';
-
-    if($page_key==='creation-site-internet'){
-        return '<section class="jd-service-conversion jd-service-conversion--compact is-web-proof" aria-label="Avis clients et demande d’estimation">'
-            .'<div class="jd-service-conversion__inner">'
-                .'<div class="jd-service-conversion__top">'
-                    .'<div class="jd-service-conversion__proof-copy">'
-                        .'<p class="jd-service-conversion__eyebrow">AVIS CLIENTS</p>'
-                        .'<p class="jd-service-conversion__promise">Nos clients sont satisfaits.</p>'
-                        .$rating
-                    .'</div>'
-                    .'<div class="jd-service-conversion__actions">'
-                        .'<a class="jd-service-conversion__cta" href="'.esc_url($contact).'">Demander une estimation '.jd_core_conversion_arrow_21619().'</a>'
-                        .'<span class="jd-service-conversion__reassure">Premier échange sans engagement.</span>'
-                    .'</div>'
-                .'</div>'
-            .'</div>'
-        .'</section>';
-    }
 
     return '<section class="jd-service-conversion jd-service-conversion--compact" aria-label="Pourquoi choisir John Design pour ce projet">'
         .'<div class="jd-service-conversion__inner">'
