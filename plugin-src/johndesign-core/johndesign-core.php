@@ -14,6 +14,7 @@ define('JD_CORE_DIR', plugin_dir_path(__FILE__));
 define('JD_CORE_URL', plugin_dir_url(__FILE__));
 // Build sync marker 2.16.31
 // Distribution trigger 2.16.31
+// Distribution build ping 2.16.31
 require_once JD_CORE_DIR.'includes/sections.php';
 require_once JD_CORE_DIR.'includes/contact.php';
 require_once JD_CORE_DIR.'includes/admin.php';
