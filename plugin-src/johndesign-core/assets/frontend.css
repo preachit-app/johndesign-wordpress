@@ -3446,3 +3446,207 @@ body.page-id-0 .jd-service-hero-conversion{
     width:100%!important;
   }
 }
+
+
+/* John Design Core 2.16.32 — hero Web fusionné avec vraies réalisations */
+.jd-web-hero-v2{
+  box-sizing:border-box!important;
+  width:calc(100% - 48px)!important;
+  max-width:1440px!important;
+  margin:18px auto 30px!important;
+  padding:0!important;
+  color:#191919!important;
+}
+.jd-web-hero-v2__inner{
+  display:grid!important;
+  grid-template-columns:minmax(390px,.88fr) minmax(0,1.12fr)!important;
+  gap:clamp(42px,5vw,82px)!important;
+  align-items:center!important;
+  padding:clamp(46px,5.2vw,78px)!important;
+  border:1px solid rgba(25,25,25,.07)!important;
+  border-radius:40px!important;
+  background:#fff!important;
+  box-shadow:0 12px 38px rgba(25,25,25,.04)!important;
+}
+.jd-web-hero-v2__copy{
+  min-width:0!important;
+}
+.jd-web-hero-v2__copy>.jd-eyebrow{
+  margin:0 0 16px!important;
+}
+.jd-web-hero-v2 h1{
+  max-width:700px!important;
+  margin:0!important;
+  color:#191919!important;
+  font-size:clamp(48px,5vw,76px)!important;
+  line-height:.94!important;
+  letter-spacing:-.058em!important;
+}
+.jd-web-hero-v2__intro{
+  max-width:650px!important;
+  margin:24px 0 0!important;
+  color:#4f4a52!important;
+  font-size:16px!important;
+  line-height:1.55!important;
+}
+.jd-web-hero-v2__proof{
+  margin-top:30px!important;
+  padding-top:25px!important;
+  border-top:1px solid rgba(25,25,25,.1)!important;
+}
+.jd-web-hero-v2__proof h2{
+  max-width:590px!important;
+  margin:0!important;
+  color:#191919!important;
+  font-size:clamp(22px,2.2vw,31px)!important;
+  line-height:1.08!important;
+  letter-spacing:-.035em!important;
+}
+.jd-web-hero-v2__proof>p{
+  margin:8px 0 0!important;
+  color:#5f5962!important;
+  font-size:17px!important;
+  line-height:1.35!important;
+  font-weight:720!important;
+}
+.jd-web-hero__rating{
+  display:inline-flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:max-content!important;
+  max-width:100%!important;
+  margin-top:15px!important;
+  padding:13px 17px!important;
+  border-radius:999px!important;
+  background:#191919!important;
+  color:#fff!important;
+  text-decoration:none!important;
+  line-height:1!important;
+  box-shadow:0 9px 22px rgba(25,25,25,.12)!important;
+}
+.jd-web-hero__rating>span{
+  color:#fff!important;
+  font-size:14px!important;
+  letter-spacing:.8px!important;
+}
+.jd-web-hero__rating strong{
+  color:#fff!important;
+  font-size:13.5px!important;
+  font-weight:880!important;
+}
+.jd-web-hero__rating em{
+  color:rgba(255,255,255,.67)!important;
+  font-size:11.5px!important;
+  font-style:normal!important;
+}
+.jd-web-hero-v2__cta{
+  min-height:50px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  margin-top:22px!important;
+  padding:0 20px!important;
+  border-radius:999px!important;
+  background:#f1ecfb!important;
+  color:#191919!important;
+  text-decoration:none!important;
+  font-size:13px!important;
+  font-weight:840!important;
+  transition:transform .18s ease,box-shadow .18s ease!important;
+}
+.jd-web-hero-v2__cta:hover{
+  transform:translateY(-2px)!important;
+  box-shadow:0 9px 22px rgba(25,25,25,.09)!important;
+}
+.jd-web-hero-v2__visual{
+  min-width:0!important;
+  align-self:center!important;
+}
+.jd-web-hero-slider{
+  width:100%!important;
+}
+.jd-web-hero-slider .jd-web-proof-slider__slides{
+  aspect-ratio:16/10!important;
+  border-radius:28px!important;
+  box-shadow:0 20px 48px rgba(25,25,25,.12)!important;
+}
+.jd-web-hero-slider .jd-web-proof-slider__ui{
+  margin-top:15px!important;
+}
+.jd-web-pricing{
+  margin-top:28px!important;
+}
+
+@media(max-width:980px){
+  .jd-web-hero-v2__inner{
+    grid-template-columns:1fr!important;
+    gap:34px!important;
+  }
+  .jd-web-hero-v2__intro{
+    max-width:760px!important;
+  }
+  .jd-web-hero-v2__visual{
+    width:100%!important;
+  }
+}
+@media(max-width:640px){
+  .jd-web-hero-v2{
+    width:calc(100% - 24px)!important;
+    margin:14px auto 24px!important;
+  }
+  .jd-web-hero-v2__inner{
+    gap:26px!important;
+    padding:30px 18px 22px!important;
+    border-radius:28px!important;
+  }
+  .jd-web-hero-v2__copy>.jd-eyebrow{
+    margin-bottom:11px!important;
+    font-size:9.5px!important;
+  }
+  .jd-web-hero-v2 h1{
+    font-size:clamp(38px,11.6vw,52px)!important;
+    line-height:.96!important;
+  }
+  .jd-web-hero-v2__intro{
+    margin-top:17px!important;
+    font-size:14px!important;
+    line-height:1.5!important;
+  }
+  .jd-web-hero-v2__proof{
+    margin-top:22px!important;
+    padding-top:20px!important;
+  }
+  .jd-web-hero-v2__proof h2{
+    font-size:22px!important;
+    line-height:1.08!important;
+  }
+  .jd-web-hero-v2__proof>p{
+    margin-top:7px!important;
+    font-size:16px!important;
+  }
+  .jd-web-hero__rating{
+    margin-top:13px!important;
+    padding:11px 13px!important;
+    gap:8px!important;
+  }
+  .jd-web-hero__rating>span{
+    font-size:12.5px!important;
+  }
+  .jd-web-hero__rating strong{
+    font-size:12.5px!important;
+  }
+  .jd-web-hero__rating em{
+    font-size:10.5px!important;
+  }
+  .jd-web-hero-v2__cta{
+    width:100%!important;
+    box-sizing:border-box!important;
+    margin-top:18px!important;
+  }
+  .jd-web-hero-slider .jd-web-proof-slider__slides{
+    aspect-ratio:16/11!important;
+    border-radius:20px!important;
+  }
+}
