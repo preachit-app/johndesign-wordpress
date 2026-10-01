@@ -71,6 +71,11 @@ function jd_core_conversion_service_render_21619($block_content,$block){
 
     if(stripos($block_content,'<h1')===false) return $block_content;
 
+    if($page_key==='creation-site-internet'){
+        $inserted[$page_key]=true;
+        return $block_content;
+    }
+
     $inserted[$page_key]=true;
 
     if(stripos($block_content,'jd-service-hero-conversion')===false){
