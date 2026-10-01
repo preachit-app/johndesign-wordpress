@@ -179,7 +179,7 @@ function jd_core_web_portfolio_shot_2163($item){
     return 'https://s0.wp.com/mshots/v1/'.rawurlencode($url).'?w=1200&h=750';
 }
 
-function jd_core_web_portfolio_gallery_21627(){
+function jd_core_web_portfolio_gallery_21628(){
     $items=jd_core_web_portfolio_items_2163();
     if(!$items) return '';
 
@@ -202,12 +202,16 @@ function jd_core_web_portfolio_gallery_21627(){
         $dots.='<button type="button" class="jd-web-proof-slider__dot'.$active.'" data-jd-web-dot="'.$i.'" aria-label="Afficher la réalisation '.($i+1).'"'.($i===0?' aria-current="true"':'').'></button>';
     }
 
+    $rating='<a class="jd-web-proof__rating" href="'.esc_url(home_url('/#avis')).'">'
+        .'<span aria-hidden="true">★★★★★</span><strong>5,0 Google</strong><em>16 avis clients</em>'
+    .'</a>';
+
     return '<section class="jd-web-proof" aria-labelledby="jd-web-proof-title">'
         .'<div class="jd-web-proof__inner">'
             .'<div class="jd-web-proof__copy">'
-                .'<p class="jd-eyebrow">DES PROJETS BIEN RÉELS</p>'
-                .'<h2 id="jd-web-proof-title">Des sites déjà<br>en ligne.</h2>'
-                .'<p>Pas de maquettes pour remplir une galerie. Voici quelques sites réellement réalisés pour des entreprises, associations et indépendants.</p>'
+                .'<p class="jd-eyebrow">RÉALISATIONS WEB</p>'
+                .'<h2 id="jd-web-proof-title">Nous avons créé ces sites,<br>et nos clients sont satisfaits.</h2>'
+                .$rating
                 .'<a class="jd-web-proof__link" href="'.esc_url(home_url('/realisations/')).'">Voir toutes mes réalisations '.jd_core_web_pricing_arrow_21626().'</a>'
             .'</div>'
             .'<div class="jd-web-proof-slider" data-jd-web-slider>'
@@ -410,7 +414,7 @@ function jd_core_web_layout_render_2163($block_content,$block){
     if($type==='remove-studio' || $type==='remove-related') return '';
 
     if($type==='why'){
-        return jd_core_web_portfolio_gallery_21627();
+        return jd_core_web_portfolio_gallery_21628();
     }
 
     if($type==='scope'){
