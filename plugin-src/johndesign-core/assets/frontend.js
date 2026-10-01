@@ -532,4 +532,92 @@ document.querySelectorAll('[data-jd-print-slider]').forEach(slider=>{
   start();
 });
 
+
+/* 2.16.27 — galerie web haute, sur le même principe que le slider signalétique. */
+document.querySelectorAll('[data-jd-web-slider]').forEach(slider=>{
+  const slides=[...slider.querySelectorAll('[data-jd-web-slide]')];
+  const dots=[...slider.querySelectorAll('[data-jd-web-dot]')];
+  const prev=slider.querySelector('[data-jd-web-prev]');
+  const next=slider.querySelector('[data-jd-web-next]');
+  const count=slides.length;
+  if(!count) return;
+
+  let index=0;
+  let timer=null;
+  let startX=null;
+
+  const render=()=>{
+    slides.forEach((slide,i)=>{
+      const active=i===index;
+      slide.classList.toggle('is-active',active);
+      slide.setAttribute('aria-hidden',active?'false':'true');
+    });
+    dots.forEach((dot,i)=>{
+      const active=i===index;
+      dot.classList.toggle('is-active',active);
+      if(active) dot.setAttribute('aria-current','true');
+      else dot.removeAttribute('aria-current');
+    });
+  };
+
+  const go=nextIndex=>{
+    index=(nextIndex+count)%count;
+    render();
+  };
+
+  const stop=()=>{
+    if(timer){
+      clearInterval(timer);
+      timer=null;
+    }
+  };
+
+  const start=()=>{
+    stop();
+    if(count>1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      timer=setInterval(()=>go(index+1),5000);
+    }
+  };
+
+  prev?.addEventListener('click',event=>{
+    event.preventDefault();
+    go(index-1);
+    start();
+  });
+  next?.addEventListener('click',event=>{
+    event.preventDefault();
+    go(index+1);
+    start();
+  });
+  dots.forEach((dot,i)=>dot.addEventListener('click',event=>{
+    event.preventDefault();
+    go(i);
+    start();
+  }));
+
+  slider.addEventListener('pointerdown',event=>{
+    startX=event.clientX;
+    stop();
+  },{passive:true});
+  slider.addEventListener('pointerup',event=>{
+    if(startX!==null){
+      const dx=event.clientX-startX;
+      if(Math.abs(dx)>45) go(index+(dx<0?1:-1));
+    }
+    startX=null;
+    start();
+  },{passive:true});
+  slider.addEventListener('pointercancel',()=>{
+    startX=null;
+    start();
+  },{passive:true});
+  slider.addEventListener('mouseenter',stop);
+  slider.addEventListener('mouseleave',start);
+  slider.addEventListener('focusin',stop);
+  slider.addEventListener('focusout',start);
+
+  render();
+  start();
+});
+
 })();
