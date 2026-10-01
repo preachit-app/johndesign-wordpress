@@ -3368,3 +3368,81 @@ body.page-id-0 .jd-service-hero-conversion{
     font-size:17px!important;
   }
 }
+
+
+/* John Design Core 2.16.31 — correction largeur slider mobile + hiérarchie titre */
+.jd-web-proof__copy h2{
+  max-width:560px!important;
+}
+.jd-web-proof__satisfaction{
+  margin:16px 0 0!important;
+  color:#191919!important;
+  font-size:clamp(18px,1.7vw,24px)!important;
+  line-height:1.25!important;
+  font-weight:760!important;
+  letter-spacing:-.025em!important;
+}
+.jd-web-proof-slider{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  justify-self:stretch!important;
+}
+.jd-web-proof-slider__slides{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+.jd-web-proof-slider__slide{
+  width:100%!important;
+  height:100%!important;
+}
+.jd-web-proof-slider__browser{
+  width:100%!important;
+  height:100%!important;
+}
+.jd-web-proof-slider__ui{
+  width:100%!important;
+}
+@media(max-width:900px){
+  .jd-web-proof__inner{
+    width:100%!important;
+    box-sizing:border-box!important;
+  }
+  .jd-web-proof-slider{
+    grid-column:1 / -1!important;
+    width:100%!important;
+    justify-self:stretch!important;
+  }
+}
+@media(max-width:640px){
+  .jd-web-proof__copy h2{
+    max-width:100%!important;
+    font-size:clamp(34px,10.6vw,46px)!important;
+    line-height:.98!important;
+  }
+  .jd-web-proof__satisfaction{
+    margin-top:12px!important;
+    font-size:18px!important;
+    line-height:1.2!important;
+  }
+  .jd-web-proof-slider{
+    display:block!important;
+    width:100%!important;
+    min-width:100%!important;
+  }
+  .jd-web-proof-slider__slides{
+    display:block!important;
+    width:100%!important;
+    min-width:100%!important;
+    aspect-ratio:16/10!important;
+  }
+  .jd-web-proof-slider__slide,
+  .jd-web-proof-slider__browser{
+    width:100%!important;
+    min-width:100%!important;
+  }
+  .jd-web-proof-slider__slide img{
+    width:100%!important;
+  }
+}
