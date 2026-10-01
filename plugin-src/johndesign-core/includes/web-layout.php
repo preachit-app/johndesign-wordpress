@@ -210,7 +210,7 @@ function jd_core_web_portfolio_gallery_21628(){
         .'<div class="jd-web-proof__inner">'
             .'<div class="jd-web-proof__copy">'
                 .'<p class="jd-eyebrow">RÉALISATIONS WEB</p>'
-                .'<h2 id="jd-web-proof-title">Nous avons créé ces sites,<br>et nos clients sont satisfaits.</h2>'
+                .'<h2 id="jd-web-proof-title">Des sites créés pour<br>de vrais clients.</h2>'
                 .$rating
 
             .'</div>'
