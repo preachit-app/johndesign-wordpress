@@ -3238,3 +3238,66 @@ body.page-id-0 .jd-service-hero-conversion{
     margin-top:18px!important;
   }
 }
+
+
+/* John Design Core 2.16.29 — badge avis Google plus visible */
+.jd-web-proof__rating{
+  display:inline-flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:max-content!important;
+  max-width:100%!important;
+  margin-top:24px!important;
+  padding:14px 18px!important;
+  border-radius:999px!important;
+  background:#191919!important;
+  color:#fff!important;
+  text-decoration:none!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:760!important;
+  box-shadow:0 10px 24px rgba(25,25,25,.13)!important;
+  transition:transform .18s ease,box-shadow .18s ease!important;
+}
+.jd-web-proof__rating:hover{
+  transform:translateY(-2px)!important;
+  box-shadow:0 14px 30px rgba(25,25,25,.17)!important;
+}
+.jd-web-proof__rating>span{
+  color:#fff!important;
+  letter-spacing:1px!important;
+  font-size:15px!important;
+}
+.jd-web-proof__rating strong{
+  color:#fff!important;
+  font-size:14px!important;
+  font-weight:880!important;
+}
+.jd-web-proof__rating em{
+  color:rgba(255,255,255,.68)!important;
+  font-size:12px!important;
+  font-style:normal!important;
+}
+.jd-web-proof__link{
+  display:none!important;
+}
+@media(max-width:640px){
+  .jd-web-proof__rating{
+    width:100%!important;
+    box-sizing:border-box!important;
+    justify-content:center!important;
+    gap:8px!important;
+    padding:13px 14px!important;
+    border-radius:18px!important;
+  }
+  .jd-web-proof__rating>span{
+    font-size:14px!important;
+  }
+  .jd-web-proof__rating strong{
+    font-size:13.5px!important;
+  }
+  .jd-web-proof__rating em{
+    font-size:11.5px!important;
+  }
+}
