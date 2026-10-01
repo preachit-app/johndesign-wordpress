@@ -212,6 +212,148 @@ function jd_core_web_portfolio_gallery_2163(){
     .'</section>';
 }
 
+
+
+/**
+ * John Design Core 2.16.25 — tarifs Site internet.
+ * Une grille commerciale lisible, avec le référencement expliqué sans jargon
+ * et un détail dépliable pour l'hébergement, le suivi et l'abonnement.
+ */
+function jd_core_web_pricing_arrow_21625(){
+    return '<span class="jd-cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17L17 7"></path><path d="M9 7H17V15"></path></svg></span>';
+}
+
+function jd_core_web_pricing_21625(){
+    $plans=[
+        [
+            'class'=>'',
+            'label'=>'ESSENTIEL',
+            'title'=>'Pour démarrer.',
+            'price'=>'990 €',
+            'intro'=>'Un site simple et professionnel pour présenter votre activité et permettre à vos clients de vous contacter.',
+            'project'=>'Site Essentiel - à partir de 990 €',
+            'items'=>[
+                ['label'=>'Site one-page','help'=>'Une page claire avec les sections essentielles.'],
+                ['label'=>'WordPress + Divi','help'=>'Un site que vous pourrez faire évoluer.'],
+                ['label'=>'Adapté au mobile','help'=>'Ordinateur, tablette et téléphone.'],
+                ['label'=>'Formulaire de contact','help'=>'Pour recevoir directement les demandes.'],
+                ['label'=>'Référencement Google de base','help'=>'Titres, descriptions et réglages essentiels pour aider Google à comprendre votre site.'],
+                ['label'=>'Mise en ligne','help'=>'Je m’occupe de la partie technique jusqu’au lancement.'],
+            ],
+        ],
+        [
+            'class'=>' is-featured',
+            'label'=>'VITRINE',
+            'badge'=>'LE PLUS CHOISI',
+            'title'=>'Pour présenter votre entreprise.',
+            'price'=>'1 490 €',
+            'intro'=>'Le format idéal pour une entreprise qui veut expliquer ses services, rassurer et générer des demandes.',
+            'project'=>'Site Vitrine - à partir de 1 490 €',
+            'items'=>[
+                ['label'=>'Jusqu’à 5 pages','help'=>'Par exemple : accueil, services, à propos, réalisations et contact.'],
+                ['label'=>'WordPress + Divi','help'=>'Une base professionnelle et évolutive.'],
+                ['label'=>'Adapté au mobile','help'=>'Une expérience propre sur tous les écrans.'],
+                ['label'=>'Formulaire de contact','help'=>'Avec un parcours pensé pour faciliter les demandes.'],
+                ['label'=>'Référencement Google de base','help'=>'Structure, titres et descriptions préparés pour que Google comprenne votre activité.'],
+                ['label'=>'Suivi des visites','help'=>'Connexion aux outils Google pour mesurer les visites et les contacts.'],
+            ],
+        ],
+        [
+            'class'=>'',
+            'label'=>'VITRINE +',
+            'title'=>'Pour aller plus loin.',
+            'price'=>'1 990 €',
+            'intro'=>'Pour une activité qui a davantage de contenus, de services ou qui souhaite travailler plus sérieusement sa visibilité.',
+            'project'=>'Site Vitrine Plus - à partir de 1 990 €',
+            'items'=>[
+                ['label'=>'Jusqu’à 8 à 10 pages','help'=>'Pour présenter plusieurs services ou secteurs d’activité.'],
+                ['label'=>'Blog ou réalisations','help'=>'Une partie du site que vous pourrez enrichir dans le temps.'],
+                ['label'=>'Référencement local renforcé','help'=>'Pages, titres et structure pensés pour mieux expliquer à Google votre activité et votre zone.'],
+                ['label'=>'Suivi des visites','help'=>'Mesure des visites et des demandes depuis Google.'],
+                ['label'=>'Accompagnement renforcé','help'=>'Plus de contenu à organiser et à intégrer.'],
+                ['label'=>'Mise en ligne & prise en main','help'=>'Le site est livré prêt à utiliser.'],
+            ],
+        ],
+    ];
+
+    $cards='';
+    foreach($plans as $plan){
+        $items='';
+        foreach($plan['items'] as $item){
+            $items.='<li>'
+                .'<span class="jd-web-pricing__check" aria-hidden="true">✓</span>'
+                .'<span><strong>'.esc_html($item['label']).'</strong><small>'.esc_html($item['help']).'</small></span>'
+            .'</li>';
+        }
+
+        $badge=!empty($plan['badge'])
+            ?'<span class="jd-web-pricing__badge">'.esc_html($plan['badge']).'</span>'
+            :'';
+
+        $contact=add_query_arg('project',$plan['project'],home_url('/contact/'));
+
+        $cards.='<article class="jd-web-pricing__card'.esc_attr($plan['class']).'">'
+            .'<div class="jd-web-pricing__card-top">'
+                .'<div><p class="jd-web-pricing__label">'.esc_html($plan['label']).'</p>'.$badge.'</div>'
+                .'<h3>'.esc_html($plan['title']).'</h3>'
+                .'<p class="jd-web-pricing__price"><span>À partir de</span><strong>'.esc_html($plan['price']).'</strong></p>'
+                .'<p class="jd-web-pricing__intro">'.esc_html($plan['intro']).'</p>'
+            .'</div>'
+            .'<ul class="jd-web-pricing__features">'.$items.'</ul>'
+            .'<a class="jd-web-pricing__cta" href="'.esc_url($contact).'">Parler de cette formule '.jd_core_web_pricing_arrow_21625().'</a>'
+        .'</article>';
+    }
+
+    $subscription=add_query_arg('project','Site vitrine en abonnement - 89 €/mois',home_url('/contact/'));
+
+    return '<section class="jd-web-pricing" id="tarifs" aria-labelledby="jd-web-pricing-title">'
+        .'<div class="jd-web-pricing__inner">'
+            .'<header class="jd-web-pricing__head">'
+                .'<div>'
+                    .'<p class="jd-eyebrow">TARIFS SITE INTERNET</p>'
+                    .'<h2 id="jd-web-pricing-title">Des prix clairs.<br>Pas de jargon.</h2>'
+                .'</div>'
+                .'<p>Chaque projet reste adapté à votre activité, mais vous savez dès le départ dans quel ordre de prix vous vous situez.</p>'
+            .'</header>'
+            .'<div class="jd-web-pricing__grid">'.$cards.'</div>'
+            .'<details class="jd-web-pricing__more">'
+                .'<summary>'
+                    .'<span><strong>En savoir plus sur les tarifs</strong><small>Référencement, hébergement, maintenance et paiement mensuel.</small></span>'
+                    .'<span class="jd-web-pricing__plus" aria-hidden="true">+</span>'
+                .'</summary>'
+                .'<div class="jd-web-pricing__more-body">'
+                    .'<div class="jd-web-pricing__explain">'
+                        .'<span class="jd-web-pricing__number">01</span>'
+                        .'<h3>Le « référencement Google », concrètement ?</h3>'
+                        .'<p>On parle aussi de SEO ou de référencement naturel. En clair : je prépare la structure du site, les titres, les descriptions et les principaux réglages pour aider Google à comprendre qui vous êtes, ce que vous proposez et où vous travaillez.</p>'
+                        .'<p class="jd-web-pricing__fine">Cela prépare de bonnes bases, mais ne promet pas une première place sur Google. Un accompagnement de référencement régulier peut faire l’objet d’un devis séparé.</p>'
+                    .'</div>'
+                    .'<div class="jd-web-pricing__explain">'
+                        .'<span class="jd-web-pricing__number">02</span>'
+                        .'<h3>Et après la mise en ligne ?</h3>'
+                        .'<div class="jd-web-pricing__mini-prices">'
+                            .'<div><strong>12 € / mois</strong><span>Hébergement géré</span><small>Hébergement, SSL et gestion technique du compte.</small></div>'
+                            .'<div><strong>39 € / mois</strong><span>Formule Sérénité</span><small>Hébergement, mises à jour, sauvegardes, surveillance et suivi courant.</small></div>'
+                        .'</div>'
+                    .'</div>'
+                    .'<div class="jd-web-pricing__explain jd-web-pricing__subscription">'
+                        .'<span class="jd-web-pricing__number">03</span>'
+                        .'<h3>Vous préférez étaler l’investissement ?</h3>'
+                        .'<p class="jd-web-pricing__subscription-price"><strong>290 €</strong> à la mise en service <span>+</span> <strong>89 € / mois</strong> pendant 24 mois.</p>'
+                        .'<p>Cette formule permet de démarrer avec un site vitrine, l’hébergement et la maintenance inclus, sans régler toute la création en une seule fois. Au terme des 24 mois, le site vous appartient et le suivi devient facultatif.</p>'
+                        .'<a href="'.esc_url($subscription).'" class="jd-web-pricing__text-link">Découvrir cette formule '.jd_core_web_pricing_arrow_21625().'</a>'
+                    .'</div>'
+                    .'<div class="jd-web-pricing__note">'
+                        .'<strong>Ce qui peut faire évoluer le prix</strong>'
+                        .'<p>Boutique en ligne, réservation, espace privé, plusieurs langues, rédaction importante, fonctionnalités spécifiques ou quantité de contenu supérieure au forfait choisi. Dans tous les cas, le périmètre et le prix sont validés avant de commencer.</p>'
+                    .'</div>'
+                .'</div>'
+            .'</details>'
+            .'<p class="jd-web-pricing__legal">Tarifs indicatifs « à partir de ». Un devis précise toujours le contenu exact du projet avant démarrage.</p>'
+        .'</div>'
+    .'</section>';
+}
+
 function jd_core_web_layout_render_2163($block_content,$block){
     if(!is_page('creation-site-internet')) return $block_content;
     if(($block['blockName']??'')!=='johndesign/section') return $block_content;
@@ -232,7 +374,7 @@ function jd_core_web_layout_render_2163($block_content,$block){
         return jd_core_web_layout_add_class_2163(
             $block_content,
             'jd-web-flow-section jd-web-flow-card jd-web-flow-scope'
-        );
+        ).jd_core_web_pricing_21625();
     }
 
     if($type==='start'){
