@@ -2,17 +2,17 @@
 /**
  * Plugin Name: John Design Core
  * Description: Modules Gutenberg John Design, import V2.12, portfolio, formulaire sécurisé et mises à jour GitHub.
- * Version: 2.16.29
+ * Version: 2.16.30
  * Update URI: https://github.com/preachit-app/johndesign-wordpress
  * Requires at least: 6.6
  * Requires PHP: 8.0
  * Author: John Design
  */
 if (!defined('ABSPATH')) exit;
-define('JD_CORE_VERSION', '2.16.29');
+define('JD_CORE_VERSION', '2.16.30');
 define('JD_CORE_DIR', plugin_dir_path(__FILE__));
 define('JD_CORE_URL', plugin_dir_url(__FILE__));
-// Build sync marker 2.16.29
+// Build sync marker 2.16.30
 require_once JD_CORE_DIR.'includes/sections.php';
 require_once JD_CORE_DIR.'includes/contact.php';
 require_once JD_CORE_DIR.'includes/admin.php';
