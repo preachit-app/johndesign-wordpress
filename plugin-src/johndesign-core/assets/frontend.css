@@ -3186,3 +3186,55 @@ body.page-id-0 .jd-service-hero-conversion{
     height:40px!important;
   }
 }
+
+
+/* John Design Core 2.16.28 — galerie + preuve sociale réunies */
+.jd-web-proof{
+  background:#fff!important;
+  border:1px solid rgba(25,25,25,.07)!important;
+  box-shadow:0 10px 34px rgba(25,25,25,.035)!important;
+}
+.jd-web-proof__inner{
+  grid-template-columns:minmax(300px,.72fr) minmax(0,1.28fr)!important;
+}
+.jd-web-proof__copy h2{
+  max-width:520px!important;
+  font-size:clamp(42px,4.5vw,64px)!important;
+  line-height:.98!important;
+}
+.jd-web-proof__rating{
+  display:inline-flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:8px!important;
+  margin-top:24px!important;
+  color:#191919!important;
+  text-decoration:none!important;
+  font-size:12.5px!important;
+  line-height:1!important;
+}
+.jd-web-proof__rating>span{
+  letter-spacing:1px!important;
+  font-size:14px!important;
+}
+.jd-web-proof__rating strong{
+  font-size:13.5px!important;
+  font-weight:850!important;
+}
+.jd-web-proof__rating em{
+  color:#77717a!important;
+  font-style:normal!important;
+}
+.jd-web-proof__link{
+  display:flex!important;
+  width:max-content!important;
+  margin-top:24px!important;
+}
+@media(max-width:640px){
+  .jd-web-proof__copy h2{
+    font-size:clamp(36px,10.8vw,49px)!important;
+  }
+  .jd-web-proof__rating{
+    margin-top:18px!important;
+  }
+}
