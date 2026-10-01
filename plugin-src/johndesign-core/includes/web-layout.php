@@ -212,7 +212,7 @@ function jd_core_web_portfolio_gallery_21628(){
                 .'<p class="jd-eyebrow">RÉALISATIONS WEB</p>'
                 .'<h2 id="jd-web-proof-title">Nous avons créé ces sites,<br>et nos clients sont satisfaits.</h2>'
                 .$rating
-                .'<a class="jd-web-proof__link" href="'.esc_url(home_url('/realisations/')).'">Voir toutes mes réalisations '.jd_core_web_pricing_arrow_21626().'</a>'
+
             .'</div>'
             .'<div class="jd-web-proof-slider" data-jd-web-slider>'
                 .'<div class="jd-web-proof-slider__slides">'.$slides.'</div>'
