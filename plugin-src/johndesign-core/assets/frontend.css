@@ -2388,7 +2388,7 @@ body.page-id-0 .jd-service-hero-conversion{
 }
 
 
-/* John Design Core 2.16.25 — tarifs Site internet */
+/* John Design Core 2.16.26 — tarifs Site internet */
 .jd-web-pricing{
   box-sizing:border-box!important;
   width:calc(100% - 48px)!important;
@@ -2401,9 +2401,7 @@ body.page-id-0 .jd-service-hero-conversion{
   color:#191919!important;
   overflow:hidden!important;
 }
-.jd-web-pricing__inner{
-  padding:clamp(44px,5vw,72px)!important;
-}
+.jd-web-pricing__inner{padding:clamp(44px,5vw,72px)!important}
 .jd-web-pricing__head{
   display:grid!important;
   grid-template-columns:minmax(0,1.15fr) minmax(300px,.55fr)!important;
@@ -2411,9 +2409,7 @@ body.page-id-0 .jd-service-hero-conversion{
   align-items:end!important;
   margin-bottom:38px!important;
 }
-.jd-web-pricing__head .jd-eyebrow{
-  margin:0 0 16px!important;
-}
+.jd-web-pricing__head .jd-eyebrow{margin:0 0 16px!important}
 .jd-web-pricing__head h2{
   margin:0!important;
   color:#191919!important;
@@ -2450,6 +2446,7 @@ body.page-id-0 .jd-service-hero-conversion{
   background:#191919!important;
   color:#fff!important;
   box-shadow:0 16px 40px rgba(25,25,25,.13)!important;
+  transform:translateY(-8px)!important;
 }
 .jd-web-pricing__card-top>div:first-child{
   min-height:28px!important;
@@ -2466,9 +2463,7 @@ body.page-id-0 .jd-service-hero-conversion{
   font-weight:850!important;
   letter-spacing:.12em!important;
 }
-.jd-web-pricing__card.is-featured .jd-web-pricing__label{
-  color:rgba(255,255,255,.62)!important;
-}
+.jd-web-pricing__card.is-featured .jd-web-pricing__label{color:rgba(255,255,255,.62)!important}
 .jd-web-pricing__badge{
   display:inline-flex!important;
   align-items:center!important;
@@ -2489,12 +2484,8 @@ body.page-id-0 .jd-service-hero-conversion{
   line-height:1.03!important;
   letter-spacing:-.045em!important;
 }
-.jd-web-pricing__card.is-featured h3{
-  color:#fff!important;
-}
-.jd-web-pricing__price{
-  margin:28px 0 0!important;
-}
+.jd-web-pricing__card.is-featured h3{color:#fff!important}
+.jd-web-pricing__price{margin:28px 0 0!important}
 .jd-web-pricing__price>span{
   display:block!important;
   margin-bottom:5px!important;
@@ -2513,31 +2504,87 @@ body.page-id-0 .jd-service-hero-conversion{
   font-weight:850!important;
   letter-spacing:-.06em!important;
 }
-.jd-web-pricing__card.is-featured .jd-web-pricing__price>span{
-  color:rgba(255,255,255,.55)!important;
-}
-.jd-web-pricing__card.is-featured .jd-web-pricing__price>strong{
-  color:#fff!important;
-}
+.jd-web-pricing__card.is-featured .jd-web-pricing__price>span{color:rgba(255,255,255,.55)!important}
+.jd-web-pricing__card.is-featured .jd-web-pricing__price>strong{color:#fff!important}
 .jd-web-pricing__intro{
-  min-height:74px!important;
+  min-height:84px!important;
   margin:18px 0 0!important;
   color:#625d65!important;
   font-size:14px!important;
   line-height:1.52!important;
 }
-.jd-web-pricing__card.is-featured .jd-web-pricing__intro{
-  color:rgba(255,255,255,.68)!important;
+.jd-web-pricing__card.is-featured .jd-web-pricing__intro{color:rgba(255,255,255,.68)!important}
+.jd-web-pricing__highlights{
+  list-style:none!important;
+  display:grid!important;
+  gap:10px!important;
+  margin:22px 0!important;
+  padding:20px 0!important;
+  border-top:1px solid rgba(25,25,25,.09)!important;
+  border-bottom:1px solid rgba(25,25,25,.09)!important;
 }
+.jd-web-pricing__card.is-featured .jd-web-pricing__highlights{
+  border-color:rgba(255,255,255,.14)!important;
+}
+.jd-web-pricing__highlights li{
+  display:grid!important;
+  grid-template-columns:13px minmax(0,1fr)!important;
+  gap:7px!important;
+  margin:0!important;
+  color:#191919!important;
+  font-size:13px!important;
+  line-height:1.35!important;
+}
+.jd-web-pricing__card.is-featured .jd-web-pricing__highlights li{color:#fff!important}
+.jd-web-pricing__highlights li>span:first-child{
+  color:#998bb7!important;
+  font-size:18px!important;
+  line-height:.85!important;
+}
+.jd-web-pricing__card.is-featured .jd-web-pricing__highlights li>span:first-child{color:#d9fb70!important}
+.jd-web-pricing__card-details{
+  margin:0 0 22px!important;
+  border:0!important;
+}
+.jd-web-pricing__card-details summary{
+  min-height:40px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  padding:0!important;
+  cursor:pointer!important;
+  list-style:none!important;
+  color:#191919!important;
+  font-size:12.5px!important;
+  font-weight:820!important;
+}
+.jd-web-pricing__card.is-featured .jd-web-pricing__card-details summary{color:#fff!important}
+.jd-web-pricing__card-details summary::-webkit-details-marker{display:none!important}
+.jd-web-pricing__detail-plus{
+  width:28px!important;
+  height:28px!important;
+  flex:0 0 28px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:50%!important;
+  background:#f1ecfb!important;
+  color:#191919!important;
+  font-size:18px!important;
+  font-weight:400!important;
+  line-height:1!important;
+  transition:transform .18s ease!important;
+}
+.jd-web-pricing__card.is-featured .jd-web-pricing__detail-plus{background:#d9fb70!important}
+.jd-web-pricing__card-details[open] .jd-web-pricing__detail-plus{transform:rotate(45deg)!important}
 .jd-web-pricing__features{
   list-style:none!important;
-  margin:24px 0 28px!important;
-  padding:22px 0 0!important;
+  margin:12px 0 0!important;
+  padding:16px 0 0!important;
   border-top:1px solid rgba(25,25,25,.09)!important;
 }
-.jd-web-pricing__card.is-featured .jd-web-pricing__features{
-  border-top-color:rgba(255,255,255,.14)!important;
-}
+.jd-web-pricing__card.is-featured .jd-web-pricing__features{border-top-color:rgba(255,255,255,.14)!important}
 .jd-web-pricing__features li{
   display:grid!important;
   grid-template-columns:22px minmax(0,1fr)!important;
@@ -2557,29 +2604,23 @@ body.page-id-0 .jd-service-hero-conversion{
   font-size:11px!important;
   font-weight:900!important;
 }
-.jd-web-pricing__card.is-featured .jd-web-pricing__check{
-  background:#d9fb70!important;
-}
+.jd-web-pricing__card.is-featured .jd-web-pricing__check{background:#d9fb70!important}
 .jd-web-pricing__features strong{
   display:block!important;
   color:#191919!important;
-  font-size:13px!important;
+  font-size:12.5px!important;
   line-height:1.25!important;
   font-weight:820!important;
 }
-.jd-web-pricing__card.is-featured .jd-web-pricing__features strong{
-  color:#fff!important;
-}
+.jd-web-pricing__card.is-featured .jd-web-pricing__features strong{color:#fff!important}
 .jd-web-pricing__features small{
   display:block!important;
   margin-top:3px!important;
   color:#77717b!important;
   font-size:11.5px!important;
-  line-height:1.38!important;
+  line-height:1.4!important;
 }
-.jd-web-pricing__card.is-featured .jd-web-pricing__features small{
-  color:rgba(255,255,255,.56)!important;
-}
+.jd-web-pricing__card.is-featured .jd-web-pricing__features small{color:rgba(255,255,255,.56)!important}
 .jd-web-pricing__cta{
   min-height:50px!important;
   margin-top:auto!important;
@@ -2594,16 +2635,72 @@ body.page-id-0 .jd-service-hero-conversion{
   text-decoration:none!important;
   font-size:13px!important;
   font-weight:830!important;
-  transition:transform .18s ease,box-shadow .18s ease,background .18s ease!important;
+  transition:transform .18s ease,box-shadow .18s ease!important;
 }
-.jd-web-pricing__card.is-featured .jd-web-pricing__cta{
-  background:#fff!important;
+.jd-web-pricing__card.is-featured .jd-web-pricing__cta{background:#fff!important;color:#191919!important}
+.jd-web-pricing__cta:hover{transform:translateY(-2px)!important;box-shadow:0 9px 24px rgba(25,25,25,.13)!important}
+
+.jd-web-pricing__specific{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:28px!important;
+  align-items:center!important;
+  margin-top:18px!important;
+  padding:28px 30px!important;
+  border:1px solid rgba(25,25,25,.1)!important;
+  border-radius:26px!important;
+  background:rgba(255,255,255,.68)!important;
+}
+.jd-web-pricing__specific h3{
+  margin:10px 0 0!important;
   color:#191919!important;
+  font-size:24px!important;
+  line-height:1.08!important;
+  letter-spacing:-.035em!important;
 }
-.jd-web-pricing__cta:hover{
-  transform:translateY(-2px)!important;
-  box-shadow:0 9px 24px rgba(25,25,25,.13)!important;
+.jd-web-pricing__specific p:not(.jd-web-pricing__label){
+  max-width:720px!important;
+  margin:9px 0 0!important;
+  color:#666068!important;
+  font-size:13px!important;
+  line-height:1.48!important;
 }
+.jd-web-pricing__specific-tags{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:7px!important;
+  margin-top:14px!important;
+}
+.jd-web-pricing__specific-tags span{
+  padding:7px 10px!important;
+  border-radius:999px!important;
+  background:#fff!important;
+  color:#5e5862!important;
+  font-size:10.5px!important;
+  font-weight:760!important;
+}
+.jd-web-pricing__specific-action{
+  min-width:190px!important;
+  text-align:right!important;
+}
+.jd-web-pricing__specific-action>strong{
+  display:block!important;
+  color:#191919!important;
+  font-size:30px!important;
+  line-height:1!important;
+  letter-spacing:-.045em!important;
+}
+.jd-web-pricing__specific-action>a{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  margin-top:14px!important;
+  color:#191919!important;
+  text-decoration:none!important;
+  font-size:12.5px!important;
+  font-weight:820!important;
+}
+
 .jd-web-pricing__more{
   margin-top:18px!important;
   border:1px solid rgba(25,25,25,.09)!important;
@@ -2623,9 +2720,7 @@ body.page-id-0 .jd-service-hero-conversion{
   list-style:none!important;
 }
 .jd-web-pricing__more summary::-webkit-details-marker{display:none!important}
-.jd-web-pricing__more summary>span:first-child{
-  min-width:0!important;
-}
+.jd-web-pricing__more summary>span:first-child{min-width:0!important}
 .jd-web-pricing__more summary strong{
   display:block!important;
   color:#191919!important;
@@ -2655,18 +2750,15 @@ body.page-id-0 .jd-service-hero-conversion{
   line-height:1!important;
   transition:transform .2s ease!important;
 }
-.jd-web-pricing__more[open] .jd-web-pricing__plus{
-  transform:rotate(45deg)!important;
-}
+.jd-web-pricing__more[open] .jd-web-pricing__plus{transform:rotate(45deg)!important}
 .jd-web-pricing__more-body{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:12px!important;
-  padding:0 18px 18px!important;
+  padding:18px!important;
   border-top:1px solid rgba(25,25,25,.08)!important;
 }
-.jd-web-pricing__explain,
-.jd-web-pricing__note{
+.jd-web-pricing__explain{
   min-width:0!important;
   padding:25px!important;
   border-radius:21px!important;
@@ -2683,107 +2775,95 @@ body.page-id-0 .jd-service-hero-conversion{
 .jd-web-pricing__explain h3{
   margin:0!important;
   color:#191919!important;
-  font-size:24px!important;
+  font-size:22px!important;
   line-height:1.08!important;
   letter-spacing:-.04em!important;
 }
 .jd-web-pricing__explain p{
-  margin:14px 0 0!important;
+  margin:12px 0 0!important;
   color:#5e5961!important;
-  font-size:14px!important;
+  font-size:13.5px!important;
   line-height:1.55!important;
 }
-.jd-web-pricing__fine{
-  font-size:12px!important;
-  color:#817b84!important;
-}
-.jd-web-pricing__mini-prices{
-  display:grid!important;
-  gap:10px!important;
-  margin-top:17px!important;
-}
-.jd-web-pricing__mini-prices>div{
-  display:grid!important;
-  grid-template-columns:auto 1fr!important;
-  column-gap:12px!important;
-  align-items:baseline!important;
-  padding:14px 0!important;
-  border-top:1px solid rgba(25,25,25,.08)!important;
-}
-.jd-web-pricing__mini-prices>div:first-child{
-  border-top:0!important;
-  padding-top:0!important;
-}
-.jd-web-pricing__mini-prices strong{
-  color:#191919!important;
-  font-size:19px!important;
-  line-height:1!important;
-  letter-spacing:-.035em!important;
-}
-.jd-web-pricing__mini-prices span{
-  color:#191919!important;
-  font-size:13px!important;
-  font-weight:800!important;
-}
-.jd-web-pricing__mini-prices small{
-  grid-column:2!important;
-  margin-top:3px!important;
-  color:#77717a!important;
-  font-size:11.5px!important;
-  line-height:1.35!important;
-}
+.jd-web-pricing__fine{font-size:12px!important;color:#817b84!important}
+
 .jd-web-pricing__subscription{
-  background:#191919!important;
-}
-.jd-web-pricing__subscription .jd-web-pricing__number{
-  color:#d9fb70!important;
-}
-.jd-web-pricing__subscription h3{
-  color:#fff!important;
-}
-.jd-web-pricing__subscription p{
-  color:rgba(255,255,255,.67)!important;
-}
-.jd-web-pricing__subscription-price{
-  color:#fff!important;
-}
-.jd-web-pricing__subscription-price strong{
-  color:#fff!important;
-  font-size:21px!important;
-}
-.jd-web-pricing__subscription-price span{
-  margin:0 5px!important;
-  color:#d9fb70!important;
-}
-.jd-web-pricing__text-link{
-  display:inline-flex!important;
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(340px,.8fr)!important;
+  gap:30px!important;
   align-items:center!important;
-  gap:8px!important;
   margin-top:18px!important;
+  padding:32px!important;
+  border-radius:28px!important;
+  background:#191919!important;
   color:#fff!important;
-  text-decoration:none!important;
-  font-size:13px!important;
-  font-weight:820!important;
 }
-.jd-web-pricing__text-link .jd-cta-arrow{
-  width:17px!important;
-  height:17px!important;
-  flex-basis:17px!important;
+.jd-web-pricing__subscription .jd-web-pricing__label{color:#d9fb70!important}
+.jd-web-pricing__subscription h3{
+  margin:12px 0 0!important;
+  color:#fff!important;
+  font-size:clamp(28px,3vw,40px)!important;
+  line-height:1.02!important;
+  letter-spacing:-.045em!important;
 }
-.jd-web-pricing__note{
-  background:#fff9dc!important;
-}
-.jd-web-pricing__note strong{
-  display:block!important;
-  color:#191919!important;
-  font-size:17px!important;
-  line-height:1.15!important;
-}
-.jd-web-pricing__note p{
-  margin:9px 0 0!important;
-  color:#676158!important;
-  font-size:13px!important;
+.jd-web-pricing__subscription>div:first-child>p:last-child{
+  max-width:560px!important;
+  margin:13px 0 0!important;
+  color:rgba(255,255,255,.67)!important;
+  font-size:14px!important;
   line-height:1.5!important;
+}
+.jd-web-pricing__subscription-action{
+  display:grid!important;
+  grid-template-columns:1fr auto 1fr!important;
+  gap:12px!important;
+  align-items:center!important;
+}
+.jd-web-pricing__subscription-action p{margin:0!important}
+.jd-web-pricing__subscription-action strong{
+  display:block!important;
+  color:#fff!important;
+  font-size:25px!important;
+  line-height:1!important;
+  letter-spacing:-.04em!important;
+}
+.jd-web-pricing__subscription-action p span{
+  display:block!important;
+  margin-top:5px!important;
+  color:rgba(255,255,255,.55)!important;
+  font-size:10.5px!important;
+  font-weight:700!important;
+}
+.jd-web-pricing__subscription-action i{
+  color:#d9fb70!important;
+  font-size:22px!important;
+  font-style:normal!important;
+}
+.jd-web-pricing__subscription-action a{
+  grid-column:1 / -1!important;
+  min-height:48px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  margin-top:8px!important;
+  padding:0 18px!important;
+  border-radius:999px!important;
+  background:#fff!important;
+  color:#191919!important;
+  text-decoration:none!important;
+  font-size:12.5px!important;
+  font-weight:830!important;
+}
+.jd-web-pricing__subscription-note{
+  grid-column:1 / -1!important;
+  margin:0!important;
+  padding-top:18px!important;
+  border-top:1px solid rgba(255,255,255,.13)!important;
+  color:rgba(255,255,255,.55)!important;
+  font-size:11.5px!important;
+  line-height:1.45!important;
 }
 .jd-web-pricing__legal{
   margin:14px 4px 0!important;
@@ -2792,24 +2872,52 @@ body.page-id-0 .jd-service-hero-conversion{
   line-height:1.45!important;
 }
 
+/* Prix lisible directement dans la section Maintenance existante. */
+.jd-web-maintenance-price{
+  align-self:center!important;
+  min-width:190px!important;
+  padding:22px 24px!important;
+  border-radius:22px!important;
+  background:#f1ecfb!important;
+}
+.jd-web-maintenance-price>span{
+  display:block!important;
+  color:#756987!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.1em!important;
+}
+.jd-web-maintenance-price>p{margin:10px 0 0!important}
+.jd-web-maintenance-price strong{
+  color:#191919!important;
+  font-size:34px!important;
+  line-height:1!important;
+  letter-spacing:-.05em!important;
+}
+.jd-web-maintenance-price small{
+  margin-left:4px!important;
+  color:#77717a!important;
+  font-size:12px!important;
+  font-weight:750!important;
+}
+.jd-web-maintenance-price em{
+  display:block!important;
+  margin-top:8px!important;
+  color:#66606a!important;
+  font-size:11px!important;
+  line-height:1.35!important;
+  font-style:normal!important;
+}
+
 @media(max-width:980px){
-  .jd-web-pricing__head{
-    grid-template-columns:1fr!important;
-    gap:16px!important;
-    align-items:start!important;
-  }
-  .jd-web-pricing__head>p{
-    max-width:650px!important;
-  }
-  .jd-web-pricing__grid{
-    grid-template-columns:1fr!important;
-  }
-  .jd-web-pricing__intro{
-    min-height:0!important;
-  }
-  .jd-web-pricing__more-body{
-    grid-template-columns:1fr!important;
-  }
+  .jd-web-pricing__head{grid-template-columns:1fr!important;gap:16px!important;align-items:start!important}
+  .jd-web-pricing__head>p{max-width:650px!important}
+  .jd-web-pricing__grid{grid-template-columns:1fr!important}
+  .jd-web-pricing__card.is-featured{transform:none!important}
+  .jd-web-pricing__intro{min-height:0!important}
+  .jd-web-pricing__more-body{grid-template-columns:1fr!important}
+  .jd-web-pricing__subscription{grid-template-columns:1fr!important}
 }
 @media(max-width:640px){
   .jd-web-pricing{
@@ -2817,55 +2925,34 @@ body.page-id-0 .jd-service-hero-conversion{
     margin:28px auto 40px!important;
     border-radius:28px!important;
   }
-  .jd-web-pricing__inner{
-    padding:34px 16px!important;
-  }
-  .jd-web-pricing__head{
-    margin-bottom:26px!important;
-  }
-  .jd-web-pricing__head h2{
-    font-size:clamp(39px,12vw,54px)!important;
-  }
-  .jd-web-pricing__head>p{
-    font-size:15px!important;
-  }
-  .jd-web-pricing__card{
+  .jd-web-pricing__inner{padding:34px 16px!important}
+  .jd-web-pricing__head{margin-bottom:26px!important}
+  .jd-web-pricing__head h2{font-size:clamp(39px,12vw,54px)!important}
+  .jd-web-pricing__head>p{font-size:15px!important}
+  .jd-web-pricing__card{padding:22px!important;border-radius:23px!important}
+  .jd-web-pricing__card h3{font-size:29px!important}
+  .jd-web-pricing__price>strong{font-size:46px!important}
+  .jd-web-pricing__specific{
+    grid-template-columns:1fr!important;
+    gap:20px!important;
     padding:22px!important;
-    border-radius:23px!important;
-  }
-  .jd-web-pricing__card h3{
-    font-size:29px!important;
-  }
-  .jd-web-pricing__price>strong{
-    font-size:46px!important;
-  }
-  .jd-web-pricing__more{
     border-radius:22px!important;
   }
-  .jd-web-pricing__more summary{
-    min-height:84px!important;
-    padding:19px 18px!important;
+  .jd-web-pricing__specific-action{text-align:left!important}
+  .jd-web-pricing__more{border-radius:22px!important}
+  .jd-web-pricing__more summary{min-height:84px!important;padding:19px 18px!important}
+  .jd-web-pricing__more summary small{padding-right:5px!important}
+  .jd-web-pricing__plus{width:38px!important;height:38px!important;flex-basis:38px!important}
+  .jd-web-pricing__more-body{padding:10px!important}
+  .jd-web-pricing__explain{padding:21px!important;border-radius:18px!important}
+  .jd-web-pricing__subscription{
+    gap:24px!important;
+    padding:24px 22px!important;
+    border-radius:23px!important;
   }
-  .jd-web-pricing__more summary small{
-    padding-right:5px!important;
-  }
-  .jd-web-pricing__plus{
-    width:38px!important;
-    height:38px!important;
-    flex-basis:38px!important;
-  }
-  .jd-web-pricing__more-body{
-    padding:0 10px 10px!important;
-  }
-  .jd-web-pricing__explain,
-  .jd-web-pricing__note{
-    padding:21px!important;
-    border-radius:18px!important;
-  }
-  .jd-web-pricing__mini-prices>div{
-    grid-template-columns:1fr!important;
-  }
-  .jd-web-pricing__mini-prices small{
-    grid-column:1!important;
-  }
+  .jd-web-pricing__subscription-action{grid-template-columns:1fr!important;gap:9px!important}
+  .jd-web-pricing__subscription-action i{display:none!important}
+  .jd-web-pricing__subscription-action a{grid-column:1!important}
+  .jd-web-maintenance-price{width:100%!important;box-sizing:border-box!important}
 }
+
