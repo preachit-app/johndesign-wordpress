@@ -3301,3 +3301,70 @@ body.page-id-0 .jd-service-hero-conversion{
     font-size:11.5px!important;
   }
 }
+
+
+/* John Design Core 2.16.30 — suppression du doublon avis + mobile gallery cleanup */
+.jd-web-proof__copy h2{
+  max-width:500px!important;
+}
+@media(max-width:640px){
+  .jd-web-proof{
+    margin-top:16px!important;
+    margin-bottom:32px!important;
+  }
+  .jd-web-proof__inner{
+    padding:28px 16px 20px!important;
+    gap:22px!important;
+  }
+  .jd-web-proof__copy .jd-eyebrow{
+    margin-bottom:10px!important;
+    font-size:9.5px!important;
+  }
+  .jd-web-proof__copy h2{
+    max-width:340px!important;
+    font-size:clamp(32px,10vw,44px)!important;
+    line-height:.98!important;
+  }
+  .jd-web-proof__rating{
+    margin-top:16px!important;
+    width:max-content!important;
+    max-width:100%!important;
+    padding:11px 13px!important;
+    justify-content:flex-start!important;
+    border-radius:999px!important;
+  }
+  .jd-web-proof__rating>span{
+    font-size:12.5px!important;
+    letter-spacing:.5px!important;
+  }
+  .jd-web-proof__rating strong{
+    font-size:12.5px!important;
+  }
+  .jd-web-proof__rating em{
+    font-size:10.5px!important;
+  }
+  .jd-web-proof-slider__slides{
+    aspect-ratio:16/11!important;
+  }
+  .jd-web-proof-slider__bar{
+    height:24px!important;
+  }
+  .jd-web-proof-slider__slide img{
+    height:calc(100% - 24px)!important;
+  }
+  .jd-web-proof-slider__ui{
+    margin-top:10px!important;
+  }
+  .jd-web-proof-slider__dot{
+    width:7px!important;
+    height:7px!important;
+  }
+  .jd-web-proof-slider__dot.is-active{
+    width:20px!important;
+  }
+  .jd-web-proof-slider__arrow{
+    width:36px!important;
+    height:36px!important;
+    font-size:17px!important;
+  }
+}
