@@ -89,18 +89,24 @@ function jd_core_home_services_snapshot_2151(){
 }
 
 function jd_core_web_maintenance_2151(){
+ $contact=add_query_arg('project','Maintenance Sérénité - 39 €/mois',home_url('/contact/'));
  return '<section class="jd-web-maintenance">
    <div class="jd-web-maintenance-copy">
      <p class="jd-eyebrow">APRÈS LA MISE EN LIGNE</p>
      <h2>Maintenance &amp; suivi<br>de votre site internet.</h2>
-     <p>Mises à jour, sauvegardes, surveillance et petites évolutions : je peux continuer à m’occuper du site après sa mise en ligne.</p>
+     <p>Vous ne voulez pas gérer les mises à jour, les sauvegardes ou les petits soucis techniques ? Je peux continuer à m’occuper du site pour vous.</p>
+   </div>
+   <div class="jd-web-maintenance-price">
+     <span>FORMULE SÉRÉNITÉ</span>
+     <p><strong>39 €</strong><small>/ mois</small></p>
+     <em>Hébergement, maintenance et suivi courant.</em>
    </div>
    <div class="jd-web-maintenance-items">
-     <div><strong>Mises à jour &amp; sauvegardes</strong><span>WordPress, extensions et sauvegardes régulières.</span></div>
-     <div><strong>Surveillance</strong><span>Vérification du bon fonctionnement et des points essentiels.</span></div>
-     <div><strong>Petites évolutions</strong><span>Textes, images, nouvelles sections ou ajustements au fil du temps.</span></div>
+     <div><strong>Hébergement &amp; sauvegardes</strong><span>Votre site reste hébergé et des sauvegardes sont conservées régulièrement.</span></div>
+     <div><strong>Mises à jour &amp; surveillance</strong><span>WordPress, Divi et les extensions sont suivis pour garder un site propre et fonctionnel.</span></div>
+     <div><strong>Petites corrections</strong><span>Quelques ajustements ponctuels de textes, images ou contenus sans relancer un nouveau projet.</span></div>
    </div>
-   <a class="jd-web-maintenance-link" href="'.esc_url(home_url('/contact/')).'">Parlons du suivi <span class="jd-cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17L17 7"></path><path d="M9 7H17V15"></path></svg></span></a>
+   <a class="jd-web-maintenance-link" href="'.esc_url($contact).'">Choisir la formule Sérénité <span class="jd-cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17L17 7"></path><path d="M9 7H17V15"></path></svg></span></a>
  </section>';
 }
 
