@@ -179,6 +179,69 @@ function jd_core_web_portfolio_shot_2163($item){
     return 'https://s0.wp.com/mshots/v1/'.rawurlencode($url).'?w=1200&h=750';
 }
 
+
+function jd_core_web_portfolio_slider_21632(){
+    $items=jd_core_web_portfolio_items_2163();
+    if(!$items) return '';
+
+    $slides='';
+    $dots='';
+    foreach($items as $i=>$item){
+        $url=(string)$item['url'];
+        $shot=jd_core_web_portfolio_shot_2163($item);
+        $active=$i===0?' is-active':'';
+        $hidden=$i===0?'false':'true';
+        $loading=$i===0?'eager':'lazy';
+
+        $slides.='<a class="jd-web-proof-slider__slide'.$active.'" data-jd-web-slide="'.$i.'" href="'.esc_url($url).'" target="_blank" rel="noopener noreferrer" aria-hidden="'.$hidden.'" aria-label="Visiter '.esc_attr($item['name']).'">'
+            .'<span class="jd-web-proof-slider__browser">'
+                .'<span class="jd-web-proof-slider__bar" aria-hidden="true"><i></i><i></i><i></i></span>'
+                .'<img src="'.esc_url($shot).'" alt="Aperçu du site '.esc_attr($item['name']).'" loading="'.$loading.'" decoding="async">'
+            .'</span>'
+        .'</a>';
+
+        $dots.='<button type="button" class="jd-web-proof-slider__dot'.$active.'" data-jd-web-dot="'.$i.'" aria-label="Afficher la réalisation '.($i+1).'"'.($i===0?' aria-current="true"':'').'></button>';
+    }
+
+    return '<div class="jd-web-proof-slider jd-web-hero-slider" data-jd-web-slider>'
+        .'<div class="jd-web-proof-slider__slides">'.$slides.'</div>'
+        .'<div class="jd-web-proof-slider__ui">'
+            .'<div class="jd-web-proof-slider__dots">'.$dots.'</div>'
+            .'<div class="jd-web-proof-slider__arrows">'
+                .'<button type="button" class="jd-web-proof-slider__arrow" data-jd-web-prev aria-label="Site précédent">←</button>'
+                .'<button type="button" class="jd-web-proof-slider__arrow" data-jd-web-next aria-label="Site suivant">→</button>'
+            .'</div>'
+        .'</div>'
+    .'</div>';
+}
+
+function jd_core_web_hero_21632(){
+    $rating='<a class="jd-web-hero__rating" href="'.esc_url(home_url('/#avis')).'">'
+        .'<span aria-hidden="true">★★★★★</span>'
+        .'<strong>5,0 Google</strong>'
+        .'<em>16 avis clients</em>'
+    .'</a>';
+
+    return '<section class="jd-web-hero-v2" aria-labelledby="jd-web-hero-title">'
+        .'<div class="jd-web-hero-v2__inner">'
+            .'<div class="jd-web-hero-v2__copy">'
+                .'<p class="jd-eyebrow">WEB / WORDPRESS</p>'
+                .'<h1 id="jd-web-hero-title">Création ou refonte<br>de votre site internet.</h1>'
+                .'<p class="jd-web-hero-v2__intro">Je crée ou refonds votre site pour qu’il soit clair, rapide et adapté au mobile, avec un design professionnel pensé pour donner confiance et faciliter les prises de contact.</p>'
+                .'<div class="jd-web-hero-v2__proof">'
+                    .'<h2>Découvrez quelques sites que nous avons créés.</h2>'
+                    .'<p>Nos clients sont satisfaits.</p>'
+                    .$rating
+                .'</div>'
+                .'<a class="jd-web-hero-v2__cta" href="#tarifs">Découvrir nos tarifs '.jd_core_web_pricing_arrow_21626().'</a>'
+            .'</div>'
+            .'<div class="jd-web-hero-v2__visual">'
+                .jd_core_web_portfolio_slider_21632()
+            .'</div>'
+        .'</div>'
+    .'</section>';
+}
+
 function jd_core_web_portfolio_gallery_21628(){
     $items=jd_core_web_portfolio_items_2163();
     if(!$items) return '';
@@ -408,13 +471,17 @@ function jd_core_web_layout_render_2163($block_content,$block){
     if(!is_page('creation-site-internet')) return $block_content;
     if(($block['blockName']??'')!=='johndesign/section') return $block_content;
 
+    if(stripos($block_content,'<h1')!==false){
+        return jd_core_web_hero_21632();
+    }
+
     $plain=jd_core_web_layout_plain_2163($block_content);
     $type=jd_core_web_layout_type_2163($plain);
 
     if($type==='remove-studio' || $type==='remove-related') return '';
 
     if($type==='why'){
-        return jd_core_web_portfolio_gallery_21628();
+        return '';
     }
 
     if($type==='scope'){
