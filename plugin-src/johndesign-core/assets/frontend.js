@@ -575,7 +575,7 @@ document.querySelectorAll('[data-jd-web-slider]').forEach(slider=>{
   const start=()=>{
     stop();
     if(count>1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-      timer=setInterval(()=>go(index+1),5000);
+      timer=setInterval(()=>go(index+1),4200);
     }
   };
 
