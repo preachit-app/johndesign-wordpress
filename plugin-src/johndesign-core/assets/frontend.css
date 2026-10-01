@@ -2956,3 +2956,233 @@ body.page-id-0 .jd-service-hero-conversion{
   .jd-web-maintenance-price{width:100%!important;box-sizing:border-box!important}
 }
 
+
+
+/* John Design Core 2.16.27 — preuve web remontée et parcours commercial simplifié */
+.jd-service-conversion.is-web-proof .jd-service-conversion__inner{
+  background:#fff!important;
+}
+.jd-service-conversion.is-web-proof .jd-service-conversion__top{
+  grid-template-columns:minmax(0,1fr) auto!important;
+}
+.jd-service-conversion__proof-copy{
+  min-width:0!important;
+}
+.jd-service-conversion__eyebrow{
+  margin:0 0 9px!important;
+  color:#716a76!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.12em!important;
+}
+.jd-service-conversion.is-web-proof .jd-service-conversion__promise{
+  max-width:none!important;
+  font-size:clamp(30px,3.1vw,46px)!important;
+  line-height:1.02!important;
+  font-weight:820!important;
+  letter-spacing:-.045em!important;
+}
+.jd-service-conversion.is-web-proof .jd-service-conversion__rating{
+  margin-top:14px!important;
+  font-size:13px!important;
+}
+.jd-service-conversion.is-web-proof .jd-service-conversion__rating>span{
+  font-size:15px!important;
+}
+.jd-service-conversion.is-web-proof .jd-service-conversion__rating strong{
+  font-size:14px!important;
+}
+
+/* Galerie web inspirée du slider signalétique : une vraie réalisation à la fois. */
+.jd-web-proof{
+  box-sizing:border-box!important;
+  width:calc(100% - 48px)!important;
+  max-width:1440px!important;
+  margin:28px auto 52px!important;
+  padding:0!important;
+  border-radius:40px!important;
+  background:#f7f3ed!important;
+  overflow:hidden!important;
+}
+.jd-web-proof__inner{
+  display:grid!important;
+  grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr)!important;
+  gap:clamp(34px,5vw,72px)!important;
+  align-items:center!important;
+  padding:clamp(42px,5vw,72px)!important;
+}
+.jd-web-proof__copy .jd-eyebrow{
+  margin:0 0 16px!important;
+}
+.jd-web-proof__copy h2{
+  margin:0!important;
+  color:#191919!important;
+  font-size:clamp(48px,5.2vw,74px)!important;
+  line-height:.95!important;
+  letter-spacing:-.055em!important;
+}
+.jd-web-proof__copy>p:not(.jd-eyebrow){
+  max-width:460px!important;
+  margin:22px 0 0!important;
+  color:#5f5962!important;
+  font-size:15px!important;
+  line-height:1.55!important;
+}
+.jd-web-proof__link{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:9px!important;
+  margin-top:26px!important;
+  color:#191919!important;
+  text-decoration:none!important;
+  font-size:13px!important;
+  font-weight:830!important;
+}
+.jd-web-proof-slider{
+  min-width:0!important;
+}
+.jd-web-proof-slider__slides{
+  position:relative!important;
+  aspect-ratio:16/10!important;
+  border-radius:28px!important;
+  overflow:hidden!important;
+  background:#dedad4!important;
+  box-shadow:0 22px 54px rgba(25,25,25,.12)!important;
+}
+.jd-web-proof-slider__slide{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  transform:scale(.985)!important;
+  transition:opacity .35s ease,transform .5s ease!important;
+}
+.jd-web-proof-slider__slide.is-active{
+  opacity:1!important;
+  pointer-events:auto!important;
+  transform:scale(1)!important;
+}
+.jd-web-proof-slider__browser{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  background:#fff!important;
+}
+.jd-web-proof-slider__bar{
+  height:30px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  padding:0 12px!important;
+  box-sizing:border-box!important;
+  background:#eeeae4!important;
+  border-bottom:1px solid rgba(25,25,25,.08)!important;
+}
+.jd-web-proof-slider__bar i{
+  width:7px!important;
+  height:7px!important;
+  display:block!important;
+  border-radius:50%!important;
+  background:#c9c3ba!important;
+}
+.jd-web-proof-slider__slide img{
+  display:block!important;
+  width:100%!important;
+  height:calc(100% - 30px)!important;
+  object-fit:cover!important;
+  object-position:top center!important;
+}
+.jd-web-proof-slider__ui{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:18px!important;
+  margin-top:18px!important;
+}
+.jd-web-proof-slider__dots{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+}
+.jd-web-proof-slider__dot{
+  width:8px!important;
+  height:8px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:#c8c1b9!important;
+  cursor:pointer!important;
+  transition:width .18s ease,background .18s ease!important;
+}
+.jd-web-proof-slider__dot.is-active{
+  width:24px!important;
+  background:#191919!important;
+}
+.jd-web-proof-slider__arrows{
+  display:flex!important;
+  gap:8px!important;
+}
+.jd-web-proof-slider__arrow{
+  width:44px!important;
+  height:44px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:50%!important;
+  background:#191919!important;
+  color:#fff!important;
+  font-size:19px!important;
+  line-height:1!important;
+  cursor:pointer!important;
+  transition:transform .18s ease,opacity .18s ease!important;
+}
+.jd-web-proof-slider__arrow:hover{
+  transform:translateY(-2px)!important;
+}
+
+/* L'ancien bloc "Tout ce qu'il faut..." n'est plus rendu.
+   Les tarifs prennent directement sa place dans le parcours. */
+.jd-web-pricing{
+  margin-top:34px!important;
+}
+
+@media(max-width:900px){
+  .jd-web-proof__inner{
+    grid-template-columns:1fr!important;
+  }
+  .jd-web-proof__copy>p:not(.jd-eyebrow){
+    max-width:650px!important;
+  }
+  .jd-service-conversion.is-web-proof .jd-service-conversion__top{
+    grid-template-columns:1fr!important;
+  }
+}
+@media(max-width:640px){
+  .jd-web-proof{
+    width:calc(100% - 24px)!important;
+    margin:20px auto 38px!important;
+    border-radius:28px!important;
+  }
+  .jd-web-proof__inner{
+    gap:28px!important;
+    padding:34px 18px 24px!important;
+  }
+  .jd-web-proof__copy h2{
+    font-size:clamp(40px,12vw,54px)!important;
+  }
+  .jd-web-proof__copy>p:not(.jd-eyebrow){
+    font-size:14px!important;
+  }
+  .jd-web-proof-slider__slides{
+    aspect-ratio:4/3!important;
+    border-radius:21px!important;
+  }
+  .jd-web-proof-slider__ui{
+    margin-top:14px!important;
+  }
+  .jd-web-proof-slider__arrow{
+    width:40px!important;
+    height:40px!important;
+  }
+}
